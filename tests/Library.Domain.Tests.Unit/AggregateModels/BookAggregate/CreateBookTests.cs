@@ -8,7 +8,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
 {
     public class CreateBookTests
     {
-        internal Book Act(string title, string author) => new Book(title, author);
+        internal Book Act(string title, string author) => Book.Create(title, author);
 
         [Fact]
         public void given_valid_data_book_should_be_created()
