@@ -9,8 +9,9 @@ namespace Library.Domain.AggregateModels.BookAggregate
     {
         public string Title { get; }
         public string Author { get; }
-        public bool IsBorrowed { get; }
-        public DateTime? BorrowedUntil { get; }
+        public bool IsBorrowed => BorrowedUntil.HasValue;
+        public DateTime? BorrowedUntil { get; private set; }
+        public long? BorrowedByUserId { get; private set; }
 
         private Book(string title, string author)
         {
@@ -23,8 +24,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
             Title = title;
             Author = author;
 
-            IsBorrowed = false;
             BorrowedUntil = null;
+            BorrowedByUserId = null;
         }
 
         public static Book Create(string title, string author)
@@ -34,6 +35,20 @@ namespace Library.Domain.AggregateModels.BookAggregate
             book.AddDomainEvent(new BookCreatedEvent(title, author));
 
             return book;
+        }
+
+        public void Borrow(long userId, uint daysPeriod)
+        {
+            if (IsBorrowed)
+                throw new BookAlreadyBorrowedException(BorrowedUntil.Value);
+
+            if (daysPeriod > 30)
+                throw new BookBorrowInvalidPeriodException(daysPeriod);
+
+            BorrowedByUserId = userId;
+            BorrowedUntil = DateTime.UtcNow.AddDays(daysPeriod);
+
+            AddDomainEvent(new BookBorrowedEvent(Id, BorrowedByUserId.Value, BorrowedUntil.Value));
         }
     }
 }
