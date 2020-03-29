@@ -9,8 +9,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
     {
         public string Title { get; }
         public string Author { get; }
-        public bool IsReserved { get; }
-        public DateTime? ReservedUntil { get; }
+        public bool IsBorrowed { get; }
+        public DateTime? BorrowedUntil { get; }
 
         private Book(string title, string author)
         {
@@ -22,8 +22,9 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
             Title = title;
             Author = author;
-            IsReserved = false;
-            ReservedUntil = null;
+
+            IsBorrowed = false;
+            BorrowedUntil = null;
         }
 
         public static Book Create(string title, string author)
