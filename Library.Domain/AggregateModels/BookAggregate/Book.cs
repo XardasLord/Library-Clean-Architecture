@@ -1,4 +1,5 @@
 ﻿using System;
+using Library.Domain.AggregateModels.BookAggregate.Events;
 using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.BookAggregate
@@ -16,6 +17,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
             Author = author;
             IsReserved = false;
             ReservedUntil = null;
+
+            AddDomainEvent(new BookCreatedEvent(Title, Author));
         }
     }
 }
