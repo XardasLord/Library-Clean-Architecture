@@ -5,7 +5,7 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class Book : Entity<long>, IAggregateRoot
+    public class Book : AggregateRoot<long>
     {
         public string Title { get; }
         public string Author { get; }
