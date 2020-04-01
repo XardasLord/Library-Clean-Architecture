@@ -50,5 +50,16 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
             AddDomainEvent(new BookBorrowedEvent(Id, BorrowedByUserId.Value, BorrowedUntil.Value));
         }
+
+        public void GiveBack()
+        {
+            if (!IsBorrowed)
+                throw new BookNotBorrowedException(Id);
+
+            BorrowedByUserId = null;
+            BorrowedUntil = null;
+
+            AddDomainEvent(new BookGaveBackEvent(Id, DateTime.UtcNow));
+        }
     }
 }
