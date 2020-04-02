@@ -7,11 +7,16 @@ namespace Library.Domain.AggregateModels.BookAggregate
 {
     public class Book : AggregateRoot<long>
     {
-        public string Title { get; }
-        public string Author { get; }
+        private readonly string _title;
+        private readonly string _author;
+        private DateTime? _borrowedUntil;
+        private long? _borrowedByUserId;
+
+        public string Title => _title;
+        public string Author => _author;
         public bool IsBorrowed => BorrowedUntil.HasValue;
-        public DateTime? BorrowedUntil { get; private set; }
-        public long? BorrowedByUserId { get; private set; }
+        public DateTime? BorrowedUntil => _borrowedUntil;
+        public long? BorrowedByUserId => _borrowedByUserId;
 
         private Book(string title, string author)
         {
@@ -21,11 +26,11 @@ namespace Library.Domain.AggregateModels.BookAggregate
             if (string.IsNullOrWhiteSpace(author))
                 throw new BookCreationException($"Parameter {nameof(author)} cannot be empty.");
 
-            Title = title;
-            Author = author;
+            _title = title;
+            _author = author;
 
-            BorrowedUntil = null;
-            BorrowedByUserId = null;
+            _borrowedUntil = null;
+            _borrowedByUserId = null;
         }
 
         public static Book Create(string title, string author)
@@ -45,10 +50,10 @@ namespace Library.Domain.AggregateModels.BookAggregate
             if (daysPeriod > 30)
                 throw new BookBorrowInvalidPeriodException(daysPeriod);
 
-            BorrowedByUserId = userId;
-            BorrowedUntil = DateTime.UtcNow.AddDays(daysPeriod);
+            _borrowedByUserId = userId;
+            _borrowedUntil = DateTime.UtcNow.AddDays(daysPeriod);
 
-            AddDomainEvent(new BookBorrowedEvent(Id, BorrowedByUserId.Value, BorrowedUntil.Value));
+            AddDomainEvent(new BookBorrowedEvent(Id, _borrowedByUserId.Value, _borrowedUntil.Value));
         }
 
         public void GiveBack()
@@ -56,8 +61,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
             if (!IsBorrowed)
                 throw new BookNotBorrowedException(Id);
 
-            BorrowedByUserId = null;
-            BorrowedUntil = null;
+            _borrowedByUserId = null;
+            _borrowedUntil = null;
 
             AddDomainEvent(new BookGaveBackEvent(Id, DateTime.UtcNow));
         }
