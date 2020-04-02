@@ -15,15 +15,15 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
         public void calling_give_back_book_when_book_is_borrowed_should_be_set_as_available()
         {
             const long userId = 1;
-            const uint daysPeriod = 15;
+            const int requestedLoadPeriodInDays = 15;
             var book = Book.Create("Title", "Author");
 
-            book.Borrow(userId, daysPeriod);
+            book.Borrow(userId, requestedLoadPeriodInDays);
 
             Act(book);
 
             book.IsBorrowed.Should().BeFalse();
-            book.BorrowedUntil.Should().BeNull();
+            book.LoanUntil.Should().BeNull();
             book.BorrowedByUserId.Should().BeNull();
             book.DomainEvents.Last().Should().BeOfType<BookReturnedBackEvent>();
         }

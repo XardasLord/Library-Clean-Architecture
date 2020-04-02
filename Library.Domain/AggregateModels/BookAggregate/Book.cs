@@ -7,15 +7,17 @@ namespace Library.Domain.AggregateModels.BookAggregate
 {
     public class Book : AggregateRoot<long>
     {
+        public static int MaximumLoanPeriodInDays = 30;
+
         private readonly string _title;
         private readonly string _author;
-        private DateTime? _borrowedUntil;
+        private DateTime? _loanUntil;
         private long? _borrowedByUserId;
 
         public string Title => _title;
         public string Author => _author;
-        public bool IsBorrowed => BorrowedUntil.HasValue;
-        public DateTime? BorrowedUntil => _borrowedUntil;
+        public bool IsBorrowed => LoanUntil.HasValue;
+        public DateTime? LoanUntil => _loanUntil;
         public long? BorrowedByUserId => _borrowedByUserId;
 
         private Book(string title, string author)
@@ -29,7 +31,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
             _title = title;
             _author = author;
 
-            _borrowedUntil = null;
+            _loanUntil = null;
             _borrowedByUserId = null;
         }
 
@@ -42,18 +44,18 @@ namespace Library.Domain.AggregateModels.BookAggregate
             return book;
         }
 
-        public void Borrow(long userId, uint daysPeriod)
+        public void Borrow(long userId, int requestedLoanPeriodInDays)
         {
             if (IsBorrowed)
-                throw new BookAlreadyBorrowedException(BorrowedUntil.Value);
+                throw new BookAlreadyBorrowedException(LoanUntil.Value);
 
-            if (daysPeriod > 30)
-                throw new BookBorrowInvalidPeriodException(daysPeriod);
+            if (requestedLoanPeriodInDays > MaximumLoanPeriodInDays || requestedLoanPeriodInDays <= 0)
+                throw new BookBorrowInvalidPeriodException(requestedLoanPeriodInDays, MaximumLoanPeriodInDays);
 
             _borrowedByUserId = userId;
-            _borrowedUntil = DateTime.UtcNow.AddDays(daysPeriod);
+            _loanUntil = DateTime.UtcNow.AddDays(requestedLoanPeriodInDays);
 
-            AddDomainEvent(new BookBorrowedEvent(Id, _borrowedByUserId.Value, _borrowedUntil.Value));
+            AddDomainEvent(new BookBorrowedEvent(Id, _borrowedByUserId.Value, _loanUntil.Value));
         }
 
         public void ReturnBack()
@@ -62,7 +64,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
                 throw new BookNotBorrowedException(Id);
 
             _borrowedByUserId = null;
-            _borrowedUntil = null;
+            _loanUntil = null;
 
             AddDomainEvent(new BookReturnedBackEvent(Id, DateTime.UtcNow));
         }

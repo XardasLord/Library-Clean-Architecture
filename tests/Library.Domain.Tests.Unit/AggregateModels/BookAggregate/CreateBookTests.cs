@@ -23,7 +23,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             result.Title.Should().Be(title);
             result.Author.Should().Be(author);
             result.IsBorrowed.Should().BeFalse();
-            result.BorrowedUntil.Should().BeNull();
+            result.LoanUntil.Should().BeNull();
 
             result.DomainEvents.Should().HaveCount(1);
             result.DomainEvents.First().Should().BeOfType<BookCreatedEvent>();
