@@ -7,9 +7,9 @@ using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
 {
-    public class GiveBackBookTests
+    public class ReturnBackBookTests
     {
-        internal void Act(Book book) => book.GiveBack();
+        internal void Act(Book book) => book.ReturnBack();
 
         [Fact]
         public void calling_give_back_book_when_book_is_borrowed_should_be_set_as_available()
@@ -25,7 +25,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             book.IsBorrowed.Should().BeFalse();
             book.BorrowedUntil.Should().BeNull();
             book.BorrowedByUserId.Should().BeNull();
-            book.DomainEvents.Last().Should().BeOfType<BookGaveBackEvent>();
+            book.DomainEvents.Last().Should().BeOfType<BookReturnedBackEvent>();
         }
 
         [Fact]
