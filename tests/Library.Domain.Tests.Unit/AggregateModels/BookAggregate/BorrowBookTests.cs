@@ -17,7 +17,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
         {
             const long userId = 1;
             const int requestedLoadPeriodInDays = 15;
-            var book = Book.Create("Title", "Author");
+            var bookInformation = new BookInformation("Title", "Author", "Subject", "isbn");
+            var book = Book.Create(bookInformation);
 
             Act(book, userId, requestedLoadPeriodInDays);
 
@@ -34,7 +35,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
         public void calling_borrow_book_with_invalid_requested_loan_period_should_throws_an_exception(int requestedLoadPeriodInDays)
         {
             const long userId = 1;
-            var book = Book.Create("Title", "Author");
+            var bookInformation = new BookInformation("Title", "Author", "Subject", "isbn");
+            var book = Book.Create(bookInformation);
 
             var result = Record.Exception(() => Act(book, userId, requestedLoadPeriodInDays));
 
@@ -47,7 +49,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
         {
             const long userId = 1;
             const int requestedLoadPeriodInDays = 15;
-            var book = Book.Create("Title", "Author");
+            var bookInformation = new BookInformation("Title", "Author", "Subject", "isbn");
+            var book = Book.Create(bookInformation);
 
             book.Borrow(userId, requestedLoadPeriodInDays);
 

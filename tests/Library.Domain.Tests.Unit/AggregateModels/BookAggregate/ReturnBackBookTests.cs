@@ -16,7 +16,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
         {
             const long userId = 1;
             const int requestedLoadPeriodInDays = 15;
-            var book = Book.Create("Title", "Author");
+            var bookInformation = new BookInformation("Title", "Author", "Subject", "isbn");
+            var book = Book.Create(bookInformation);
 
             book.Borrow(userId, requestedLoadPeriodInDays);
 
@@ -31,7 +32,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
         [Fact]
         public void calling_give_back_book_when_book_is_not_borrowed_should_throws_an_exception()
         {
-            var book = Book.Create("Title", "Author");
+            var bookInformation = new BookInformation("Title", "Author", "Subject", "isbn");
+            var book = Book.Create(bookInformation);
 
             var result = Record.Exception(() => Act(book));
 

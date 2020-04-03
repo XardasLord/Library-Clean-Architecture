@@ -9,37 +9,27 @@ namespace Library.Domain.AggregateModels.BookAggregate
     {
         public static int MaximumLoanPeriodInDays = 30;
 
-        private readonly string _title;
-        private readonly string _author;
+        private BookInformation _bookInformation;
         private DateTime? _loanUntil;
         private long? _borrowedByUserId;
 
-        public string Title => _title;
-        public string Author => _author;
+        public BookInformation BookInformation => _bookInformation;
         public bool InStock => !LoanUntil.HasValue;
         public DateTime? LoanUntil => _loanUntil;
         public long? BorrowedByUserId => _borrowedByUserId;
 
-        private Book(string title, string author)
+        private Book(BookInformation bookInformation)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                throw new BookCreationException($"Parameter {nameof(title)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(author))
-                throw new BookCreationException($"Parameter {nameof(author)} cannot be empty.");
-
-            _title = title;
-            _author = author;
-
+            _bookInformation = bookInformation;
             _loanUntil = null;
             _borrowedByUserId = null;
         }
 
-        public static Book Create(string title, string author)
+        public static Book Create(BookInformation bookInformation)
         {
-            var book = new Book(title, author);
+            var book = new Book(bookInformation);
 
-            book.AddDomainEvent(new BookCreatedEvent(title, author));
+            book.AddDomainEvent(new BookCreatedEvent(bookInformation));
 
             return book;
         }
