@@ -16,7 +16,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
         public string Title => _title;
         public string Author => _author;
-        public bool IsBorrowed => LoanUntil.HasValue;
+        public bool InStock => !LoanUntil.HasValue;
         public DateTime? LoanUntil => _loanUntil;
         public long? BorrowedByUserId => _borrowedByUserId;
 
@@ -46,7 +46,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
         public void Borrow(long userId, int requestedLoanPeriodInDays)
         {
-            if (IsBorrowed)
+            if (!InStock)
                 throw new BookAlreadyBorrowedException(LoanUntil.Value);
 
             if (requestedLoanPeriodInDays > MaximumLoanPeriodInDays || requestedLoanPeriodInDays <= 0)
@@ -60,7 +60,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
         public void ReturnBack()
         {
-            if (!IsBorrowed)
+            if (InStock)
                 throw new BookNotBorrowedException(Id);
 
             _borrowedByUserId = null;

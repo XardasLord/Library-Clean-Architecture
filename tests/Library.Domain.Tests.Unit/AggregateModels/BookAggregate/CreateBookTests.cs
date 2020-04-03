@@ -22,7 +22,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             result.Should().NotBeNull();
             result.Title.Should().Be(title);
             result.Author.Should().Be(author);
-            result.IsBorrowed.Should().BeFalse();
+            result.InStock.Should().BeTrue();
             result.LoanUntil.Should().BeNull();
 
             result.DomainEvents.Should().HaveCount(1);

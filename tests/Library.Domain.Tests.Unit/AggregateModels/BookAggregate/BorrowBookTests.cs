@@ -21,7 +21,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
 
             Act(book, userId, requestedLoadPeriodInDays);
 
-            book.IsBorrowed.Should().BeTrue();
+            book.InStock.Should().BeFalse();
             book.LoanUntil.Should().BeCloseTo(DateTime.UtcNow.AddDays(requestedLoadPeriodInDays));
             book.BorrowedByUserId.Should().Be(userId);
             book.DomainEvents.Last().Should().BeOfType<BookBorrowedEvent>();

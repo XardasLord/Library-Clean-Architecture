@@ -22,7 +22,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
 
             Act(book);
 
-            book.IsBorrowed.Should().BeFalse();
+            book.InStock.Should().BeTrue();
             book.LoanUntil.Should().BeNull();
             book.BorrowedByUserId.Should().BeNull();
             book.DomainEvents.Last().Should().BeOfType<BookReturnedBackEvent>();
