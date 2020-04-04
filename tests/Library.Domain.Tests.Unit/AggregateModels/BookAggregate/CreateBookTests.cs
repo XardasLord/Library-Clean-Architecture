@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.BookAggregate.Events;
+using Library.Domain.AggregateModels.LoanAggregate;
+using Library.Domain.AggregateModels.LoanAggregate.Events;
 using Library.Domain.Exceptions;
 using Xunit;
 
@@ -9,7 +9,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
 {
     public class CreateBookTests
     {
-        internal Book Act(BookInformation bookInformation) => Book.Create(bookInformation);
+        internal Book Act(string title, string author, string subject, string isbn) 
+            => Book.Create(title, author, subject, isbn);
 
         [Fact]
         public void given_valid_data_book_should_be_created()
@@ -18,9 +19,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             const string author = "Book Author";
             const string subject = "Subject";
             const string isbn = "Isbn";
-            var bookInformation = new BookInformation(title, author, subject, isbn);
 
-            var result = Act(bookInformation);
+            var result = Act(title, author, subject, isbn);
 
             result.Should().NotBeNull();
             result.BookInformation.Title.Should().Be(title);
@@ -28,7 +28,6 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             result.BookInformation.Subject.Should().Be(subject);
             result.BookInformation.Isbn.Should().Be(isbn);
             result.InStock.Should().BeTrue();
-            result.LoanUntil.Should().BeNull();
 
             result.DomainEvents.Should().HaveCount(1);
             result.DomainEvents.First().Should().BeOfType<BookCreatedEvent>();
@@ -44,7 +43,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             const string subject = "Subject";
             const string isbn = "Isbn";
 
-            var result = Record.Exception(() => Act(new BookInformation(title, author, subject, isbn)));
+            var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
             result.Should().BeOfType<BookCreationException>();
@@ -60,7 +59,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             const string subject = "Subject";
             const string isbn = "Isbn";
 
-            var result = Record.Exception(() => Act(new BookInformation(title, author, subject, isbn)));
+            var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
             result.Should().BeOfType<BookCreationException>();
@@ -76,7 +75,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             const string author = "Author";
             const string isbn = "Isbn";
 
-            var result = Record.Exception(() => Act(new BookInformation(title, author, subject, isbn)));
+            var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
             result.Should().BeOfType<BookCreationException>();
@@ -92,7 +91,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             const string author = "Author";
             const string subject = "Subject";
 
-            var result = Record.Exception(() => Act(new BookInformation(title, author, subject, isbn)));
+            var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
             result.Should().BeOfType<BookCreationException>();

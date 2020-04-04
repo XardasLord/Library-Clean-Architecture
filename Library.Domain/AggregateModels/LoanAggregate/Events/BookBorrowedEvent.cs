@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Library.Domain.AggregateModels.BookAggregate.Events
+namespace Library.Domain.AggregateModels.LoanAggregate.Events
 {
     public class BookBorrowedEvent : INotification
     {
