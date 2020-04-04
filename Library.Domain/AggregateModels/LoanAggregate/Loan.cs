@@ -13,9 +13,11 @@ namespace Library.Domain.AggregateModels.LoanAggregate
         private readonly long _userId;
         private readonly DateTime _endDate;
         private bool _active;
+        private Book _book;
+        private RegisteredLibraryUser _user;
 
-        public long BookId => _bookId;
-        public long UserId => _userId;
+        public Book Book => _book;
+        public RegisteredLibraryUser User => _user;
         public DateTime EndDate => _endDate;
         public bool Active => _active;
 
@@ -32,18 +34,20 @@ namespace Library.Domain.AggregateModels.LoanAggregate
             var endDate = DateTime.UtcNow.AddDays(DefaultLoanPeriodInDays);
             var loan = new Loan(bookId, userId, endDate);
 
+            loan.Book.Borrow();
+
             loan.AddDomainEvent(new LoanCreatedEvent(bookId, userId, endDate));
 
             return loan;
         }
 
-        // Returning book / better will be "End Loan"
         public void EndLoan()
         {
             if (!Active)
                 throw new LoanNotActiveException(Id);
 
             _active = false;
+            _book.Return();
 
             AddDomainEvent(new LoanFinishedEvent(Id));
         }

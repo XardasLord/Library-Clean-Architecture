@@ -5,10 +5,8 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.LoanAggregate
 {
-    public class Book : AggregateRoot<long>
+    public class Book : Entity<long>
     {
-        public static int MaximumLoanPeriodInDays = 30;
-
         private BookInformation _bookInformation;
         private bool _inStock;
 
@@ -31,15 +29,17 @@ namespace Library.Domain.AggregateModels.LoanAggregate
             return book;
         }
 
-        public void UnavailableInStock()
+        public void Borrow()
         {
             if (!InStock)
                 throw new BookAlreadyBorrowedException();
 
             _inStock = false;
+
+            AddDomainEvent(new BookBorrowedEvent(Id));
         }
 
-        public void AvailableInStock()
+        public void Return()
         {
             if (InStock)
                 throw new BookNotBorrowedException(Id);
