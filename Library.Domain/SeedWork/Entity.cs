@@ -69,13 +69,9 @@ namespace Library.Domain.SeedWork
         }
 
         public void RemoveDomainEvent(INotification eventItem)
-        {
-            _domainEvents?.Remove(eventItem);
-        }
+            => _domainEvents?.Remove(eventItem);
 
         public void ClearDomainEvents()
-        {
-            _domainEvents?.Clear();
-        }
+            => _domainEvents?.Clear();
     }
 }

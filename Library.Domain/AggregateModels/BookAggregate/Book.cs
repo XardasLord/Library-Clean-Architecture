@@ -5,50 +5,48 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class Book : Entity<long>, IAggregateRoot
+    public class Book : AggregateRoot<long>
     {
-        public string Title { get; }
-        public string Author { get; }
-        public bool IsBorrowed => BorrowedUntil.HasValue;
-        public DateTime? BorrowedUntil { get; private set; }
-        public long? BorrowedByUserId { get; private set; }
+        private BookInformation _bookInformation;
+        private bool _inStock;
 
-        private Book(string title, string author)
+        public BookInformation BookInformation => _bookInformation;
+        public bool InStock => _inStock;
+
+        private Book(BookInformation bookInformation)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                throw new BookCreationException($"Parameter {nameof(title)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(author))
-                throw new BookCreationException($"Parameter {nameof(author)} cannot be empty.");
-
-            Title = title;
-            Author = author;
-
-            BorrowedUntil = null;
-            BorrowedByUserId = null;
+            _bookInformation = bookInformation;
+            _inStock = true;
         }
 
-        public static Book Create(string title, string author)
+        public static Book Create(string title, string author, string subject, string isbn)
         {
-            var book = new Book(title, author);
+            var bookInformation = new BookInformation(title, author, subject, isbn);
+            var book = new Book(bookInformation);
 
-            book.AddDomainEvent(new BookCreatedEvent(title, author));
+            book.AddDomainEvent(new BookCreatedEvent(bookInformation));
 
             return book;
         }
 
-        public void Borrow(long userId, uint daysPeriod)
+        public void Borrow()
         {
-            if (IsBorrowed)
-                throw new BookAlreadyBorrowedException(BorrowedUntil.Value);
+            if (!InStock)
+                throw new BookAlreadyBorrowedException();
 
-            if (daysPeriod > 30)
-                throw new BookBorrowInvalidPeriodException(daysPeriod);
+            _inStock = false;
 
-            BorrowedByUserId = userId;
-            BorrowedUntil = DateTime.UtcNow.AddDays(daysPeriod);
+            AddDomainEvent(new BookBorrowedEvent(Id));
+        }
 
-            AddDomainEvent(new BookBorrowedEvent(Id, BorrowedByUserId.Value, BorrowedUntil.Value));
+        public void Return()
+        {
+            if (InStock)
+                throw new BookNotBorrowedException(Id);
+
+            _inStock = true;
+
+            AddDomainEvent(new BookReturnedBackEvent(Id, DateTime.UtcNow));
         }
     }
 }
