@@ -28,6 +28,7 @@ namespace Library.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHealthChecks();
 
             services.AddInfrastructure(Configuration);
             services.AddApplication();
@@ -50,6 +51,7 @@ namespace Library.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("api/healthz");
             });
         }
     }
