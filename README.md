@@ -1,4 +1,4 @@
-# LibraryCleanArchitecture
+# Library .NET Core REST API (Clean Architecture + DDD + CQRS)
 A simple example of .NET Core REST API project built using Clean Architecture (Hexagonal Architecture + DDD + CQRS)
 
 
