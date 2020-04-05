@@ -1,4 +1,6 @@
-﻿using Library.Infrastructure.Persistence;
+﻿using Library.Domain.AggregateModels.BookAggregate;
+using Library.Infrastructure.Persistence;
+using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,9 +13,11 @@ namespace Library.Infrastructure
             => AddDatabase(services, configuration);
 
         private static IServiceCollection AddDatabase(IServiceCollection services, IConfiguration configuration)
-            => services.AddDbContext<LibraryDbContext>(options =>
+            => services
+                .AddDbContext<LibraryDbContext>(options =>
                 {
                     options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection"));
-                });
+                })
+                .AddScoped<IBookRepository, BookRepository>();
     }
 }
