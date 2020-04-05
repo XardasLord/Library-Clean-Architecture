@@ -2,7 +2,7 @@
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
-namespace Library.Domain.AggregateModels.LoanAggregate
+namespace Library.Domain.AggregateModels.BookAggregate
 {
     public class BookInformation : ValueObject
     {

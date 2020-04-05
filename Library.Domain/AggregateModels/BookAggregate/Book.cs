@@ -1,11 +1,11 @@
 ﻿using System;
-using Library.Domain.AggregateModels.LoanAggregate.Events;
+using Library.Domain.AggregateModels.BookAggregate.Events;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
-namespace Library.Domain.AggregateModels.LoanAggregate
+namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class Book : Entity<long>
+    public class Book : AggregateRoot<long>
     {
         private BookInformation _bookInformation;
         private bool _inStock;

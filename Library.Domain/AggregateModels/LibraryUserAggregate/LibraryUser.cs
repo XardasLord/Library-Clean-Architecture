@@ -1,8 +1,8 @@
 ﻿using Library.Domain.SeedWork;
 
-namespace Library.Domain.AggregateModels.LoanAggregate
+namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class RegisteredLibraryUser : Entity<long>
+    public class LibraryUser : AggregateRoot<long>
     {
         private string _firstName;
         private string _lastName;
@@ -14,7 +14,7 @@ namespace Library.Domain.AggregateModels.LoanAggregate
         public string Email => _email;
         public bool Active => _active;
 
-        private RegisteredLibraryUser(string firstName, string lastName, string email)
+        private LibraryUser(string firstName, string lastName, string email)
         {
             _firstName = firstName;
             _lastName = lastName;
@@ -22,9 +22,9 @@ namespace Library.Domain.AggregateModels.LoanAggregate
             _active = true;
         }
 
-        public static RegisteredLibraryUser Create(string firstName, string lastName, string email)
+        public static LibraryUser Create(string firstName, string lastName, string email)
         {
-            var user = new RegisteredLibraryUser(firstName, lastName, email);
+            var user = new LibraryUser(firstName, lastName, email);
             
             return user;
         }

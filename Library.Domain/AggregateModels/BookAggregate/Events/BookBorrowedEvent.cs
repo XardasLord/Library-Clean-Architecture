@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Library.Domain.AggregateModels.LoanAggregate.Events
+namespace Library.Domain.AggregateModels.BookAggregate.Events
 {
     public class BookBorrowedEvent : INotification
     {

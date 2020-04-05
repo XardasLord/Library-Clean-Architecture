@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using Library.Domain.AggregateModels.LoanAggregate;
-using Library.Domain.AggregateModels.LoanAggregate.Events;
+using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.BookAggregate.Events;
 using Library.Domain.Exceptions;
 using Xunit;
 

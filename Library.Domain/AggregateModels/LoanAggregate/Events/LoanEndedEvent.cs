@@ -2,10 +2,10 @@
 
 namespace Library.Domain.AggregateModels.LoanAggregate.Events
 {
-    public class LoanFinishedEvent : INotification
+    public class LoanEndedEvent : INotification
     {
         public long LoanId { get; }
 
-        public LoanFinishedEvent(long loanId) => LoanId = loanId;
+        public LoanEndedEvent(long loanId) => LoanId = loanId;
     }
 }
