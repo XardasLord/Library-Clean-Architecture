@@ -2,19 +2,24 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Library.Infrastructure.Persistence.Configurations
+namespace Library.Infrastructure.Persistence.EntityConfigurations
 {
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {
-        public void Configure(EntityTypeBuilder<Book> builder)
+        public void Configure(EntityTypeBuilder<Book> entity)
         {
-            builder.ToTable("Book");
-            builder.HasKey(x => x.Id);
+            entity.ToTable("Book");
+            entity.HasKey(x => x.Id);
 
-            builder.Property(x => x.Id).HasColumnName("BookId");
-            builder.Property(x => x.InStock).HasColumnName("InStock");
+            entity.Ignore(x => x.DomainEvents);
 
-            builder.OwnsOne(x => x.BookInformation, x =>
+            entity.Property(x => x.Id)
+                .HasColumnName("BookId")
+                .UseIdentityColumn();
+
+            entity.Property(x => x.InStock).HasColumnName("InStock");
+
+            entity.OwnsOne(x => x.BookInformation, x =>
             {
                 x.Property(b => b.Title).HasColumnName("Title");
                 x.Property(b => b.Author).HasColumnName("Author");
