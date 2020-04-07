@@ -16,7 +16,7 @@ namespace Library.Infrastructure
             => services
                 .AddDbContext<LibraryDbContext>(options =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection"));
+                    options.UseSqlServer(configuration.GetConnectionString("LibraryConnectionString"));
                 })
                 .AddScoped<IBookRepository, BookRepository>();
     }
