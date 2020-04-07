@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.API", "Library.API\Library.API.csproj", "{19190E23-7648-429F-9381-1509863790CB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B5081DF-A569-42A4-B3A0-2B98599DD75D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Application", "Library.Application\Library.Application.csproj", "{0B27E7D8-AC39-401B-A12E-6824A63D1EDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.API", "src\Library.API\Library.API.csproj", "{19190E23-7648-429F-9381-1509863790CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "Library.Domain\Library.Domain.csproj", "{6FA61FA5-9C95-4C40-B861-593271C69169}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Application", "src\Library.Application\Library.Application.csproj", "{0B27E7D8-AC39-401B-A12E-6824A63D1EDB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure", "Library.Infrastructure\Library.Infrastructure.csproj", "{9C3616E8-A4D2-4362-A862-F2CE8865951C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "src\Library.Domain\Library.Domain.csproj", "{6FA61FA5-9C95-4C40-B861-593271C69169}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure", "src\Library.Infrastructure\Library.Infrastructure.csproj", "{9C3616E8-A4D2-4362-A862-F2CE8865951C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C6DFB217-452B-4396-9BD3-B2644410438C}"
 EndProject
@@ -53,6 +55,10 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1E5D8742-887E-49C5-957D-F0A225F6BB20} = {C6DFB217-452B-4396-9BD3-B2644410438C}
+		{19190E23-7648-429F-9381-1509863790CB} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
+		{0B27E7D8-AC39-401B-A12E-6824A63D1EDB} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
+		{6FA61FA5-9C95-4C40-B861-593271C69169} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
+		{9C3616E8-A4D2-4362-A862-F2CE8865951C} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09CE0A8A-286D-478A-9D29-3D92AB8E3D1D}

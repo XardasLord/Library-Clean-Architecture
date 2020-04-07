@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}libraryapi
     build:
       context: .
-      dockerfile: Library.API/Dockerfile
+      dockerfile: src/Library.API/Dockerfile
     ports:
       - "5000:443"
     depends_on:
