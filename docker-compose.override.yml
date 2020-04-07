@@ -5,7 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionStrings__LibraryConnectionString=Server=db;Database=master;User=sa;Password=test$$123;
+      - ConnectionStrings__LibraryConnectionString=Server=db;Database=Library;User=sa;Password=test$$123;
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
