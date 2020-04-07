@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "Library.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure", "Library.Infrastructure\Library.Infrastructure.csproj", "{9C3616E8-A4D2-4362-A862-F2CE8865951C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C6DFB217-452B-4396-9BD3-B2644410438C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C6DFB217-452B-4396-9BD3-B2644410438C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain.Tests.Unit", "tests\Library.Domain.Tests.Unit\Library.Domain.Tests.Unit.csproj", "{1E5D8742-887E-49C5-957D-F0A225F6BB20}"
 EndProject

@@ -11,6 +11,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
         public string Subject { get; }
         public string Isbn { get; }
 
+        private BookInformation() { }
+
         public BookInformation(string title, string author, string subject, string isbn)
         {
             if (string.IsNullOrWhiteSpace(title))
