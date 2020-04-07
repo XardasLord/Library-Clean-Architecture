@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>e2415461-0892-4be8-869a-4050c76ab9bd</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/weatherforecast</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/healthz</DockerServiceUrl>
     <DockerServiceName>library.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

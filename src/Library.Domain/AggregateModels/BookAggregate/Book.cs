@@ -13,6 +13,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
         public BookInformation BookInformation => _bookInformation;
         public bool InStock => _inStock;
 
+        private Book() { }
+
         private Book(BookInformation bookInformation)
         {
             _bookInformation = bookInformation;
