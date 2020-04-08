@@ -13,6 +13,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
         
         public string Value { get; }
 
+        private Isbn() { }
+
         public Isbn(string isbn)
         {
             const string nonDigitsPattern = "[^.0-9]";
