@@ -9,7 +9,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
         public string Title { get; }
         public string Author { get; }
         public string Subject { get; }
-        public string Isbn { get; }
+        public Isbn Isbn { get; }
 
         private BookInformation() { }
 
@@ -31,7 +31,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
             Title = title;
             Author = author;
             Subject = subject;
-            Isbn = isbn;
+            Isbn = new Isbn(isbn);
         }
 
         protected override IEnumerable<object> GetAtomicValues()
