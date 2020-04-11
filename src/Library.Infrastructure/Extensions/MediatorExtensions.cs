@@ -22,6 +22,9 @@ namespace Library.Infrastructure.Extensions
             domainEntities
                 .ForEach(entity => entity.Entity.ClearDomainEvents());
 
+            // TODO: LoggedEvents table to easily see the history of events on Aggregates
+            // https://app.pluralsight.com/course-player?clipId=f4eb2c3a-ee0e-44ee-a5d3-7c2f70862977
+
             var tasks = domainEvents
                 .Select(async (domainEvent) => {
                     await mediator.Publish(domainEvent);
