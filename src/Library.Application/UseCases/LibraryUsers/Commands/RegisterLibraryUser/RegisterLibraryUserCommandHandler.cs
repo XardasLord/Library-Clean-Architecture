@@ -10,10 +10,8 @@ namespace Library.Application.UseCases.LibraryUsers.Commands.RegisterLibraryUser
     {
         private readonly ILibraryUserRepository _libraryUserRepository;
 
-        public RegisterLibraryUserCommandHandler(ILibraryUserRepository libraryUserRepository)
-        {
-            _libraryUserRepository = libraryUserRepository;
-        }
+        public RegisterLibraryUserCommandHandler(ILibraryUserRepository libraryUserRepository) 
+            => _libraryUserRepository = libraryUserRepository;
 
         public async Task<Unit> Handle(RegisterLibraryUserCommand command, CancellationToken cancellationToken)
         {
