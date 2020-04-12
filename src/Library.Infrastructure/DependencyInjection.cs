@@ -1,6 +1,7 @@
 ﻿using System;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Infrastructure.Authorization;
 using Library.Infrastructure.Persistence;
 using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,8 @@ namespace Library.Infrastructure
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
-            => AddDatabase(services, configuration);
+            => AddDatabase(services, configuration)
+                .AddTokenAuthentication(configuration);
 
         private static IServiceCollection AddDatabase(IServiceCollection services, IConfiguration configuration)
             => services
