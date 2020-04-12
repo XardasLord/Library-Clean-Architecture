@@ -17,14 +17,29 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                 .HasColumnName("BookId")
                 .UseIdentityColumn();
 
-            entity.Property(x => x.InStock).HasColumnName("InStock");
+            entity.Property(x => x.InStock)
+                .HasColumnName("InStock")
+                .IsRequired();
 
             entity.OwnsOne(x => x.BookInformation, x =>
             {
-                x.Property(b => b.Title).HasColumnName("Title");
-                x.Property(b => b.Author).HasColumnName("Author");
-                x.Property(b => b.Subject).HasColumnName("Subject");
-                x.Property(b => b.Isbn).HasColumnName("Isbn");
+                x.Property(b => b.Title)
+                    .HasColumnName("Title")
+                    .IsRequired();
+
+                x.Property(b => b.Author)
+                    .HasColumnName("Author")
+                    .IsRequired();
+                x.Property(b => b.Subject)
+                    .HasColumnName("Subject")
+                    .IsRequired();
+
+                x.OwnsOne(b => b.Isbn, b =>
+                {
+                    b.Property(i => i.Value)
+                        .HasColumnName("Isbn")
+                        .IsRequired();
+                });
             });
         }
     }
