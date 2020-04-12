@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Library.Application.UseCases.Books.Dtos;
+using MediatR;
 
 namespace Library.Application.UseCases.Books.Queries.GetBook
 {

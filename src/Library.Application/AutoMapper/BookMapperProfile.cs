@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Library.Application.UseCases.Books.Dtos;
 using Library.Application.UseCases.Books.Queries.GetBook;
 using Library.Domain.AggregateModels.BookAggregate;
 
