@@ -19,7 +19,7 @@ namespace Library.Infrastructure.Authorization
             _expDate = config.GetSection("JwtConfig").GetSection("ExpirationInMinutes").Value;
         }
 
-        public string GenerateSecurityToken(string email, string name)
+        public string GenerateSecurityToken(long userId, string email, string name)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
@@ -27,6 +27,7 @@ namespace Library.Infrastructure.Authorization
             {
                 Subject = new ClaimsIdentity(new[]
                 {
+                    new Claim(ClaimTypes.Sid, userId.ToString()), 
                     new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.Name, name)
                 }),

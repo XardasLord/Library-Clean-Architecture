@@ -13,7 +13,7 @@ namespace Library.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
             => AddDatabase(services, configuration)
                 .AddTokenAuthentication(configuration);
 

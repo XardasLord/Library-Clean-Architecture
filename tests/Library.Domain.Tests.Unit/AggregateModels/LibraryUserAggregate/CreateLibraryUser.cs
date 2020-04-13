@@ -27,7 +27,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
             libraryUser.FirstName.Should().Be(firstName);
             libraryUser.LastName.Should().Be(lastName);
             libraryUser.Email.Value.Should().Be(email);
-            libraryUser.Active.Should().BeTrue();
+            libraryUser.IsActive.Should().BeTrue();
         }
 
         [Theory]

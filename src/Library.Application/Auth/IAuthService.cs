@@ -2,6 +2,6 @@
 {
     public interface IAuthService
     {
-        string GenerateSecurityToken(string email, string name);
+        string GenerateSecurityToken(long userId, string email, string name);
     }
 }
