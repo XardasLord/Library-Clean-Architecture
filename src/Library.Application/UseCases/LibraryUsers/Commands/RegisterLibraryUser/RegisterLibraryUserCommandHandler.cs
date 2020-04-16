@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Library.Application.Auth;
 using Library.Application.UseCases.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using MediatR;
@@ -18,7 +19,9 @@ namespace Library.Application.UseCases.LibraryUsers.Commands.RegisterLibraryUser
             if (await _libraryUserRepository.ExistsAsync(command.Email))
                 throw new LibraryUserAlreadyExistsException(command.Email);
 
-            var libraryUser = LibraryUser.Create(command.Login, command.Password, command.FirstName, command.LastName, command.Email);
+            var hashedPassword = PasswordManager.HashPassword(command.Password);
+
+            var libraryUser = LibraryUser.Create(command.Login, hashedPassword, command.FirstName, command.LastName, command.Email);
 
             await _libraryUserRepository.AddAsync(libraryUser);
             await _libraryUserRepository.SaveChangesAsync();
