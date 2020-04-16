@@ -42,6 +42,7 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                     .HasColumnName("Email")
                     .IsRequired();
             });
+
         }
     }
 }

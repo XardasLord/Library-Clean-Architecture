@@ -18,7 +18,7 @@ namespace Library.Infrastructure.Persistence.Repositories
             => _dbContext.LibraryUsers.SingleOrDefaultAsync(x => x.Login == login);
 
         public Task<bool> ExistsAsync(string email)
-            => _dbContext.LibraryUsers.AnyAsync(x => x.Email == email);
+            => _dbContext.LibraryUsers.AnyAsync(x => x.Email.Value == email);
 
         public Task AddAsync(LibraryUser libraryUser)
         {
