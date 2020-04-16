@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Library.Application.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -35,5 +36,11 @@ namespace Library.Infrastructure.Authorization
 
             return services;
         }
+
+        public static IApplicationBuilder UseTokenAuthentication(this IApplicationBuilder app)
+            => app.UseAuthentication();
+
+        public static IApplicationBuilder UseTokenAuthorization(this IApplicationBuilder app)
+            => app.UseAuthorization();
     }
 }
