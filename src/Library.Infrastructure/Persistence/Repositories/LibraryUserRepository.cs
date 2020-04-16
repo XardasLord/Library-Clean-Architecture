@@ -14,6 +14,9 @@ namespace Library.Infrastructure.Persistence.Repositories
         public Task<LibraryUser> GetAsync(long id)
             => _dbContext.LibraryUsers.SingleOrDefaultAsync(x => x.Id == id);
 
+        public Task<LibraryUser> GetAsync(string login)
+            => _dbContext.LibraryUsers.SingleOrDefaultAsync(x => x.Login == login);
+
         public Task<bool> ExistsAsync(string email)
             => _dbContext.LibraryUsers.AnyAsync(x => x.Email.Value == email);
 

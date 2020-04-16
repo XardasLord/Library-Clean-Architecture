@@ -35,11 +35,7 @@ namespace Library.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseInfrastructure();
 
             app.UseEndpoints(endpoints =>
             {

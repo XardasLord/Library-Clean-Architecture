@@ -31,6 +31,9 @@ namespace Library.Domain.AggregateModels.BookAggregate
             yield return Value;
         }
 
+        public static implicit operator string(Isbn isbn) => isbn.Value;
+        public static implicit operator Isbn(string value) => new Isbn(value);
+
         public override string ToString() => Value;
     }
 }

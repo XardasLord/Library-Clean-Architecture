@@ -1,8 +1,10 @@
 ﻿using System;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Infrastructure.Authorization;
 using Library.Infrastructure.Persistence;
 using Library.Infrastructure.Persistence.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,10 +14,19 @@ namespace Library.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
-            => AddDatabase(services, configuration);
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
+            => services
+                .AddDatabase(configuration)
+                .AddTokenAuthentication(configuration);
 
-        private static IServiceCollection AddDatabase(IServiceCollection services, IConfiguration configuration)
+        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
+            => app
+                .UseHttpsRedirection()
+                .UseRouting()
+                .UseTokenAuthentication()
+                .UseTokenAuthorization();
+
+        private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
             => services
                 .AddDbContext<LibraryDbContext>(options =>
                 {

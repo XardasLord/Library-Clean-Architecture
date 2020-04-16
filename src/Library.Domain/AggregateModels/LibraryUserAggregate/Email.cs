@@ -6,7 +6,7 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class Email :ValueObject
+    public class Email : ValueObject
     {
         public string Value { get; }
 
@@ -30,6 +30,9 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         {
             yield return Value;
         }
+
+        public static implicit operator string(Email email) => email.Value;
+        public static implicit operator Email(string email) => new Email(email);
 
         public override string ToString() => Value;
     }

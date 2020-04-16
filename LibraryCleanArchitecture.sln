@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain.Tests.Unit",
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E2415461-0892-4BE8-869A-4050C76AB9BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Infrastructure.Authorization", "src\Library.Infrastructure.Authorization\Library.Infrastructure.Authorization.csproj", "{D92239CF-EDFD-442D-B09A-8DB10E37A768}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,16 +51,21 @@ Global
 		{E2415461-0892-4BE8-869A-4050C76AB9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2415461-0892-4BE8-869A-4050C76AB9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2415461-0892-4BE8-869A-4050C76AB9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D92239CF-EDFD-442D-B09A-8DB10E37A768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D92239CF-EDFD-442D-B09A-8DB10E37A768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D92239CF-EDFD-442D-B09A-8DB10E37A768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D92239CF-EDFD-442D-B09A-8DB10E37A768}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1E5D8742-887E-49C5-957D-F0A225F6BB20} = {C6DFB217-452B-4396-9BD3-B2644410438C}
 		{19190E23-7648-429F-9381-1509863790CB} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
 		{0B27E7D8-AC39-401B-A12E-6824A63D1EDB} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
 		{6FA61FA5-9C95-4C40-B861-593271C69169} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
 		{9C3616E8-A4D2-4362-A862-F2CE8865951C} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
+		{1E5D8742-887E-49C5-957D-F0A225F6BB20} = {C6DFB217-452B-4396-9BD3-B2644410438C}
+		{D92239CF-EDFD-442D-B09A-8DB10E37A768} = {8B5081DF-A569-42A4-B3A0-2B98599DD75D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09CE0A8A-286D-478A-9D29-3D92AB8E3D1D}

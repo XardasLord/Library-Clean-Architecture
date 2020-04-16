@@ -11,25 +11,27 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         private string _firstName;
         private string _lastName;
         private Email _email;
-        private bool _active;
+        private bool _isActive;
 
         public string Login => _login;
         public string Password => _password;
         public string FirstName => _firstName;
         public string LastName => _lastName;
         public Email Email => _email;
-        public bool Active => _active;
+        public bool IsActive => _isActive;
+
+        private LibraryUser() { }
 
         private LibraryUser(string login, string password, string firstName, string lastName, string email)
         {
             ValidateInvariants(login, password, firstName, lastName, email);
 
             _login = login;
-            _password = password; // TODO: Hash the plain password
+            _password = password;
             _firstName = firstName;
             _lastName = lastName;
             _email = new Email(email);
-            _active = true;
+            _isActive = true;
         }
 
         private static void ValidateInvariants(string login, string password, string firstName, string lastName, string email)
