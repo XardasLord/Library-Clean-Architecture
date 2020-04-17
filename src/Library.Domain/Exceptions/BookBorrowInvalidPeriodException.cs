@@ -2,7 +2,7 @@
 {
     public class BookBorrowInvalidPeriodException : DomainException
     {
-        protected override string Code => "invalid_days_period_for_borrowing_book";
+        public override string Code => "invalid_days_period_for_borrowing_book";
         public int DaysPeriod { get; }
         public int MaximumAvailableLoanPeriodInDays { get; }
 
