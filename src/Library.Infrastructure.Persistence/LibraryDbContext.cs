@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
-using Library.Infrastructure.Extensions;
+using Library.Infrastructure.Persistence.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
