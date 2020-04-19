@@ -7,17 +7,21 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.StorageAggregate
 {
-    public class Storage : AggregateRoot<int>
+    public class Storage : AggregateRoot<long>
     {
         private readonly List<Book> _books;
         public IReadOnlyCollection<Book> Books => _books;
 
         // TODO: store `AvailableBooks` and `UnavailableBooks` properties here ?
 
-        private Storage()
-        {
-            _books = new List<Book>();
-        }
+        private Storage() 
+            => _books = new List<Book>();
+
+        private Storage(long storageId) : base()
+            => Id = storageId;
+
+        public static Storage Create(long id) 
+            => new Storage(id);
 
         public void AddBook(Book newBook)
         {
