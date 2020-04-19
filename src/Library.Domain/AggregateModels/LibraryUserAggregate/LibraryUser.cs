@@ -1,4 +1,6 @@
-﻿using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
+﻿using System;
+using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
@@ -24,7 +26,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
         private LibraryUser(string login, string password, string firstName, string lastName, string email)
         {
-            ValidateInvariants(login, password, firstName, lastName, email);
+            ValidateInputs(login, password, firstName, lastName, email);
 
             _login = login;
             _password = password;
@@ -34,7 +36,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             _isActive = true;
         }
 
-        private static void ValidateInvariants(string login, string password, string firstName, string lastName, string email)
+        private static void ValidateInputs(string login, string password, string firstName, string lastName, string email)
         {
             if (string.IsNullOrWhiteSpace(login))
                 throw new LibraryUserCreationException($"Parameter {nameof(login)} cannot be empty.");
@@ -62,6 +64,17 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             user.AddDomainEvent(new LibraryUserCreatedEvent(user));
             
             return user;
+        }
+
+        public void BorrowBook(Book book, DateTime fromDate, DateTime toDate)
+        {
+            // TODO: Validate input dates
+
+            // TODO: Do we need borrow method on a book? Maybe it is enough just to call something like SetAsUnavailable
+            // The user borrows a book, its not a book's responsibility to borrow itself. Book can only change the status of InStock property e.g.
+            book.Borrow(fromDate, toDate);
+
+            AddDomainEvent(new LibraryUserBorrowedBookEvent(book.Id, Id, fromDate, toDate));
         }
     }
 }

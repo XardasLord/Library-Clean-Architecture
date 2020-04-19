@@ -40,7 +40,16 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
             AddDomainEvent(new BookBorrowedEvent(Id));
         }
+        
+        public void Borrow(DateTime fromDate, DateTime toDate)
+        {
+            if (!InStock)
+                throw new BookAlreadyBorrowedException();
 
+            _inStock = false;
+
+            AddDomainEvent(new BookBorrowedEvent(Id, fromDate, toDate));
+        }
         public void Return()
         {
             if (InStock)
