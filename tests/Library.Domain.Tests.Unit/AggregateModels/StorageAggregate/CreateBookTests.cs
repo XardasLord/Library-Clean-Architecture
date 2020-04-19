@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using FluentAssertions;
-using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.BookAggregate.Events;
+﻿using FluentAssertions;
+using Library.Domain.AggregateModels.StorageAggregate;
 using Library.Domain.Exceptions;
 using Xunit;
 
-namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
+namespace Library.Domain.Tests.Unit.AggregateModels.StorageAggregate
 {
     public class CreateBookTests
     {
@@ -28,9 +26,6 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             result.BookInformation.Subject.Should().Be(subject);
             result.BookInformation.Isbn.Value.Should().Be(isbn);
             result.InStock.Should().BeTrue();
-
-            result.DomainEvents.Should().HaveCount(1);
-            result.DomainEvents.First().Should().BeOfType<BookCreatedEvent>();
         }
 
         [Theory]

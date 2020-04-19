@@ -1,16 +1,16 @@
 ﻿using System;
 using MediatR;
 
-namespace Library.Domain.AggregateModels.LibraryUserAggregate.Events
+namespace Library.Domain.AggregateModels.StorageAggregate.Events
 {
-    public class LibraryUserBorrowedBookEvent : INotification
+    public class BookBorrowedEvent : INotification
     {
         public long BookId { get; }
         public long UserId { get; }
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
 
-        public LibraryUserBorrowedBookEvent(long bookId, long userId, DateTime fromDate, DateTime toDate)
+        public BookBorrowedEvent(long bookId, long userId, DateTime fromDate, DateTime toDate)
         {
             BookId = bookId;
             UserId = userId;

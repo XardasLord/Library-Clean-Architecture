@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
-namespace Library.Domain.AggregateModels.BookAggregate
+namespace Library.Domain.AggregateModels.StorageAggregate
 {
     public class Isbn : ValueObject
     {

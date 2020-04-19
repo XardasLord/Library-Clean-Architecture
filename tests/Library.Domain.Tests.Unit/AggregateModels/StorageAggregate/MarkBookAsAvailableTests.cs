@@ -1,28 +1,25 @@
-﻿using System.Linq;
-using FluentAssertions;
-using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.BookAggregate.Events;
+﻿using FluentAssertions;
+using Library.Domain.AggregateModels.StorageAggregate;
 using Library.Domain.Exceptions;
 using Xunit;
 
-namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
+namespace Library.Domain.Tests.Unit.AggregateModels.StorageAggregate
 {
-    public class ReturnBookTests
+    public class MarkBookAsAvailableTests
     {
         private Book _bookSut;
 
-        private void Act() => _bookSut.Return();
+        private void Act() => _bookSut.MarkAsAvailable();
 
         [Fact]
         public void when_book_is_borrowed_book_should_be_returned()
         {
             _bookSut = Book.Create("Title", "Author", "Subject", "9783161484100");
-            _bookSut.Borrow();
+            _bookSut.MarkAsUnavailable();
 
             Act();
 
             _bookSut.InStock.Should().BeTrue();
-            _bookSut.DomainEvents.Last().Should().BeOfType<BookReturnedBackEvent>();
         }
 
         [Fact]
@@ -33,7 +30,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate
             var result = Record.Exception(Act);
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<BookNotBorrowedException>();
+            result.Should().BeOfType<BookIsInStockException>();
         }
     }
 }

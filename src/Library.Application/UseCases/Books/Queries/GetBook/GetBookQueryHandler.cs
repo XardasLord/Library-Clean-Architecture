@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Library.Application.UseCases.Books.Dtos;
 using Library.Application.UseCases.Books.Exceptions;
-using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
 
 namespace Library.Application.UseCases.Books.Queries.GetBook

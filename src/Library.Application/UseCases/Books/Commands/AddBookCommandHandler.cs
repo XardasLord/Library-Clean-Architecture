@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
 
 namespace Library.Application.UseCases.Books.Commands
