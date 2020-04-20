@@ -1,4 +1,4 @@
-﻿namespace Library.Application.UseCases.Books.Dtos
+﻿namespace Library.Application.UseCases.Storages.Dtos
 {
     public class BookDto
     {

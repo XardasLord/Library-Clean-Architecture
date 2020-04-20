@@ -1,7 +1,7 @@
-﻿using Library.Application.UseCases.Books.Dtos;
+﻿using Library.Application.UseCases.Storages.Dtos;
 using MediatR;
 
-namespace Library.Application.UseCases.Books.Queries.GetBook
+namespace Library.Application.UseCases.Storages.Queries.GetBook
 {
     public class GetBookQuery : IRequest<BookDto>
     {

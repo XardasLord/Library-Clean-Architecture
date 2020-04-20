@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Library.Application.UseCases.Books.Dtos;
+using Library.Application.UseCases.Storages.Dtos;
 using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
 
-namespace Library.Application.UseCases.Books.Queries.GetAvailableBooks
+namespace Library.Application.UseCases.Storages.Queries.GetAvailableBooks
 {
     public class GetAvailableBooksQueryHandler : IRequestHandler<GetAvailableBooksQuery, IReadOnlyCollection<BookDto>>
     {

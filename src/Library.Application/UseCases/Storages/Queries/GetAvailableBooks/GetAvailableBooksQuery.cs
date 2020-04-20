@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Library.Application.UseCases.Books.Dtos;
+using Library.Application.UseCases.Storages.Dtos;
 using MediatR;
 
-namespace Library.Application.UseCases.Books.Queries.GetAvailableBooks
+namespace Library.Application.UseCases.Storages.Queries.GetAvailableBooks
 {
     public class GetAvailableBooksQuery : IRequest<IReadOnlyCollection<BookDto>>
     {

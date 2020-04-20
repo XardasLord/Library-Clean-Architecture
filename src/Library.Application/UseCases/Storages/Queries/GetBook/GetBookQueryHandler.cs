@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Library.Application.UseCases.Books.Dtos;
-using Library.Application.UseCases.Books.Exceptions;
+using Library.Application.UseCases.Storages.Dtos;
+using Library.Application.UseCases.Storages.Exceptions;
 using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
 
-namespace Library.Application.UseCases.Books.Queries.GetBook
+namespace Library.Application.UseCases.Storages.Queries.GetBook
 {
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookDto>
     {

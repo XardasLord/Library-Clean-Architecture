@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Library.Application.UseCases.Books.Dtos;
+using Library.Application.UseCases.Storages.Dtos;
 using Library.Domain.AggregateModels.StorageAggregate;
 
 namespace Library.Application.AutoMapper

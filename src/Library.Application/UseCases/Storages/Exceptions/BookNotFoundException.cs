@@ -1,6 +1,6 @@
 ﻿using ApplicationException = Library.Application.UseCases.Exceptions.ApplicationException;
 
-namespace Library.Application.UseCases.Books.Exceptions
+namespace Library.Application.UseCases.Storages.Exceptions
 {
     public class BookNotFoundException : ApplicationException
     {
