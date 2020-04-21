@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Library.Application.UseCases.Storages.Commands
+namespace Library.Application.UseCases.Storages.Commands.AddBook
 {
     public class AddBookCommand : IRequest<long>
     {

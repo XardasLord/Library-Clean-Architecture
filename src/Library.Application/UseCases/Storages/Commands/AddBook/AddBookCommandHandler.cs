@@ -5,7 +5,7 @@ using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
 using Microsoft.Extensions.Options;
 
-namespace Library.Application.UseCases.Storages.Commands
+namespace Library.Application.UseCases.Storages.Commands.AddBook
 {
     public class AddBookCommandHandler : IRequestHandler<AddBookCommand, long>
     {
