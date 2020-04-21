@@ -4,7 +4,7 @@ namespace Library.Domain.AggregateModels.StorageAggregate
 {
     public interface IStorageRepository
     {
-        Task<Storage> GetAsync();
+        Task<Storage> GetAsync(long storageId);
         Task SaveChangesAsync();
     }
 }

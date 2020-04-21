@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Library.Domain.AggregateModels.StorageAggregate;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ namespace Library.Infrastructure.Persistence.Repositories
         public StorageRepository(LibraryDbContext dbContext) 
             => _dbContext = dbContext;
 
-        public Task<Storage> GetAsync() 
+        public Task<Storage> GetAsync(long storageId) 
             => _dbContext
                 .Storages
+                .Where(x => x.Id == storageId)
                 .Include(x => x.Books)
                 .SingleOrDefaultAsync();
 
