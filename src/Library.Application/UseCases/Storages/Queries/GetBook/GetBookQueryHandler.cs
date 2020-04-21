@@ -1,27 +1,34 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.Application.Configurations;
 using Library.Application.UseCases.Storages.Dtos;
 using Library.Application.UseCases.Storages.Exceptions;
 using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace Library.Application.UseCases.Storages.Queries.GetBook
 {
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookDto>
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IStorageRepository _storageRepository;
+        private readonly StorageConfig _storageConfig;
         private readonly IMapper _mapper;
 
-        public GetBookQueryHandler(IBookRepository bookRepository, IMapper mapper)
+        public GetBookQueryHandler(IStorageRepository storageRepository, IOptions<StorageConfig> storageOptions, IMapper mapper)
         {
-            _bookRepository = bookRepository;
+            _storageRepository = storageRepository;
+            _storageConfig = storageOptions.Value;
             _mapper = mapper;
         }
 
         public async Task<BookDto> Handle(GetBookQuery query, CancellationToken cancellationToken)
         {
-            var book = await _bookRepository.GetAsync(query.BookId)
+            var storage = await _storageRepository.GetAsync(_storageConfig.DevelopStorageId);
+
+            var book = storage.Books.SingleOrDefault(x => x.Id == query.BookId)
                        ?? throw new BookNotFoundException(query.BookId);
 
             return _mapper.Map<BookDto>(book);
