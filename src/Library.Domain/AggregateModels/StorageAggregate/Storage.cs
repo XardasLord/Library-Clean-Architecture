@@ -11,8 +11,7 @@ namespace Library.Domain.AggregateModels.StorageAggregate
     {
         private readonly List<Book> _books;
         public IReadOnlyCollection<Book> Books => _books;
-
-        // TODO: store `AvailableBooks` and `UnavailableBooks` properties here ?
+        public IReadOnlyCollection<Book> AvailableBooks => _books.Where(x => x.InStock).ToList().AsReadOnly();
 
         private Storage() 
             => _books = new List<Book>();

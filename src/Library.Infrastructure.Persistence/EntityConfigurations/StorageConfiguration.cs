@@ -12,6 +12,7 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
             entity.HasKey(e => e.Id);
 
             entity.Ignore(e => e.DomainEvents);
+            entity.Ignore(e => e.AvailableBooks);
 
             entity.HasMany(e => e.Books)
                 .WithOne();
