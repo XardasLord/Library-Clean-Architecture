@@ -5,7 +5,7 @@ using Library.Application.UseCases.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using MediatR;
 
-namespace Library.Application.UseCases.Auth.Commands
+namespace Library.Application.UseCases.Auth.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginCommandResponse>
     {
