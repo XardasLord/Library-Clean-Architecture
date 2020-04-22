@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Library.Application.UseCases.Books.Dtos;
-using Library.Application.UseCases.Books.Queries.GetBook;
-using Library.Domain.AggregateModels.BookAggregate;
+using Library.Application.UseCases.Storages.Dtos;
+using Library.Domain.AggregateModels.StorageAggregate;
 
 namespace Library.Application.AutoMapper
 {

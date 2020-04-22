@@ -4,14 +4,16 @@ using Library.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200419094305_AddedStorageTable")]
+    partial class AddedStorageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,12 +94,6 @@ namespace Library.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Storage");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L
-                        });
                 });
 
             modelBuilder.Entity("Library.Domain.AggregateModels.LibraryUserAggregate.LibraryUser", b =>

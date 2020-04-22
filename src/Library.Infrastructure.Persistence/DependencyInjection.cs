@@ -1,6 +1,6 @@
 ﻿using System;
-using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Domain.AggregateModels.StorageAggregate;
 using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +18,8 @@ namespace Library.Infrastructure.Persistence
                     options.UseSqlServer(configuration.GetConnectionString("LibraryConnectionString"));
                 })
                 .AddScoped<IBookRepository, BookRepository>()
-                .AddScoped<ILibraryUserRepository, LibraryUserRepository>();
+                .AddScoped<ILibraryUserRepository, LibraryUserRepository>()
+                .AddScoped<IStorageRepository, StorageRepository>();
 
         public static IHost MigrateDatabase(this IHost webHost)
         {

@@ -24,7 +24,7 @@ namespace Library.API
             services.AddHealthChecks();
 
             services.AddInfrastructure(Configuration);
-            services.AddApplication();
+            services.AddApplication(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

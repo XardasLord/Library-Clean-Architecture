@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.StorageAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.Repositories

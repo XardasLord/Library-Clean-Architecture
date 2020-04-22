@@ -24,7 +24,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
         private LibraryUser(string login, string password, string firstName, string lastName, string email)
         {
-            ValidateInvariants(login, password, firstName, lastName, email);
+            ValidateInputs(login, password, firstName, lastName, email);
 
             _login = login;
             _password = password;
@@ -34,7 +34,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             _isActive = true;
         }
 
-        private static void ValidateInvariants(string login, string password, string firstName, string lastName, string email)
+        private static void ValidateInputs(string login, string password, string firstName, string lastName, string email)
         {
             if (string.IsNullOrWhiteSpace(login))
                 throw new LibraryUserCreationException($"Parameter {nameof(login)} cannot be empty.");

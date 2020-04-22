@@ -1,4 +1,4 @@
-﻿using Library.Domain.AggregateModels.BookAggregate;
+﻿using Library.Domain.AggregateModels.StorageAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
