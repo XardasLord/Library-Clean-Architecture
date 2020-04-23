@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.LibraryUserAggregate;
-using Library.Domain.AggregateModels.LoanAggregate.Events;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
-namespace Library.Domain.AggregateModels.LoanAggregate
+namespace Library.Domain.AggregateModels.StorageAggregate
 {
-    public class Loan : AggregateRoot<long>
+    public class Loan : Entity<long>
     {
         public static int DefaultLoanPeriodInDays = 30;
 
@@ -17,8 +13,12 @@ namespace Library.Domain.AggregateModels.LoanAggregate
         private readonly DateTime _endDate;
         private bool _active;
 
+        public long BookId => _bookId;
+        public long UserId => _userId;
         public DateTime EndDate => _endDate;
         public bool Active => _active;
+
+        private Loan() { }
 
         private Loan(long bookId, long userId, DateTime endDate)
         {
@@ -28,29 +28,20 @@ namespace Library.Domain.AggregateModels.LoanAggregate
             _active = true;
         }
 
-        public static Loan Create(Book book, LibraryUser user)
+        public static Loan Create(long bookId, long userId)
         {
-            book.Borrow();
-
             var endDate = DateTime.UtcNow.AddDays(DefaultLoanPeriodInDays);
-            var loan = new Loan(book.Id, user.Id, endDate);
-
-            loan.AddDomainEvent(new LoanCreatedEvent(book.Id, user.Id, endDate));
+            var loan = new Loan(bookId, userId, endDate);
 
             return loan;
         }
 
-        public async Task EndLoan(IBookRepository bookRepository)
+        public void EndLoan()
         {
-            if (!Active)
+            if (!_active)
                 throw new LoanNotActiveException(Id);
 
             _active = false;
-
-            var book = await bookRepository.GetAsync(_bookId);
-            book.Return();
-
-            AddDomainEvent(new LoanEndedEvent(Id));
         }
     }
 }
