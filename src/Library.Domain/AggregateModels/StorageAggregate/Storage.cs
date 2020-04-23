@@ -10,16 +10,21 @@ namespace Library.Domain.AggregateModels.StorageAggregate
     public class Storage : AggregateRoot<long>
     {
         private readonly List<Book> _books;
+        private readonly List<Loan> _loans;
         public IReadOnlyCollection<Book> Books => _books;
+        public IReadOnlyCollection<Loan> Loans => _loans;
         public IReadOnlyCollection<Book> AvailableBooks => _books.Where(x => x.InStock).ToList().AsReadOnly();
 
-        private Storage() 
-            => _books = new List<Book>();
+        private Storage()
+        {
+            _books = new List<Book>();
+            _loans = new List<Loan>();
+        }
 
         private Storage(long storageId) : base()
             => Id = storageId;
 
-        public static Storage Create(long id) 
+        public static Storage Create(long id)
             => new Storage(id);
 
         public void AddBook(Book newBook)
@@ -37,20 +42,29 @@ namespace Library.Domain.AggregateModels.StorageAggregate
             if (fromDate < DateTime.UtcNow || toDate <= fromDate)
                 throw new Exception("TODO Invalid dates range");
 
-            var book = _books.SingleOrDefault(x => x.Id == bookId) 
+            var book = _books.SingleOrDefault(x => x.Id == bookId)
                        ?? throw new BookNotFoundException(bookId);
+
+            if (!book.InStock)
+                throw new BookIsNotInStockException();
+
+            _loans.Add(Loan.Create(bookId, userId));
 
             book.MarkAsUnavailable();
 
             AddDomainEvent(new BookBorrowedEvent(bookId, userId, fromDate, toDate));
         }
 
-        public void ReturnBook(long bookId)
+        public void ReturnBook(long bookId, long userId)
         {
             var book = _books.SingleOrDefault(x => x.Id == bookId)
                        ?? throw new BookNotFoundException(bookId);
 
+            var loan = _loans.SingleOrDefault(x => x.BookId == bookId && x.UserId == userId)
+                       ?? throw new BookNotBorrowedForUserException(bookId);
+
             book.MarkAsAvailable();
+            loan.EndLoan();
 
             AddDomainEvent(new BookReturnedEvent(bookId, DateTime.UtcNow));
         }
