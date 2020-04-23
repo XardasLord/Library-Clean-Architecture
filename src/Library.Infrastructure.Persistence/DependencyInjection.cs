@@ -11,13 +11,14 @@ namespace Library.Infrastructure.Persistence
 {
     public static class DependencyInjection
     {
+        private const string ConnectionStringConfigName = "LibraryConnectionString";
+
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
             => services
                 .AddDbContext<LibraryDbContext>(options =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("LibraryConnectionString"));
+                    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
-                .AddScoped<IBookRepository, BookRepository>()
                 .AddScoped<ILibraryUserRepository, LibraryUserRepository>()
                 .AddScoped<IStorageRepository, StorageRepository>();
 
