@@ -1,4 +1,5 @@
 ﻿using System;
+using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
@@ -6,9 +7,9 @@ namespace Library.Domain.AggregateModels.StorageAggregate
 {
     public class Loan : Entity<long>
     {
-        public static int DefaultLoanPeriodInDays = 30;
-
+        private readonly Book _book;
         private readonly long _bookId;
+        private readonly LibraryUser _user;
         private readonly long _userId;
         private readonly DateTime _endDate;
         private bool _active;
@@ -28,9 +29,8 @@ namespace Library.Domain.AggregateModels.StorageAggregate
             _active = true;
         }
 
-        public static Loan Create(long bookId, long userId)
+        public static Loan Create(long bookId, long userId, DateTime endDate)
         {
-            var endDate = DateTime.UtcNow.AddDays(DefaultLoanPeriodInDays);
             var loan = new Loan(bookId, userId, endDate);
 
             return loan;

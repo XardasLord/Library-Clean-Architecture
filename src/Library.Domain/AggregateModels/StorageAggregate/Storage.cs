@@ -39,7 +39,7 @@ namespace Library.Domain.AggregateModels.StorageAggregate
 
         public void BorrowBook(long bookId, long userId, DateTime fromDate, DateTime toDate)
         {
-            if (fromDate < DateTime.UtcNow || toDate <= fromDate)
+            if (fromDate.Date < DateTime.UtcNow.Date || toDate <= fromDate)
                 throw new Exception("TODO Invalid dates range");
 
             var book = _books.SingleOrDefault(x => x.Id == bookId)
@@ -48,7 +48,7 @@ namespace Library.Domain.AggregateModels.StorageAggregate
             if (!book.InStock)
                 throw new BookIsNotInStockException();
 
-            _loans.Add(Loan.Create(bookId, userId));
+            _loans.Add(Loan.Create(bookId, userId, toDate));
 
             book.MarkAsUnavailable();
 
