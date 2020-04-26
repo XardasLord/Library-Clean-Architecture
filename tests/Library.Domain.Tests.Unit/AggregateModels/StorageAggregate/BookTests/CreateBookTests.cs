@@ -3,7 +3,7 @@ using Library.Domain.AggregateModels.StorageAggregate;
 using Library.Domain.Exceptions;
 using Xunit;
 
-namespace Library.Domain.Tests.Unit.AggregateModels.StorageAggregate
+namespace Library.Domain.Tests.Unit.AggregateModels.StorageAggregate.BookTests
 {
     public class CreateBookTests
     {
