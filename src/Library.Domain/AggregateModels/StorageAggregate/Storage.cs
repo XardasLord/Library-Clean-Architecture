@@ -21,7 +21,7 @@ namespace Library.Domain.AggregateModels.StorageAggregate
             _loans = new List<Loan>();
         }
 
-        private Storage(long storageId) : base()
+        private Storage(long storageId) : this()
             => Id = storageId;
 
         public static Storage Create(long id)
