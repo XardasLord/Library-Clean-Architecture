@@ -16,6 +16,8 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
 
             entity.HasMany(e => e.Books)
                 .WithOne();
+
+            entity.HasMany(e => e.Loans);
         }
     }
 }

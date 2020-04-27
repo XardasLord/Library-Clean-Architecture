@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Library.Application.UseCases.Storages.Commands.AddBook;
+using Library.Application.UseCases.Storages.Commands.BorrowBook;
+using Library.Application.UseCases.Storages.Commands.ReturnBook;
 using Library.Application.UseCases.Storages.Dtos;
 using Library.Application.UseCases.Storages.Queries.GetAvailableBooks;
 using Library.Application.UseCases.Storages.Queries.GetBook;
@@ -28,6 +30,26 @@ namespace Library.API.Controllers
             var bookId = await Mediator.Send(command);
 
             return CreatedAtAction(nameof(GetBook), new { id = bookId }, new { bookId });
+        }
+
+        [HttpPost("{bookId}/borrow")]
+        public async Task<IActionResult> BorrowBook(long bookId, BorrowBookCommand command)
+        {
+            command.BookId = bookId;
+
+            await Mediator.Send(command);
+
+            return Accepted();
+        }
+
+        [HttpPost("{bookId}/return")]
+        public async Task<IActionResult> ReturnBook(long bookId, ReturnBookCommand command)
+        {
+            command.BookId = bookId;
+
+            await Mediator.Send(command);
+
+            return Accepted();
         }
     }
 }

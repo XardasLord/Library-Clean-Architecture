@@ -32,7 +32,10 @@ namespace Library.Infrastructure.Authorization
                     };
                 });
 
+            services.AddHttpContextAccessor();
+
             services.AddTransient<IAuthService, JwtService>();
+            services.AddTransient<ITokenAuthInfo, TokenAuthInfo>();
 
             return services;
         }
