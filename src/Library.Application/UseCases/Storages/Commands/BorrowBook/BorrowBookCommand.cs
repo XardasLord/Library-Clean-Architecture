@@ -7,6 +7,7 @@ namespace Library.Application.UseCases.Storages.Commands.BorrowBook
     {
         public long BookId { get; set; }
         public long UserId { get; set; }
+        public DateTime BorrowingStartDate { get; set; }
         public DateTime BorrowingEndDate { get; set; }
     }
 }
