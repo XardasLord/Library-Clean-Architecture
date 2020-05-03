@@ -1,5 +1,4 @@
-﻿using System;
-using Library.Domain.AggregateModels.LibraryUserAggregate;
+﻿using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
@@ -11,27 +10,27 @@ namespace Library.Domain.AggregateModels.StorageAggregate
         private readonly long _bookId;
         private readonly LibraryUser _user;
         private readonly long _userId;
-        private readonly DateTime _endDate;
+        private readonly DateTimePeriod _dateTimePeriod;
         private bool _active;
 
         public long BookId => _bookId;
         public long UserId => _userId;
-        public DateTime EndDate => _endDate;
+        public DateTimePeriod DateTimePeriod => _dateTimePeriod;
         public bool Active => _active;
 
         private Loan() { }
 
-        private Loan(long bookId, long userId, DateTime endDate)
+        private Loan(long bookId, long userId, DateTimePeriod dateTimePeriod)
         {
             _bookId = bookId;
             _userId = userId;
-            _endDate = endDate;
+            _dateTimePeriod = dateTimePeriod;
             _active = true;
         }
 
-        public static Loan Create(long bookId, long userId, DateTime endDate)
+        public static Loan Create(long bookId, long userId, DateTimePeriod dateTimePeriod)
         {
-            var loan = new Loan(bookId, userId, endDate);
+            var loan = new Loan(bookId, userId, dateTimePeriod);
 
             return loan;
         }

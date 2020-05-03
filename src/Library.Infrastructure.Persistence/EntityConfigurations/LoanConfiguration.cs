@@ -22,9 +22,11 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                 .HasColumnName("Active")
                 .IsRequired();
 
-            entity.Property(e => e.EndDate)
-                .HasColumnName("EndDate")
-                .IsRequired();
+            entity.OwnsOne(e => e.DateTimePeriod, x =>
+            {
+                x.Property(d => d.StartDate).HasColumnName("StartDate").IsRequired();
+                x.Property(d => d.EndDate).HasColumnName("EndDate").IsRequired();
+            });
 
             entity.HasOne<Book>("_book")
                 .WithMany()
