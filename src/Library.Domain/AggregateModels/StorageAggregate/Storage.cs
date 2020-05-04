@@ -37,22 +37,19 @@ namespace Library.Domain.AggregateModels.StorageAggregate
             AddDomainEvent(new BookAddedToStorageEvent(newBook, DateTime.UtcNow));
         }
 
-        public void BorrowBook(long bookId, long userId, DateTime fromDate, DateTime toDate)
+        public void BorrowBook(long bookId, long userId, DateTimePeriod dateTimePeriod)
         {
-            if (fromDate.Date < DateTime.UtcNow.Date || toDate <= fromDate)
-                throw new Exception("TODO Invalid dates range");
-
             var book = _books.SingleOrDefault(x => x.Id == bookId)
                        ?? throw new BookNotFoundException(bookId);
 
             if (!book.InStock)
                 throw new BookIsNotInStockException();
 
-            _loans.Add(Loan.Create(bookId, userId, toDate));
+            _loans.Add(Loan.Create(bookId, userId, dateTimePeriod));
 
             book.MarkAsUnavailable();
 
-            AddDomainEvent(new BookBorrowedEvent(bookId, userId, fromDate, toDate));
+            AddDomainEvent(new BookBorrowedEvent(bookId, userId, dateTimePeriod));
         }
 
         public void ReturnBook(long bookId, long userId)

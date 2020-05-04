@@ -1,5 +1,4 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 
 namespace Library.Domain.AggregateModels.StorageAggregate.Events
 {
@@ -7,15 +6,13 @@ namespace Library.Domain.AggregateModels.StorageAggregate.Events
     {
         public long BookId { get; }
         public long UserId { get; }
-        public DateTime FromDate { get; }
-        public DateTime ToDate { get; }
+        public DateTimePeriod DateTimePeriod { get; }
 
-        public BookBorrowedEvent(long bookId, long userId, DateTime fromDate, DateTime toDate)
+        public BookBorrowedEvent(long bookId, long userId, DateTimePeriod dateTimePeriod)
         {
             BookId = bookId;
             UserId = userId;
-            FromDate = fromDate;
-            ToDate = toDate;
+            DateTimePeriod = dateTimePeriod;
         }
     }
 }
