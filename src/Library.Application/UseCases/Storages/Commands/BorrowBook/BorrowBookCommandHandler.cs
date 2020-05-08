@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Library.Application.Auth;
 using Library.Application.Configurations;
 using Library.Domain.AggregateModels.StorageAggregate;
 using MediatR;
@@ -10,12 +11,13 @@ namespace Library.Application.UseCases.Storages.Commands.BorrowBook
     public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
     {
         private readonly IStorageRepository _storageRepository;
+        private readonly ITokenAuthInfo _tokenAuthInfo;
         private readonly StorageConfig _storageConfig;
 
-        // TODO: We need to retrieve the UserId from the token authorization
-        public BorrowBookCommandHandler(IStorageRepository storageRepository, IOptions<StorageConfig> storageOptions)
+        public BorrowBookCommandHandler(IStorageRepository storageRepository, IOptions<StorageConfig> storageOptions, ITokenAuthInfo tokenAuthInfo)
         {
             _storageRepository = storageRepository;
+            _tokenAuthInfo = tokenAuthInfo;
             _storageConfig = storageOptions.Value;
         }
 
@@ -25,7 +27,7 @@ namespace Library.Application.UseCases.Storages.Commands.BorrowBook
 
             var dateTimePeriod = DateTimePeriod.Create(command.BorrowingStartDate, command.BorrowingEndDate);
 
-            storage.BorrowBook(command.BookId, command.UserId, dateTimePeriod);
+            storage.BorrowBook(command.BookId, _tokenAuthInfo.UserId, dateTimePeriod);
 
             await _storageRepository.SaveChangesAsync();
 

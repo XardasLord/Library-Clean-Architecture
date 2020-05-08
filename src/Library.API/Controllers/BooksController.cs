@@ -43,11 +43,9 @@ namespace Library.API.Controllers
         }
 
         [HttpPost("{bookId}/return")]
-        public async Task<IActionResult> ReturnBook(long bookId, ReturnBookCommand command)
+        public async Task<IActionResult> ReturnBook(long bookId)
         {
-            command.BookId = bookId;
-
-            await Mediator.Send(command);
+            await Mediator.Send(new ReturnBookCommand(bookId));
 
             return Accepted();
         }

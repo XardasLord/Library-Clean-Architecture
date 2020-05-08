@@ -17,6 +17,7 @@ namespace Library.Infrastructure.Persistence.Repositories
                 .Storages
                 .Where(x => x.Id == storageId)
                 .Include(x => x.Books)
+                .Include(x => x.Loans)
                 .SingleOrDefaultAsync();
 
         public Task SaveChangesAsync()
