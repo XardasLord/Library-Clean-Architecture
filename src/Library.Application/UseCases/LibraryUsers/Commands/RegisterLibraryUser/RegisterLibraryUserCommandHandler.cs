@@ -19,9 +19,10 @@ namespace Library.Application.UseCases.LibraryUsers.Commands.RegisterLibraryUser
             if (await _libraryUserRepository.ExistsAsync(command.Email))
                 throw new LibraryUserAlreadyExistsException(command.Email);
 
-            var hashedPassword = PasswordManager.HashPassword(command.Password);
+            var hashedPassword = PasswordManager.HashPassword(command.Password); // Should we do it here or is it a domain responsibility to hash password? I guess it's domain's
+            var credentials = new UserCredential(command.Login, hashedPassword);
 
-            var libraryUser = LibraryUser.Create(command.Login, hashedPassword, command.FirstName, command.LastName, command.Email);
+            var libraryUser = LibraryUser.Create(credentials, command.FirstName, command.LastName, command.Email);
 
             await _libraryUserRepository.AddAsync(libraryUser);
             await _libraryUserRepository.SaveChangesAsync();

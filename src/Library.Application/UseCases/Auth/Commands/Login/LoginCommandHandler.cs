@@ -23,7 +23,7 @@ namespace Library.Application.UseCases.Auth.Commands.Login
             var user = await _libraryUserRepository.GetAsync(query.Login)
                 ?? throw new UserAuthenticationException("Invalid credentials.");
 
-            if (!PasswordManager.VerifyHashedPassword(user.Password, query.Password))
+            if (!PasswordManager.VerifyHashedPassword(user.Credentials.Password, query.Password))
                 throw new UserAuthenticationException("Invalid credentials.");
 
             if (!user.IsActive)
