@@ -17,14 +17,6 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                 .HasColumnName("LibraryUserId")
                 .UseIdentityColumn();
 
-            entity.Property(x => x.Login)
-                .HasColumnName("Login")
-                .IsRequired();
-
-            entity.Property(x => x.Password)
-                .HasColumnName("Password")
-                .IsRequired();
-
             entity.Property(x => x.FirstName)
                 .HasColumnName("FirstName")
                 .IsRequired();
@@ -43,6 +35,16 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                     .IsRequired();
             });
 
+            entity.OwnsOne(x => x.Credentials, x =>
+            {
+                x.Property(e => e.Login)
+                    .HasColumnName("Login")
+                    .IsRequired();
+
+                x.Property(e => e.Password)
+                    .HasColumnName("Password")
+                    .IsRequired();
+            });
         }
     }
 }
