@@ -7,8 +7,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
 {
     public class CreateLibraryUser
     {
-        private static LibraryUser Act(UserCredential credentials, string firstName, string lastName, string email)
-            => LibraryUser.Create(credentials, firstName, lastName, email);
+        private static LibraryUser Act(UserCredential credentials, Name name, string email)
+            => LibraryUser.Create(credentials, name, email);
 
         [Fact]
         public void given_valid_data_library_user_should_be_created()
@@ -19,8 +19,9 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
             const string lastName = "LastName";
             const string email = "email@com.pl";
             var credentials = new UserCredential(login, password);
+            var name = new Name(firstName, lastName);
 
-            var libraryUser = Act(credentials, firstName, lastName, email);
+            var libraryUser = Act(credentials, name, email);
 
             libraryUser.Should().NotBeNull();
             libraryUser.Credentials.Login.Should().Be(login);
@@ -87,41 +88,42 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
         //    result.Should().BeOfType<LibraryUserCreationException>();
         //}
 
-        [Theory]
-        [InlineData(" ")]
-        [InlineData("")]
-        [InlineData(null)]
-        public void given_empty_firstname_should_throws_an_exception(string firstName)
-        {
-            const string login = "Login";
-            const string password = "Password";
-            const string lastName = "LastName";
-            const string email = "email@com.pl";
-            var credentials = new UserCredential(login, password);
+        //[Theory]
+        //[InlineData(" ")]
+        //[InlineData("")]
+        //[InlineData(null)]
+        //public void given_empty_firstname_should_throws_an_exception(string firstName)
+        //{
+        //    const string login = "Login";
+        //    const string password = "Password";
+        //    const string lastName = "LastName";
+        //    const string email = "email@com.pl";
+        //    var credentials = new UserCredential(login, password);
+        //    var name = new Name(firstName, lastName);
 
-            var result = Record.Exception(() => Act(credentials, firstName, lastName, email));
+        //    var result = Record.Exception(() => Act(credentials, name, email));
 
-            result.Should().NotBeNull();
-            result.Should().BeOfType<LibraryUserCreationException>();
-        }
+        //    result.Should().NotBeNull();
+        //    result.Should().BeOfType<LibraryUserCreationException>();
+        //}
 
-        [Theory]
-        [InlineData(" ")]
-        [InlineData("")]
-        [InlineData(null)]
-        public void given_empty_lastname_should_throws_an_exception(string lastName)
-        {
-            const string login = "Login";
-            const string password = "Password";
-            const string firstName = "FirstName";
-            const string email = "email@com.pl";
-            var credentials = new UserCredential(login, password);
+        //[Theory]
+        //[InlineData(" ")]
+        //[InlineData("")]
+        //[InlineData(null)]
+        //public void given_empty_lastname_should_throws_an_exception(string lastName)
+        //{
+        //    const string login = "Login";
+        //    const string password = "Password";
+        //    const string firstName = "FirstName";
+        //    const string email = "email@com.pl";
+        //    var credentials = new UserCredential(login, password);
 
-            var result = Record.Exception(() => Act(credentials, firstName, lastName, email));
+        //    var result = Record.Exception(() => Act(credentials, firstName, lastName, email));
 
-            result.Should().NotBeNull();
-            result.Should().BeOfType<LibraryUserCreationException>();
-        }
+        //    result.Should().NotBeNull();
+        //    result.Should().BeOfType<LibraryUserCreationException>();
+        //}
 
         [Theory]
         [InlineData(" ")]
@@ -134,11 +136,12 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
             const string firstName = "FirstName";
             const string lastName = "LastName";
             var credentials = new UserCredential(login, password);
+            var name = new Name(firstName, lastName);
 
-            var result = Record.Exception(() => Act(credentials, firstName, lastName, email));
+            var result = Record.Exception(() => Act(credentials, name, email));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<LibraryUserCreationException>();
+            result.Should().BeOfType<InvalidEmailException>();
         }
 
         [Theory]
@@ -154,8 +157,9 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
             const string firstName = "FirstName";
             const string lastName = "LastName";
             var credentials = new UserCredential(login, password);
+            var name = new Name(firstName, lastName);
 
-            var result = Record.Exception(() => Act(credentials, firstName, lastName, email));
+            var result = Record.Exception(() => Act(credentials, name, email));
 
             result.Should().NotBeNull();
             result.Should().BeOfType<InvalidEmailException>();

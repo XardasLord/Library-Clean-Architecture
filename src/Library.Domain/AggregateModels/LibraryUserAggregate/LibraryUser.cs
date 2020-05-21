@@ -1,5 +1,4 @@
 ﻿using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
-using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
@@ -20,32 +19,18 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
         private LibraryUser() { }
 
-        private LibraryUser(UserCredential credentials, string firstName, string lastName, string email)
+        private LibraryUser(UserCredential credentials, Name name, string email)
         {
-            ValidateInputs(firstName, lastName, email);
-
             _credentials = credentials;
-            _firstName = firstName;
-            _lastName = lastName;
+            _firstName = name.FirstName;
+            _lastName = name.LastName;
             _email = new Email(email);
             _isActive = true;
         }
 
-        private static void ValidateInputs(string firstName, string lastName, string email)
+        public static LibraryUser Create(UserCredential credentials, Name name, string email)
         {
-            if (string.IsNullOrWhiteSpace(firstName))
-                throw new LibraryUserCreationException($"Parameter {nameof(firstName)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(lastName))
-                throw new LibraryUserCreationException($"Parameter {nameof(lastName)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(email))
-                throw new LibraryUserCreationException($"Parameter {nameof(email)} cannot be empty.");
-        }
-
-        public static LibraryUser Create(UserCredential credentials, string firstName, string lastName, string email)
-        {
-            var user = new LibraryUser(credentials, firstName, lastName, email);
+            var user = new LibraryUser(credentials, name, email);
 
             user.AddDomainEvent(new LibraryUserCreatedEvent(user));
             

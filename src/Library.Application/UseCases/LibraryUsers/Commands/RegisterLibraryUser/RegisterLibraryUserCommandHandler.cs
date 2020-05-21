@@ -21,8 +21,9 @@ namespace Library.Application.UseCases.LibraryUsers.Commands.RegisterLibraryUser
 
             var hashedPassword = PasswordManager.HashPassword(command.Password); // Should we do it here or is it a domain responsibility to hash password? I guess it's domain's
             var credentials = new UserCredential(command.Login, hashedPassword);
+            var name = new Name(command.FirstName, command.LastName);
 
-            var libraryUser = LibraryUser.Create(credentials, command.FirstName, command.LastName, command.Email);
+            var libraryUser = LibraryUser.Create(credentials, name, command.Email);
 
             await _libraryUserRepository.AddAsync(libraryUser);
             await _libraryUserRepository.SaveChangesAsync();
