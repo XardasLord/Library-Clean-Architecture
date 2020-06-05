@@ -12,14 +12,16 @@ namespace Library.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
             => services
                 .AddDatabase(configuration)
+                .AddCustomGraphQL()
                 .AddTokenAuthentication(configuration);
 
-        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app)
+        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app, IConfiguration configuration)
             => app
                 .UseHttpsRedirection()
                 .UseRouting()
                 .UseMiddleware<ErrorHandlingMiddleware>()
                 .UseTokenAuthentication()
-                .UseTokenAuthorization();
+                .UseTokenAuthorization()
+                .UseCustomGraphQL(configuration.GetSection("Infrastructure:GraphQL"));
     }
 }

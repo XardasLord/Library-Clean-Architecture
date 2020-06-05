@@ -1,7 +1,14 @@
 ﻿using System;
+using HotChocolate;
+using HotChocolate.AspNetCore;
+using HotChocolate.Execution.Configuration;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.AggregateModels.StorageAggregate;
+using Library.Infrastructure.Persistence.GraphQL.Queries;
+using Library.Infrastructure.Persistence.GraphQL.Types;
 using Library.Infrastructure.Persistence.Repositories;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +28,23 @@ namespace Library.Infrastructure.Persistence
                 })
                 .AddScoped<ILibraryUserRepository, LibraryUserRepository>()
                 .AddScoped<IStorageRepository, StorageRepository>();
+
+        public static IServiceCollection AddCustomGraphQL(this IServiceCollection services) 
+            => services
+                .AddGraphQL(
+                    SchemaBuilder.New()
+                        .AddQueryType<BookQuery>()
+                        .AddType<BookType>()
+                        .Create(),
+                    new QueryExecutionOptions
+                    {
+                        ForceSerialExecution = true
+                    });
+
+        public static IApplicationBuilder UseCustomGraphQL(this IApplicationBuilder app, IConfiguration configuration)
+            => app
+                .UseGraphQL(new PathString(configuration.GetSection("EndpointUrl").Value))
+                .UsePlayground(new PathString(configuration.GetSection("EndpointUrl").Value));
 
         public static IHost MigrateDatabase(this IHost webHost)
         {
