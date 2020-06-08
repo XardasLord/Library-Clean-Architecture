@@ -10,8 +10,44 @@ services:
       - "5000:443"
     depends_on:
       - db
+    networks:
+      - backtier
 
   db:
     image: "mcr.microsoft.com/mssql/server"
     ports:
       - "1433:1433"
+    networks:
+      - backtier
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    networks:
+      - backtier
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+      - backtier
+  
+networks:
+  backtier:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:
+    driver: local
