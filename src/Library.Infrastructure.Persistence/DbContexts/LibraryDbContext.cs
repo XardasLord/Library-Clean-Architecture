@@ -7,7 +7,7 @@ using Library.Infrastructure.Persistence.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.Infrastructure.Persistence
+namespace Library.Infrastructure.Persistence.DbContexts
 {
     public class LibraryDbContext : DbContext
     {

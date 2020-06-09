@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Library.Domain.SeedWork;
+using Library.Infrastructure.Persistence.DbContexts;
 using MediatR;
 
 namespace Library.Infrastructure.Persistence.Extensions
