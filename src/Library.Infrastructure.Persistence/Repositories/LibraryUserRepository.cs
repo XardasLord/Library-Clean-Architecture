@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.Repositories

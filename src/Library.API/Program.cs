@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Library.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,27 +9,12 @@ namespace Library.API
 {
     public class Program
     {
-        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
-            .AddEnvironmentVariables()
-            .Build();
-
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
-                .Enrich.FromLogContext()
-                .CreateLogger();
-
             try
             {
-                Log.Information("Starting web host");
-                CreateHostBuilder(args)
-                    .Build()
-                    .MigrateDatabase()
-                    .Run();
+                ConfigureLogging();
+                CreateHost(args);
             }
             catch (Exception ex)
             {
@@ -46,8 +30,36 @@ namespace Library.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                })
-                .UseSerilog();
+                    webBuilder
+                        .UseStartup<Startup>()
+                        .UseSerilog();
+                });
+
+        private static void ConfigureLogging()
+        {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile(
+                    $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+                    optional: true)
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithMachineName()
+                .Enrich.WithProperty("Environment", environment)
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
+
+        private static void CreateHost(string[] args)
+        {
+            Log.Information("Starting web host");
+            CreateHostBuilder(args)
+                .Build()
+                .MigrateDatabase()
+                .Run();
+        }
     }
 }
