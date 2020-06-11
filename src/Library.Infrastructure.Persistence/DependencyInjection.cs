@@ -25,12 +25,18 @@ namespace Library.Infrastructure.Persistence
             => services
                 .AddDbContext<LibraryDbContext>(options =>
                 {
+                    options.EnableDetailedErrors();
+                    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
+                })
+                .AddDbContext<LibraryViewDbContext>(options =>
+                {
+                    options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
                 .AddScoped<ILibraryUserRepository, LibraryUserRepository>()
                 .AddScoped<IStorageRepository, StorageRepository>();
 
-        public static IServiceCollection AddCustomGraphQL(this IServiceCollection services) 
+        public static IServiceCollection AddGraphQLQueries(this IServiceCollection services) 
             => services
                 .AddGraphQL(
                     SchemaBuilder.New()
@@ -42,10 +48,10 @@ namespace Library.Infrastructure.Persistence
                         ForceSerialExecution = true
                     });
 
-        public static IApplicationBuilder UseCustomGraphQL(this IApplicationBuilder app, IConfiguration configuration)
+        public static IApplicationBuilder UseGraphQLQueries(this IApplicationBuilder app, IConfiguration graphQLConfiguration)
             => app
-                .UseGraphQL(new PathString(configuration.GetSection("EndpointUrl").Value))
-                .UsePlayground(new PathString(configuration.GetSection("EndpointUrl").Value));
+                .UseGraphQL(new PathString(graphQLConfiguration.GetSection("EndpointUrl").Value))
+                .UsePlayground(new PathString(graphQLConfiguration.GetSection("EndpointUrl").Value));
 
         public static IHost MigrateDatabase(this IHost webHost)
         {
