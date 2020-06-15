@@ -28,11 +28,11 @@ namespace Library.Infrastructure.Persistence
                     options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
-                .AddDbContext<LibraryViewDbContext>(options =>
-                {
-                    options.EnableDetailedErrors();
-                    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
-                })
+                //.AddDbContext<LibraryViewDbContext>(options =>
+                //{
+                //    options.EnableDetailedErrors();
+                //    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
+                //})
                 .AddScoped<ILibraryUserRepository, LibraryUserRepository>()
                 .AddScoped<IStorageRepository, StorageRepository>();
 
@@ -40,8 +40,9 @@ namespace Library.Infrastructure.Persistence
             => services
                 .AddGraphQL(
                     SchemaBuilder.New()
-                        .AddQueryType<BookQuery>()
-                        .AddType<BookType>()
+                        .AddQueryType<StorageViewModelQuery>()
+                        .AddType<BookViewModelType>()
+                        .AddType<StorageViewModelType>()
                         .Create(),
                     new QueryExecutionOptions
                     {

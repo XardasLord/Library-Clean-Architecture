@@ -1,8 +1,8 @@
-﻿using System.Reflection;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.AggregateModels.StorageAggregate;
+using Library.Infrastructure.Persistence.EntityConfigurations;
 using Library.Infrastructure.Persistence.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +20,12 @@ namespace Library.Infrastructure.Persistence.DbContexts
         public DbSet<LibraryUser> LibraryUsers { get; set; }
         public DbSet<Storage> Storages { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) 
-            => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+            => modelBuilder
+                .ApplyConfiguration(new StorageConfiguration())
+                .ApplyConfiguration(new BookConfiguration())
+                .ApplyConfiguration(new LibraryUserConfiguration())
+                .ApplyConfiguration(new LoanConfiguration());
 
         public async Task SaveEntitiesAsync()
         {

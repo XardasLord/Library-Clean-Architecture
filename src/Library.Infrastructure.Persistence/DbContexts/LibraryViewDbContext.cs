@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Library.Application.UseCases.Storages.ViewModels;
+using Library.Infrastructure.Persistence.EntityConfigurations.ViewModelsConfiguration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.DbContexts
@@ -9,9 +10,11 @@ namespace Library.Infrastructure.Persistence.DbContexts
         {
         }
          
-        // TODO: View DbSets
+        public DbSet<StorageViewModel> StorageViewModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            => modelBuilder
+                .ApplyConfiguration(new StorageViewModelConfiguration())
+                .ApplyConfiguration(new BookViewModelConfiguration());
     }
 }
