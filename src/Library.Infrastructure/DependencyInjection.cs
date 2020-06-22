@@ -12,7 +12,7 @@ namespace Library.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
             => services
                 .AddDatabase(configuration)
-                .AddCustomGraphQL()
+                .AddGraphQLQueries()
                 .AddTokenAuthentication(configuration);
 
         public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app, IConfiguration configuration)
@@ -22,6 +22,6 @@ namespace Library.Infrastructure
                 .UseMiddleware<ErrorHandlingMiddleware>()
                 .UseTokenAuthentication()
                 .UseTokenAuthorization()
-                .UseCustomGraphQL(configuration.GetSection("Infrastructure:GraphQL"));
+                .UseGraphQLQueries(configuration.GetSection("Infrastructure:GraphQL"));
     }
 }
