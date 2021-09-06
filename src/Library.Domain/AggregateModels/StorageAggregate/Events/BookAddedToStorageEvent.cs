@@ -6,12 +6,12 @@ namespace Library.Domain.AggregateModels.StorageAggregate.Events
     public class BookAddedToStorageEvent : INotification
     {
         public Book Book { get; }
-        public DateTime DateOccured { get; }
+        public DateTime DateOccurred { get; }
 
-        public BookAddedToStorageEvent(Book book, DateTime dateOccured)
+        public BookAddedToStorageEvent(Book book, DateTime dateOccurred)
         {
             Book = book;
-            DateOccured = dateOccured;
+            DateOccurred = dateOccurred;
         }
     }
 }
