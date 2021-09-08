@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using AutoMapper;
 using Library.Application.Configurations;
 using MediatR;
 using Microsoft.Extensions.Configuration;
