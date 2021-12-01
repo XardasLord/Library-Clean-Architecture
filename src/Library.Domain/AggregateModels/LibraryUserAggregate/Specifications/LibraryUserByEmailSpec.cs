@@ -8,7 +8,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate.Specifications
         public LibraryUserByEmailSpec(string email)
         {
             Query
-                .Where(user => string.Equals(user.Email.Value, email, StringComparison.CurrentCultureIgnoreCase));
+                .Where(user => user.Email.Value == email);
         }
     }
 }
