@@ -7,7 +7,7 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.StorageAggregate
 {
-    public class Storage : AggregateRoot<long>
+    public class Storage : Entity<long>, IAggregateRoot
     {
         private readonly List<Book> _books;
         private readonly List<Loan> _loans;

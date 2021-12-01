@@ -3,7 +3,7 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class LibraryUser : AggregateRoot<long>
+    public class LibraryUser : Entity<long>, IAggregateRoot
     {
         private UserCredential _credentials;
         private string _firstName;
@@ -36,5 +36,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             
             return user;
         }
+
+        public long Id { get; set; }
     }
 }

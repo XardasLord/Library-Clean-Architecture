@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.Specification" Version="5.2.0" />
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="5.2.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.3" />
     <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.4.3" />
     <PackageReference Include="HotChocolate.Types.Selections" Version="10.4.3" />
