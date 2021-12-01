@@ -15,7 +15,7 @@ services:
       - lca
 
   db:
-    image: "mcr.microsoft.com/mssql/server"
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
     container_name: lca-db
     ports:
       - "1433:1433"
