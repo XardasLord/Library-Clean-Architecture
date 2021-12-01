@@ -11,13 +11,16 @@ namespace Library.Application.UseCases.Storages.Commands.BorrowBook
     public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand>
     {
         private readonly IStorageRepository _storageRepository;
-        private readonly ITokenAuthInfo _tokenAuthInfo;
+        private readonly ICurrentUser _currentUser;
         private readonly StorageConfig _storageConfig;
 
-        public BorrowBookCommandHandler(IStorageRepository storageRepository, IOptions<StorageConfig> storageOptions, ITokenAuthInfo tokenAuthInfo)
+        public BorrowBookCommandHandler(
+            IStorageRepository storageRepository,
+            IOptions<StorageConfig> storageOptions,
+            ICurrentUser currentUser)
         {
             _storageRepository = storageRepository;
-            _tokenAuthInfo = tokenAuthInfo;
+            _currentUser = currentUser;
             _storageConfig = storageOptions.Value;
         }
 
@@ -27,7 +30,7 @@ namespace Library.Application.UseCases.Storages.Commands.BorrowBook
 
             var dateTimePeriod = DateTimePeriod.Create(command.BorrowingStartDate, command.BorrowingEndDate);
 
-            storage.BorrowBook(command.BookId, _tokenAuthInfo.UserId, dateTimePeriod);
+            storage.BorrowBook(command.BookId, _currentUser.UserId, dateTimePeriod);
 
             await _storageRepository.SaveChangesAsync();
 

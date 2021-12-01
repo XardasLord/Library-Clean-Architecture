@@ -11,13 +11,13 @@ namespace Library.Application.UseCases.Storages.Commands.ReturnBook
     public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand>
     {
         private readonly IStorageRepository _storageRepository;
-        private readonly ITokenAuthInfo _tokenAuthInfo;
+        private readonly ICurrentUser _currentUser;
         private readonly StorageConfig _storageConfig;
 
-        public ReturnBookCommandHandler(IStorageRepository storageRepository, IOptions<StorageConfig> storageOptions, ITokenAuthInfo tokenAuthInfo)
+        public ReturnBookCommandHandler(IStorageRepository storageRepository, IOptions<StorageConfig> storageOptions, ICurrentUser currentUser)
         {
             _storageRepository = storageRepository;
-            _tokenAuthInfo = tokenAuthInfo;
+            _currentUser = currentUser;
             _storageConfig = storageOptions.Value;
         }
 
@@ -25,7 +25,7 @@ namespace Library.Application.UseCases.Storages.Commands.ReturnBook
         {
             var storage = await _storageRepository.GetAsync(_storageConfig.DevelopStorageId);
 
-            storage.ReturnBook(command.BookId, _tokenAuthInfo.UserId);
+            storage.ReturnBook(command.BookId, _currentUser.UserId);
 
             await _storageRepository.SaveChangesAsync();
 

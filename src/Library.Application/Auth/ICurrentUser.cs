@@ -1,6 +1,6 @@
 ﻿namespace Library.Application.Auth
 {
-    public interface ITokenAuthInfo
+    public interface ICurrentUser
     {
         long UserId { get; }
     }
