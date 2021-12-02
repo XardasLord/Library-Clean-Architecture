@@ -21,7 +21,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         public bool IsActive => _isActive;
         public IReadOnlyCollection<Loan> ActiveLoans => _activeLoans;
 
-        private LibraryUser() { }
+        internal LibraryUser() { }
 
         private LibraryUser(UserCredential credentials, Name name, Email email)
         {

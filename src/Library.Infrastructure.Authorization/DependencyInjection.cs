@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Library.Application.Auth;
+using Library.Domain.SharedKernel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;

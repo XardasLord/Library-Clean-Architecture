@@ -20,8 +20,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.DateTimePeriod
 
             var result = Act(startDate, endDate);
 
-            result.StartDate.Should().BeCloseTo(startDate);
-            result.EndDate.Should().BeCloseTo(endDate);
+            result.StartDate.Should().BeCloseTo(startDate, TimeSpan.Zero);
+            result.EndDate.Should().BeCloseTo(endDate, TimeSpan.Zero);
         }
 
         [Fact]

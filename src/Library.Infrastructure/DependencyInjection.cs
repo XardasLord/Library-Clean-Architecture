@@ -1,6 +1,8 @@
-﻿using Library.Infrastructure.Authorization;
+﻿using Library.Domain.SharedKernel;
+using Library.Infrastructure.Authorization;
 using Library.Infrastructure.ErrorHandling;
 using Library.Infrastructure.Persistence;
+using Library.Infrastructure.Time;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +16,8 @@ namespace Library.Infrastructure
             => services
                 .AddDatabase(configuration)
                 .AddGraphQLQueries()
-                .AddTokenAuthentication(configuration);
+                .AddTokenAuthentication(configuration)
+                .AddTransient<ICurrentDateTime, CurrentDateTime>();
 
         public static IApplicationBuilder UseInfrastructure(
             this IApplicationBuilder app,

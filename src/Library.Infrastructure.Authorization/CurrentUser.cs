@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using Library.Application.Auth;
+using Library.Domain.SharedKernel;
 using Microsoft.AspNetCore.Http;
 
 namespace Library.Infrastructure.Authorization

@@ -15,7 +15,9 @@ namespace Library.Domain.AggregateModels.BookAggregate
         public BookInformation BookInformation => _bookInformation;
         public bool InStock => _currentLoan is null || !_currentLoan.IsActive;
 
-        private Book() { }
+        internal Book()
+        {
+        }
 
         private Book(BookInformation bookInformation)
         {
