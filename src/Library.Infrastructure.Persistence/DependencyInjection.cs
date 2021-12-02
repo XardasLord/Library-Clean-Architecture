@@ -2,6 +2,7 @@
 using HotChocolate.AspNetCore;
 using Library.Domain.SharedKernel;
 using Library.Infrastructure.Persistence.DbContexts;
+using Library.Infrastructure.Persistence.GraphQL.ErrorHandling;
 using Library.Infrastructure.Persistence.GraphQL.Queries;
 using Library.Infrastructure.Persistence.GraphQL.Types;
 using Library.Infrastructure.Persistence.Repositories;
@@ -28,7 +29,7 @@ namespace Library.Infrastructure.Persistence
                 .AddScoped(typeof(IAggregateRepository<>), typeof(AggregateRepository<>))
                 .AddScoped(typeof(IAggregateReadRepository<>), typeof(AggregateRepository<>));
 
-        public static IServiceCollection AddGraphQlQueries(this IServiceCollection services)
+        public static IServiceCollection AddGraphQLQueries(this IServiceCollection services)
         {
             services
                 .AddGraphQLServer()
@@ -39,19 +40,19 @@ namespace Library.Infrastructure.Persistence
                 .AddSorting()
                 .AddType<BookViewModelType>();
 
-            // services.AddErrorFilter<GraphQLErrorFilter>();
+            services.AddErrorFilter<GraphQLErrorFilter>();
 
             return services;
         }
 
-        public static IApplicationBuilder UseGraphQlQueries(
+        public static IApplicationBuilder UseGraphQLQueries(
             this IApplicationBuilder app,
             IConfiguration graphQlConfiguration,
             IWebHostEnvironment env)
         {
-            var graphQlEndpoint = graphQlConfiguration.GetSection("EndpointUrl").Value;
+            var graphQLEndpoint = graphQlConfiguration.GetSection("EndpointUrl").Value;
 
-            return app.UseEndpoints(x => x.MapGraphQL(graphQlEndpoint)
+            return app.UseEndpoints(x => x.MapGraphQL(graphQLEndpoint)
                 .WithOptions(new GraphQLServerOptions
                 {
                     Tool =

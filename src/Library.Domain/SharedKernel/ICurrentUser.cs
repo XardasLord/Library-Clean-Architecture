@@ -1,4 +1,4 @@
-﻿namespace Library.Application.Auth
+﻿namespace Library.Domain.SharedKernel
 {
     public interface ICurrentUser
     {
