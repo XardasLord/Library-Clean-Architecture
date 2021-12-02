@@ -2,13 +2,13 @@
 
 namespace Library.Domain.AggregateModels.BookAggregate.Specifications
 {
-    public sealed class BookByIsbnSpec : Specification<Book>, ISingleResultSpecification
+    public sealed class BookByIdSpec : Specification<Book>, ISingleResultSpecification
     {
-        public BookByIsbnSpec(Isbn isbn)
+        public BookByIdSpec(long bookId)
         {
             Query
                 .Include("_currentLoan")
-                .Where(book => book.BookInformation.Isbn == isbn);
+                .Where(book => book.Id == bookId);
         }
     }
 }

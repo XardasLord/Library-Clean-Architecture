@@ -7,9 +7,11 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="5.2.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="5.2.0" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.3" />
-    <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.4.3" />
-    <PackageReference Include="HotChocolate.Types.Selections" Version="10.4.3" />
+    <PackageReference Include="HotChocolate.Abstractions" Version="12.3.2" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.3.2" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.3.2" />
+    <PackageReference Include="HotChocolate.Data" Version="12.3.2" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.3.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">

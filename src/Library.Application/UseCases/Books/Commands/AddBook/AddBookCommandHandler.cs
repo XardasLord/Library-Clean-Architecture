@@ -32,7 +32,6 @@ namespace Library.Application.UseCases.Books.Commands.AddBook
             book.Register(libraryUser);
 
             await _bookRepository.AddAsync(book, cancellationToken);
-            await _bookRepository.SaveChangesAsync(cancellationToken);
 
             return book.Id;
         }

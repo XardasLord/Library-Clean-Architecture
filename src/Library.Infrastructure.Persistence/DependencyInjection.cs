@@ -1,16 +1,12 @@
 ﻿using System;
-using HotChocolate;
 using HotChocolate.AspNetCore;
-using HotChocolate.Execution.Configuration;
-using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.SharedKernel;
 using Library.Infrastructure.Persistence.DbContexts;
 using Library.Infrastructure.Persistence.GraphQL.Queries;
 using Library.Infrastructure.Persistence.GraphQL.Types;
 using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,31 +25,41 @@ namespace Library.Infrastructure.Persistence
                     options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
-                //.AddDbContext<LibraryViewDbContext>(options =>
-                //{
-                //    options.EnableDetailedErrors();
-                //    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
-                //})
-                .AddScoped<IAggregateRepository<LibraryUser>, AggregateRepository<LibraryUser>>()
-                .AddScoped<IAggregateRepository<Book>, AggregateRepository<Book>>();
+                .AddScoped(typeof(IAggregateRepository<>), typeof(AggregateRepository<>))
+                .AddScoped(typeof(IAggregateReadRepository<>), typeof(AggregateRepository<>));
 
-        public static IServiceCollection AddGraphQLQueries(this IServiceCollection services) 
-            => services
-                .AddGraphQL(
-                    SchemaBuilder.New()
-                        .AddQueryType<StorageViewModelQuery>()
-                        .AddType<BookViewModelType>()
-                        .AddType<StorageViewModelType>()
-                        .Create(),
-                    new QueryExecutionOptions
+        public static IServiceCollection AddGraphQlQueries(this IServiceCollection services)
+        {
+            services
+                .AddGraphQLServer()
+                .AddAuthorization()
+                .AddQueryType<BookViewModelQueries>()
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting()
+                .AddType<BookViewModelType>();
+
+            // services.AddErrorFilter<GraphQLErrorFilter>();
+
+            return services;
+        }
+
+        public static IApplicationBuilder UseGraphQlQueries(
+            this IApplicationBuilder app,
+            IConfiguration graphQlConfiguration,
+            IWebHostEnvironment env)
+        {
+            var graphQlEndpoint = graphQlConfiguration.GetSection("EndpointUrl").Value;
+
+            return app.UseEndpoints(x => x.MapGraphQL(graphQlEndpoint)
+                .WithOptions(new GraphQLServerOptions
+                {
+                    Tool =
                     {
-                        ForceSerialExecution = true
-                    });
-
-        public static IApplicationBuilder UseGraphQLQueries(this IApplicationBuilder app, IConfiguration graphQLConfiguration)
-            => app
-                .UseGraphQL(new PathString(graphQLConfiguration.GetSection("EndpointUrl").Value))
-                .UsePlayground(new PathString(graphQLConfiguration.GetSection("EndpointUrl").Value));
+                        Enable = env.IsDevelopment()
+                    }
+                }));
+        }
 
         public static IHost MigrateDatabase(this IHost webHost)
         {

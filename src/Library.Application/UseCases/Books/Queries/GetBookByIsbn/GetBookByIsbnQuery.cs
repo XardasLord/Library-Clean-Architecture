@@ -1,9 +1,9 @@
-﻿using Library.Application.UseCases.Books.Dtos;
+﻿using Library.Application.UseCases.Books.ViewModels;
 using MediatR;
 
 namespace Library.Application.UseCases.Books.Queries.GetBookByIsbn
 {
-    public class GetBookByIsbnQuery : IRequest<BookDto>
+    public class GetBookByIsbnQuery : IRequest<BookViewModel>
     {
         public string Isbn { get; }
 

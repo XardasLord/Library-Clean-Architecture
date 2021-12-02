@@ -2,6 +2,7 @@
 using Library.Infrastructure.ErrorHandling;
 using Library.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,19 +10,22 @@ namespace Library.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
             => services
                 .AddDatabase(configuration)
-                .AddGraphQLQueries()
+                .AddGraphQlQueries()
                 .AddTokenAuthentication(configuration);
 
-        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app, IConfiguration configuration)
+        public static IApplicationBuilder UseInfrastructure(
+            this IApplicationBuilder app,
+            IConfiguration configuration,
+            IWebHostEnvironment env)
             => app
                 .UseHttpsRedirection()
                 .UseRouting()
                 .UseMiddleware<ErrorHandlingMiddleware>()
                 .UseTokenAuthentication()
                 .UseTokenAuthorization()
-                .UseGraphQLQueries(configuration.GetSection("Infrastructure:GraphQL"));
+                .UseGraphQlQueries(configuration.GetSection("Infrastructure:GraphQL"), env);
     }
 }

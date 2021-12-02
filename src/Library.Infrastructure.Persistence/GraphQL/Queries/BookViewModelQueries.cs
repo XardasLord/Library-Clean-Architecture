@@ -1,19 +1,19 @@
 ﻿using System.Linq;
 using HotChocolate;
+using HotChocolate.Data;
 using HotChocolate.Types;
-using HotChocolate.Types.Relay;
 using Library.Application.UseCases.Books.ViewModels;
 using Library.Infrastructure.Persistence.DbContexts;
 
 namespace Library.Infrastructure.Persistence.GraphQL.Queries
 {
-    public class StorageViewModelQuery
+    public class BookViewModelQueries
     {
-        [UsePaging]
+        [UsePaging(IncludeTotalCount = true, MaxPageSize = 200)]
+        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        [UseSelection]
-        public IQueryable<BookViewModel> GetBooks([Service] LibraryViewDbContext viewContext)
-            => viewContext.BookViewModels.AsQueryable();
+        public IQueryable<BookViewModel> GetBooks([Service] LibraryDbContext dbContext)
+            => dbContext.BookViewModels.AsQueryable();
     }
 }

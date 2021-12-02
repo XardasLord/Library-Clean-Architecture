@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Library.Application.UseCases.Books.Dtos;
+using Library.Application.UseCases.Books.ViewModels;
 using Library.Domain.AggregateModels.BookAggregate;
 
 namespace Library.Application.AutoMapper
@@ -8,7 +8,7 @@ namespace Library.Application.AutoMapper
     {
         public BookMapperProfile()
         {
-            CreateMap<Book, BookDto>()
+            CreateMap<Book, BookViewModel>()
                 .ForMember(x => x.Title, dest => dest.MapFrom(src => src.BookInformation.Title))
                 .ForMember(x => x.Author, dest => dest.MapFrom(src => src.BookInformation.Author))
                 .ForMember(x => x.Subject, dest => dest.MapFrom(src => src.BookInformation.Subject))
