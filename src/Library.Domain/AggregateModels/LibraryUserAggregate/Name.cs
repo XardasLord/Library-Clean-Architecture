@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 

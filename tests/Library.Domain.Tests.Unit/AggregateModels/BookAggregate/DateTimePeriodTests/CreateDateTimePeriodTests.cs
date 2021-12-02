@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
+using Library.Domain.SharedKernel;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.DateTimePeriodTests

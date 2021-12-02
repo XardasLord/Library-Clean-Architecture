@@ -1,6 +1,6 @@
 ﻿using Library.Domain.Exceptions;
 
-namespace Library.Domain.AggregateModels.LoanAggregate.Exceptions
+namespace Library.Domain.SharedKernel.Exceptions
 {
     public class LoanNotActiveException : DomainException
    {

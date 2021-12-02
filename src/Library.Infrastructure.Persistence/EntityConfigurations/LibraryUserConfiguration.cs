@@ -45,6 +45,10 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                     .HasColumnName("Password")
                     .IsRequired();
             });
+            
+            entity.HasMany(b => b.ActiveLoans)
+                .WithOne()
+                .HasForeignKey("_userId");
         }
     }
 }

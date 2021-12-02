@@ -3,6 +3,7 @@ using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Domain.SharedKernel;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
@@ -16,8 +17,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         {
             _libraryUser = LibraryUser.Create(
                 new UserCredential("Login", "Password"),
-                new Name("First", "Last"), 
-                "Email@email.com");
+                new Name("First", "Last"),
+                new Email("Email@email.com"));
         }
         
         private void Act() => _book.Return(_libraryUser);
@@ -26,7 +27,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         public void when_book_is_borrowed_book_should_be_returned()
         {
             // Arrange
-            var dateTimePeriod = DateTimePeriod.Create(DateTime.Now, DateTime.Now.AddDays(7));
+            var dateTimePeriod = DateTimePeriod.Create(DateTime.UtcNow, DateTime.UtcNow.AddDays(7));
             _book = Book.Create("Title", "Author", "Subject", "9783161484100");
             _book.Borrow(_libraryUser, dateTimePeriod);
 

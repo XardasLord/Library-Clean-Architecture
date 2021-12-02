@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mail;
+using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
 

@@ -1,5 +1,7 @@
-﻿using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
+﻿using System.Collections.Generic;
+using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
 using Library.Domain.SeedWork;
+using Library.Domain.SharedKernel;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
@@ -10,25 +12,27 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         private string _lastName;
         private Email _email;
         private bool _isActive;
+        private List<Loan> _activeLoans;
 
         public UserCredential Credentials => _credentials;
         public string FirstName => _firstName;
         public string LastName => _lastName;
         public Email Email => _email;
         public bool IsActive => _isActive;
+        public IReadOnlyCollection<Loan> ActiveLoans => _activeLoans;
 
         private LibraryUser() { }
 
-        private LibraryUser(UserCredential credentials, Name name, string email)
+        private LibraryUser(UserCredential credentials, Name name, Email email)
         {
             _credentials = credentials;
             _firstName = name.FirstName;
             _lastName = name.LastName;
-            _email = new Email(email);
+            _email = email;
             _isActive = true;
         }
 
-        public static LibraryUser Create(UserCredential credentials, Name name, string email)
+        public static LibraryUser Create(UserCredential credentials, Name name, Email email)
         {
             var user = new LibraryUser(credentials, name, email);
 
@@ -36,7 +40,5 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             
             return user;
         }
-
-        public long Id { get; set; }
     }
 }

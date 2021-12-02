@@ -1,10 +1,8 @@
-﻿namespace Library.Application.UseCases.Books.ViewModels
+﻿namespace Library.Application.UseCases.Books.Dtos
 {
-    public class BookViewModel
+    public class BookDto
     {
-        public long Id { get; set; }
-        public long StorageId { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set;  }
         public string Author { get; set; }
         public string Subject { get; set; }
         public string Isbn { get; set; }

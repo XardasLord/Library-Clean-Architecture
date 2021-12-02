@@ -1,5 +1,4 @@
-﻿using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.LibraryUserAggregate;
+﻿using Library.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,27 +13,33 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
 
             entity.Ignore(e => e.DomainEvents);
 
-            entity.Property(e => e.Id)
+            entity
+                .Property(e => e.Id)
                 .HasColumnName("LoanId")
                 .UseIdentityColumn();
 
-            entity.Property(e => e.Active)
-                .HasColumnName("Active")
+            entity
+                .Property(e => e.IsActive)
+                .HasColumnName("IsActive")
                 .IsRequired();
 
-            entity.OwnsOne(e => e.DateTimePeriod, x =>
+            entity.OwnsOne(e => e.BorrowPeriod, x =>
             {
                 x.Property(d => d.StartDate).HasColumnName("StartDate").IsRequired();
                 x.Property(d => d.EndDate).HasColumnName("EndDate").IsRequired();
             });
 
-            entity.HasOne<Book>("_book")
-                .WithMany()
-                .HasForeignKey(x => x.BookId);
-
-            entity.HasOne<LibraryUser>("_user")
-                .WithMany()
-                .HasForeignKey(x => x.UserId);
+            entity
+                .Property<long>("_bookId")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("BookId")
+                .IsRequired();
+            
+            entity
+                .Property<long>("_userId")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("UserId")
+                .IsRequired();
         }
     }
 }

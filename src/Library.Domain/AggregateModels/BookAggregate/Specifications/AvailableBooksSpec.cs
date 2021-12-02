@@ -7,7 +7,8 @@ namespace Library.Domain.AggregateModels.BookAggregate.Specifications
         public AvailableBooksSpec()
         {
             Query
-                .Where(book => book.InStock);
+                .Include("_currentLoan");
+            // .Where(book => book.InStock);
         }
     }
 }

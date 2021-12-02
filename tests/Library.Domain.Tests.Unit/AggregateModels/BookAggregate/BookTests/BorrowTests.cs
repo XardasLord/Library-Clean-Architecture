@@ -3,6 +3,7 @@ using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Domain.SharedKernel;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
@@ -16,8 +17,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         {
             _libraryUser = LibraryUser.Create(
                 new UserCredential("Login", "Password"),
-                new Name("First", "Last"), 
-                "Email@email.com");
+                new Name("First", "Last"),
+                new Email("Email@email.com"));
         }
 
         private void Act(DateTimePeriod period) => _book.Borrow(_libraryUser, period);

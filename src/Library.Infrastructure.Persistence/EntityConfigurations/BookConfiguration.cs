@@ -1,4 +1,5 @@
 ﻿using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,14 +13,11 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
             entity.HasKey(x => x.Id);
 
             entity.Ignore(x => x.DomainEvents);
+            entity.Ignore(x => x.InStock);
 
             entity.Property(x => x.Id)
                 .HasColumnName("BookId")
                 .UseIdentityColumn();
-
-            entity.Property(x => x.InStock)
-                .HasColumnName("InStock")
-                .IsRequired();
 
             entity.OwnsOne(x => x.BookInformation, x =>
             {
@@ -41,6 +39,12 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                         .IsRequired();
                 });
             });
+
+            entity.HasOne<Loan>("_currentLoan")
+                .WithOne()
+                .IsRequired(false)
+                .HasForeignKey<Loan>("_bookId")
+                .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

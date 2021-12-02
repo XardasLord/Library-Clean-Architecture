@@ -16,8 +16,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         {
             _libraryUser = LibraryUser.Create(
                 new UserCredential("Login", "Password"),
-                new Name("First", "Last"), 
-                "Email@email.com");
+                new Name("First", "Last"),
+                new Email("Email@email.com"));
         }
 
         private void Act() => _book.Register(_libraryUser);

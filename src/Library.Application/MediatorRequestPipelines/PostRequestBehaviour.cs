@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
-namespace Library.Application.MediatRRequestPipelines
+namespace Library.Application.MediatorRequestPipelines
 {
     public class PostRequestLogger<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
     {

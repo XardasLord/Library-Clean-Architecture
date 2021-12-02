@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
 using Library.Domain.Exceptions;
 using Xunit;
 
@@ -17,9 +18,10 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
             const string password = "Password";
             const string firstName = "FirstName";
             const string lastName = "LastName";
-            const string email = "email@com.pl";
+            const string emailAddress = "email@com.pl";
             var credentials = new UserCredential(login, password);
             var name = new Name(firstName, lastName);
+            var email = new Email(emailAddress);
 
             var libraryUser = Act(credentials, name, email);
 
@@ -32,23 +34,26 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate
             libraryUser.IsActive.Should().BeTrue();
         }
 
-        //[Theory]
-        //[InlineData(" ")]
-        //[InlineData("")]
-        //[InlineData(null)]
-        //public void given_empty_login_should_throws_an_exception(string login)
-        //{
-        //    const string password = "Password";
-        //    const string firstName = "FirstName";
-        //    const string lastName = "LastName";
-        //    const string email = "email@com.pl";
-        //    var credentials = new UserCredential(login, password);
-
-        //    var result = Record.Exception(() => Act(credentials, firstName, lastName, email));
-
-        //    result.Should().NotBeNull();
-        //    result.Should().BeOfType<LibraryUserCreationException>();
-        //}
+        // TODO: Move below tests as value object tests (Guards)
+        // [Theory]
+        // [InlineData(" ")]
+        // [InlineData("")]
+        // [InlineData(null)]
+        // public void given_empty_login_should_throws_an_exception(string login)
+        // {
+        //     const string password = "Password";
+        //     const string firstName = "FirstName";
+        //     const string lastName = "LastName";
+        //     const string emailAddress = "email@com.pl";
+        //     var credentials = new UserCredential(login, password);
+        //     var name = new Name(firstName, lastName);
+        //     var email = new Email(emailAddress);
+        //
+        //     var result = Record.Exception(() => Act(credentials, name, email));
+        //
+        //     result.Should().NotBeNull();
+        //     result.Should().BeOfType<LibraryUserCreationException>();
+        // }
 
         //[Theory]
         //[InlineData(" ")]

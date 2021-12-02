@@ -13,7 +13,7 @@ namespace Library.Infrastructure.Persistence.GraphQL.Queries
         [UseFiltering]
         [UseSorting]
         [UseSelection]
-        public IQueryable<StorageViewModel> GetStorageInformation([Service] LibraryViewDbContext context, long storageId)
-            => context.StorageViewModel.Where(x => x.Id == storageId);
+        public IQueryable<BookViewModel> GetBooks([Service] LibraryViewDbContext viewContext)
+            => viewContext.BookViewModels.AsQueryable();
     }
 }

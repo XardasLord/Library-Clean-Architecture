@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Library.Domain.SharedKernel;
+using MediatR;
 
 namespace Library.Domain.AggregateModels.BookAggregate.Events
 {
