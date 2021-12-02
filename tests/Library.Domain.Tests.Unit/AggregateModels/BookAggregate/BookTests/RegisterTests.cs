@@ -3,35 +3,29 @@ using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Events;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
+using Library.Domain.Tests.Unit.Helpers;
+using NSubstitute.Core;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
-    public class RegisterTests
+    public class RegisterTests : AggregateTestHelper
     {
-        private Book _book;
+        private readonly Book _book;
         private readonly LibraryUser _libraryUser;
 
         public RegisterTests()
         {
-            _libraryUser = LibraryUser.Create(
-                new UserCredential("Login", "Password"),
-                new Name("First", "Last"),
-                new Email("Email@email.com"));
+            _libraryUser = GetValidLibraryUserAggregate();
+            _book = GetValidBookAggregate();
         }
 
-        private void Act() => _book.Register(_libraryUser);
+        private void Act() 
+            => _book.Register(_libraryUser);
 
         [Fact]
         public void given_new_book_should_be_added()
         {
-            // Arrange
-            const string title = "Book Title";
-            const string author = "Book Author";
-            const string subject = "Subject";
-            const string isbn = "9783161484100";
-            _book = Book.Create(title, author, subject, isbn);
-
             // Act
             Act();
 

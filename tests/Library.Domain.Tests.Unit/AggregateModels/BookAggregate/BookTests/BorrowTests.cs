@@ -1,52 +1,50 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.SharedKernel;
+using Library.Domain.Tests.Unit.Helpers;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
-    public class BorrowTests
+    public class BorrowTests : AggregateTestHelper
     {
         private Book _book;
         private readonly LibraryUser _libraryUser;
+        private readonly DateTimePeriod _dateTimePeriod;
 
         public BorrowTests()
         {
-            _libraryUser = LibraryUser.Create(
-                new UserCredential("Login", "Password"),
-                new Name("First", "Last"),
-                new Email("Email@email.com"));
+            _libraryUser = GetValidLibraryUserAggregate();
+            _book = GetValidBookAggregate();
+            _dateTimePeriod = GetValidDateTimePeriod();
         }
 
-        private void Act(DateTimePeriod period) => _book.Borrow(_libraryUser, period);
+        private void Act() 
+            => _book.Borrow(_libraryUser, _dateTimePeriod);
 
         [Fact]
-        public void when_book_is_in_stock_book_should_be_out_of_stock()
+        public void when_book_is_not_borrowed_should_be_out_of_stock()
         {
             // Arrange
-            var dateTimePeriod = DateTimePeriod.Create(DateTime.Now, DateTime.Now.AddDays(7));
-            _book = Book.Create("Title", "Author", "Subject", "9783161484100");
+            _book._currentLoan = null;
 
             // Act
-            Act(dateTimePeriod);
+            Act();
 
             // Assert
             _book.InStock.Should().BeFalse();
         }
 
         [Fact]
-        public void when_book_is_not_in_stock_should_throws_an_exception()
+        public void when_book_is_already_borrowed_should_throws_an_exception()
         {
             // Arrange
-            var dateTimePeriod = DateTimePeriod.Create(DateTime.Now, DateTime.Now.AddDays(7));
-            _book = Book.Create("Title", "Author", "Subject", "9783161484100");
-            _book.Borrow(_libraryUser, dateTimePeriod);
+            _book._currentLoan = Loan.Create(_book.Id, ExpectedUserId, _dateTimePeriod);
 
             // Act
-            var result = Record.Exception(() => Act(dateTimePeriod));
+            var result = Record.Exception(() => Act());
 
             // Assert
             result.Should().NotBeNull();

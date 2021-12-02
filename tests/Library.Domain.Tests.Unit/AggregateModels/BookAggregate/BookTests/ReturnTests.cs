@@ -1,35 +1,34 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.SharedKernel;
+using Library.Domain.Tests.Unit.Helpers;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
-    public class ReturnTests
+    public class ReturnTests : AggregateTestHelper
     {
-        private Book _book;
+        private readonly Book _book;
         private readonly LibraryUser _libraryUser;
+        private readonly DateTimePeriod _dateTimePeriod;
 
         public ReturnTests()
         {
-            _libraryUser = LibraryUser.Create(
-                new UserCredential("Login", "Password"),
-                new Name("First", "Last"),
-                new Email("Email@email.com"));
+            _libraryUser = GetValidLibraryUserAggregate();
+            _book = GetValidBookAggregate();
+            _dateTimePeriod = GetValidDateTimePeriod();
         }
         
-        private void Act() => _book.Return(_libraryUser);
+        private void Act() 
+            => _book.Return(_libraryUser);
 
         [Fact]
         public void when_book_is_borrowed_book_should_be_returned()
         {
             // Arrange
-            var dateTimePeriod = DateTimePeriod.Create(DateTime.UtcNow, DateTime.UtcNow.AddDays(7));
-            _book = Book.Create("Title", "Author", "Subject", "9783161484100");
-            _book.Borrow(_libraryUser, dateTimePeriod);
+            _book._currentLoan = Loan.Create(_book.Id, ExpectedUserId, _dateTimePeriod);
 
             // Act
             Act();
@@ -39,9 +38,9 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         }
 
         [Fact]
-        public void when_book_is_in_stock_should_throws_an_exception()
+        public void when_book_is_not_borrowed_should_throws_an_exception()
         {
-            _book = Book.Create("Title", "Author", "Subject", "9783161484100");
+            _book._currentLoan = null;
 
             var result = Record.Exception(Act);
 

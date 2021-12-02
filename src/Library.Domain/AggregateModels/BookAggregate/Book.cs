@@ -10,12 +10,12 @@ namespace Library.Domain.AggregateModels.BookAggregate
     public class Book : Entity<long>, IAggregateRoot
     {
         private BookInformation _bookInformation;
-        private Loan _currentLoan;
+        internal Loan _currentLoan;
 
         public BookInformation BookInformation => _bookInformation;
         public bool InStock => _currentLoan is null || !_currentLoan.IsActive;
 
-        internal Book()
+        private Book()
         {
         }
 

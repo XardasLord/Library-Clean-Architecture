@@ -13,7 +13,7 @@ namespace Library.Tests.Base
 	public abstract class TestBase
 	{
 		// Shared
-		private readonly IFixture _fixture = new Fixture();
+		protected readonly IFixture _fixture = new Fixture();
 		protected readonly CancellationToken DefaultCancellationToken = CancellationToken.None;
 		protected readonly ICurrentUser CurrentUser = Substitute.For<ICurrentUser>();
 		protected readonly ICurrentDateTime CurrentDateTime = Substitute.For<ICurrentDateTime>();
