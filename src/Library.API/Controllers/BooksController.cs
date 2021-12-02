@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Library.Application.UseCases.Storages.Commands.AddBook;
-using Library.Application.UseCases.Storages.Commands.BorrowBook;
-using Library.Application.UseCases.Storages.Commands.ReturnBook;
-using Library.Application.UseCases.Storages.Dtos;
-using Library.Application.UseCases.Storages.Queries.GetAvailableBooks;
-using Library.Application.UseCases.Storages.Queries.GetBook;
-using Library.Application.UseCases.Storages.Queries.GetBookByIsbn;
+using Library.Application.UseCases.Books.Commands.AddBook;
+using Library.Application.UseCases.Books.Commands.BorrowBook;
+using Library.Application.UseCases.Books.Commands.ReturnBook;
+using Library.Application.UseCases.Books.Dtos;
+using Library.Application.UseCases.Books.Queries.GetAvailableBooks;
+using Library.Application.UseCases.Books.Queries.GetBook;
+using Library.Application.UseCases.Books.Queries.GetBookByIsbn;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

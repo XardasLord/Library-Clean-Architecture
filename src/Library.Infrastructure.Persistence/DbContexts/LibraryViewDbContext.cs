@@ -1,4 +1,4 @@
-﻿using Library.Application.UseCases.Storages.ViewModels;
+﻿using Library.Application.UseCases.Books.ViewModels;
 using Library.Infrastructure.Persistence.EntityConfigurations.ViewModelsConfiguration;
 using Microsoft.EntityFrameworkCore;
 

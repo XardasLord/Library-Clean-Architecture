@@ -1,4 +1,4 @@
-﻿using Library.Application.UseCases.Storages.ViewModels;
+﻿using Library.Application.UseCases.Books.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -2,7 +2,7 @@
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
-using Library.Application.UseCases.Storages.ViewModels;
+using Library.Application.UseCases.Books.ViewModels;
 using Library.Infrastructure.Persistence.DbContexts;
 
 namespace Library.Infrastructure.Persistence.GraphQL.Queries

@@ -1,5 +1,5 @@
 ﻿using HotChocolate.Types;
-using Library.Application.UseCases.Storages.ViewModels;
+using Library.Application.UseCases.Books.ViewModels;
 
 namespace Library.Infrastructure.Persistence.GraphQL.Types
 {

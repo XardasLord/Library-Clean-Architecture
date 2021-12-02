@@ -2,8 +2,8 @@
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.Execution.Configuration;
+using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
-using Library.Domain.AggregateModels.StorageAggregate;
 using Library.Domain.SharedKernel;
 using Library.Infrastructure.Persistence.DbContexts;
 using Library.Infrastructure.Persistence.GraphQL.Queries;
@@ -35,7 +35,7 @@ namespace Library.Infrastructure.Persistence
                 //    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 //})
                 .AddScoped<IAggregateRepository<LibraryUser>, AggregateRepository<LibraryUser>>()
-                .AddScoped<IAggregateRepository<Storage>, AggregateRepository<Storage>>();
+                .AddScoped<IAggregateRepository<Book>, AggregateRepository<Book>>();
 
         public static IServiceCollection AddGraphQLQueries(this IServiceCollection services) 
             => services

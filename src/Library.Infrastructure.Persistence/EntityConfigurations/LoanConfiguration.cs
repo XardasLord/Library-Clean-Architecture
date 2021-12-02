@@ -1,5 +1,5 @@
-﻿using Library.Domain.AggregateModels.LibraryUserAggregate;
-using Library.Domain.AggregateModels.StorageAggregate;
+﻿using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

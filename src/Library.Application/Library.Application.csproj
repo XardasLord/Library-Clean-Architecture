@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Library.Domain\Library.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\Storages\Queries\ViewModels\" />
-  </ItemGroup>
-
 </Project>
