@@ -19,6 +19,38 @@ namespace Library.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Library.Application.UseCases.Books.ViewModels.BookViewModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Author");
+
+                    b.Property<string>("Isbn")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Isbn");
+
+                    b.Property<string>("Subject")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Subject");
+
+                    b.Property<string>("Title")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Book");
+                });
+
             modelBuilder.Entity("Library.Domain.AggregateModels.BookAggregate.Book", b =>
                 {
                     b.Property<long>("Id")
@@ -28,6 +60,10 @@ namespace Library.Infrastructure.Persistence.Migrations
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("InStock")
+                        .HasColumnType("bit")
+                        .HasColumnName("InStock");
 
                     b.HasKey("Id");
 
@@ -87,12 +123,20 @@ namespace Library.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("_bookId")
-                        .IsUnique();
+                    b.HasIndex("_bookId");
 
                     b.HasIndex("_userId");
 
                     b.ToTable("Loan");
+                });
+
+            modelBuilder.Entity("Library.Application.UseCases.Books.ViewModels.BookViewModel", b =>
+                {
+                    b.HasOne("Library.Domain.AggregateModels.BookAggregate.Book", null)
+                        .WithOne()
+                        .HasForeignKey("Library.Application.UseCases.Books.ViewModels.BookViewModel", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Library.Domain.AggregateModels.BookAggregate.Book", b =>
@@ -106,16 +150,19 @@ namespace Library.Infrastructure.Persistence.Migrations
 
                             b1.Property<string>("Author")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Author");
 
                             b1.Property<string>("Subject")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Subject");
 
                             b1.Property<string>("Title")
                                 .IsRequired()
+                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Title");
 
@@ -135,6 +182,7 @@ namespace Library.Infrastructure.Persistence.Migrations
 
                                     b2.Property<string>("Value")
                                         .IsRequired()
+                                        .ValueGeneratedOnUpdateSometimes()
                                         .HasColumnType("nvarchar(max)")
                                         .HasColumnName("Isbn");
 
@@ -207,10 +255,8 @@ namespace Library.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Library.Domain.SharedKernel.Loan", b =>
                 {
                     b.HasOne("Library.Domain.AggregateModels.BookAggregate.Book", null)
-                        .WithOne("_currentLoan")
-                        .HasForeignKey("Library.Domain.SharedKernel.Loan", "_bookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("_loans")
+                        .HasForeignKey("_bookId");
 
                     b.HasOne("Library.Domain.AggregateModels.LibraryUserAggregate.LibraryUser", null)
                         .WithMany("ActiveLoans")
@@ -246,7 +292,7 @@ namespace Library.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Library.Domain.AggregateModels.BookAggregate.Book", b =>
                 {
-                    b.Navigation("_currentLoan");
+                    b.Navigation("_loans");
                 });
 
             modelBuilder.Entity("Library.Domain.AggregateModels.LibraryUserAggregate.LibraryUser", b =>

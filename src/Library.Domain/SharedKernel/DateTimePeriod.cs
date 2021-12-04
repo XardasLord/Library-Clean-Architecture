@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
-using Library.Domain.SeedWork;
 
 namespace Library.Domain.SharedKernel
 {
@@ -16,9 +14,6 @@ namespace Library.Domain.SharedKernel
 
         private DateTimePeriod(DateTime startDate, DateTime endDate)
         {
-            if (startDate.Date < DateTime.UtcNow.Date)
-                throw new DateTimePeriodValidationException("Starting date cannot be in the past.");
-
             if (startDate >= endDate)
                 throw new DateTimePeriodValidationException("Starting date cannot be greater or equal the ending date");
 

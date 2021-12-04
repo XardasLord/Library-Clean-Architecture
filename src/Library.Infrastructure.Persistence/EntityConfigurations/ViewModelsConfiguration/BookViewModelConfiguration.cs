@@ -11,13 +11,12 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations.ViewModelsConf
         {
             viewModel.ToTable("Book"); // TODO: View maybe instead?
             viewModel.HasKey(e => e.Id);
-            
-            viewModel.Ignore(x => x.InStock);
 
             viewModel.Property(b => b.Title).HasColumnName("Title");
             viewModel.Property(b => b.Author).HasColumnName("Author");
             viewModel.Property(b => b.Subject).HasColumnName("Subject");
             viewModel.Property(b => b.Isbn).HasColumnName("Isbn");
+            viewModel.Property(b => b.InStock).HasColumnName("InStock");
             
             viewModel
                 .HasOne<Book>()

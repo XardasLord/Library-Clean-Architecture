@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
@@ -10,7 +11,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
     public class BorrowTests : AggregateTestHelper
     {
-        private Book _book;
+        private readonly Book _book;
         private readonly LibraryUser _libraryUser;
         private readonly DateTimePeriod _dateTimePeriod;
 
@@ -21,14 +22,15 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
             _dateTimePeriod = GetValidDateTimePeriod();
         }
 
-        private void Act() 
+        private void Act()
             => _book.Borrow(_libraryUser, _dateTimePeriod);
 
         [Fact]
         public void when_book_is_not_borrowed_should_be_out_of_stock()
         {
             // Arrange
-            _book._currentLoan = null;
+            _book._loans = new List<Loan>();
+            _book._inStock = true;
 
             // Act
             Act();
@@ -41,10 +43,11 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         public void when_book_is_already_borrowed_should_throws_an_exception()
         {
             // Arrange
-            _book._currentLoan = Loan.Create(_book.Id, ExpectedUserId, _dateTimePeriod);
+            _book._loans.Add(Loan.Create(_book.Id, ExpectedUserId, _dateTimePeriod));
+            _book._inStock = false;
 
             // Act
-            var result = Record.Exception(() => Act());
+            var result = Record.Exception(Act);
 
             // Assert
             result.Should().NotBeNull();

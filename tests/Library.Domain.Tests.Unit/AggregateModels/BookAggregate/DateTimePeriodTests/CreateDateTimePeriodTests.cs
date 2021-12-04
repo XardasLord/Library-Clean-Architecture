@@ -24,18 +24,6 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.DateTimePeriod
         }
 
         [Fact]
-        public void given_start_date_in_the_past_should_throws_an_exception()
-        {
-            var startDate = DateTime.UtcNow.AddDays(-1);
-            var endDate = DateTime.UtcNow.AddMonths(1);
-
-            var result = Record.Exception(() => Act(startDate, endDate));
-
-            result.Should().NotBeNull();
-            result.Should().BeOfType<DateTimePeriodValidationException>();
-        }
-
-        [Fact]
         public void given_start_date_the_same_as_end_date_should_throws_an_exception()
         {
             var startDate = DateTime.UtcNow.AddDays(1);

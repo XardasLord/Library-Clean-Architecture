@@ -16,7 +16,8 @@ namespace Library.Infrastructure.Persistence.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Isbn = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Isbn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InStock = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +62,7 @@ namespace Library.Infrastructure.Persistence.Migrations
                         column: x => x.BookId,
                         principalTable: "Book",
                         principalColumn: "BookId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Loan_LibraryUser_UserId",
                         column: x => x.UserId,
@@ -73,8 +74,7 @@ namespace Library.Infrastructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Loan_BookId",
                 table: "Loan",
-                column: "BookId",
-                unique: true);
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Loan_UserId",

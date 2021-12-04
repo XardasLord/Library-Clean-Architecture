@@ -19,6 +19,10 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                 .HasColumnName("BookId")
                 .UseIdentityColumn();
 
+            entity.Property(x => x.InStock)
+                .HasColumnName("InStock")
+                .IsRequired();
+
             entity.OwnsOne(x => x.BookInformation, x =>
             {
                 x.Property(b => b.Title)
@@ -39,12 +43,18 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                         .IsRequired();
                 });
             });
-
-            entity.HasOne<Loan>("_currentLoan")
+            
+            entity.HasMany<Loan>("_loans")
                 .WithOne()
                 .IsRequired(false)
-                .HasForeignKey<Loan>("_bookId")
+                .HasForeignKey("_bookId")
                 .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            // entity.HasOne<Loan>("_currentLoan")
+            //     .WithOne()
+            //     .IsRequired(false)
+            //     .HasForeignKey<Loan>("_bookId")
+            //     .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

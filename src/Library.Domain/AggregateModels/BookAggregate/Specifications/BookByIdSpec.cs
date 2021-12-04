@@ -7,7 +7,7 @@ namespace Library.Domain.AggregateModels.BookAggregate.Specifications
         public BookByIdSpec(long bookId)
         {
             Query
-                .Include("_currentLoan")
+                .Include("_loans")
                 .Where(book => book.Id == bookId);
         }
     }

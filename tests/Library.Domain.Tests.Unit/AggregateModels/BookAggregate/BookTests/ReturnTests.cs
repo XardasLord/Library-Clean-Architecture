@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
@@ -28,7 +29,8 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         public void when_book_is_borrowed_book_should_be_returned()
         {
             // Arrange
-            _book._currentLoan = Loan.Create(_book.Id, ExpectedUserId, _dateTimePeriod);
+            _book._loans.Add(Loan.Create(_book.Id, ExpectedUserId, _dateTimePeriod));
+            _book._inStock = false;
 
             // Act
             Act();
@@ -40,10 +42,14 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         [Fact]
         public void when_book_is_not_borrowed_should_throws_an_exception()
         {
-            _book._currentLoan = null;
+            // Arrange
+            _book._loans = new List<Loan>();
+            _book._inStock = true;
 
+            // Act
             var result = Record.Exception(Act);
 
+            // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<BookIsInStockException>();
         }

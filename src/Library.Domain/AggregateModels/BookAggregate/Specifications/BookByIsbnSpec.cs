@@ -7,7 +7,7 @@ namespace Library.Domain.AggregateModels.BookAggregate.Specifications
         public BookByIsbnSpec(Isbn isbn)
         {
             Query
-                .Include("_currentLoan")
+                .Include("_loans")
                 .Where(book => book.BookInformation.Isbn == isbn);
         }
     }

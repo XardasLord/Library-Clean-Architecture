@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Library.Application.Auth;
 using Library.Application.UseCases.Books.Exceptions;
 using Library.Domain.AggregateModels.BookAggregate;
+using Library.Domain.AggregateModels.BookAggregate.Specifications;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.SharedKernel;
 using MediatR;
@@ -30,10 +31,11 @@ namespace Library.Application.UseCases.Books.Commands.BorrowBook
             var libraryUser = await _libraryUserRepository.GetByIdAsync(_currentUser.UserId, cancellationToken);
             
             // TODO: Get book from repo by its ISBN, not it directly
-            var book = await _bookRepository.GetByIdAsync(command.BookId, cancellationToken)
+            var spec = new BookByIdSpec(command.BookId);
+            var book = await _bookRepository.GetBySpecAsync(spec, cancellationToken)
                        ?? throw new BookNotFoundException(command.BookId);
             
-            var dateTimePeriod = DateTimePeriod.Create(command.BorrowingStartDate, command.BorrowingEndDate);
+            var dateTimePeriod = DateTimePeriod.Create(DateTime.UtcNow, command.BorrowingEndDate);
             book.Borrow(libraryUser, dateTimePeriod);
             
             await _bookRepository.SaveChangesAsync(cancellationToken);
