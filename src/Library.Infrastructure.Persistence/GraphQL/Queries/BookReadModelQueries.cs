@@ -2,18 +2,18 @@
 using HotChocolate;
 using HotChocolate.Data;
 using HotChocolate.Types;
-using Library.Application.UseCases.Books.ViewModels;
 using Library.Infrastructure.Persistence.DbContexts;
+using Library.Infrastructure.Persistence.DbContexts.ReadModels;
 
 namespace Library.Infrastructure.Persistence.GraphQL.Queries
 {
-    public class BookViewModelQueries
+    public class BookReadModelQueries
     {
         [UsePaging(IncludeTotalCount = true, MaxPageSize = 200)]
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<BookViewModel> GetBooks([Service] LibraryDbContext dbContext)
-            => dbContext.BookViewModels.AsQueryable();
+        public IQueryable<BookReadModel> GetBooks([Service] LibraryReadDbContext dbContext)
+            => dbContext.BookReadModels.AsQueryable();
     }
 }

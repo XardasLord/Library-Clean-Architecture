@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Library.Infrastructure.Persistence.EntityConfigurations
+namespace Library.Infrastructure.Persistence.DbContexts.EntityConfigurations
 {
     public class LoanConfiguration : IEntityTypeConfiguration<Loan>
     {

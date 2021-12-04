@@ -3,7 +3,7 @@ using Library.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Library.Infrastructure.Persistence.EntityConfigurations
+namespace Library.Infrastructure.Persistence.DbContexts.EntityConfigurations
 {
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {
@@ -49,12 +49,6 @@ namespace Library.Infrastructure.Persistence.EntityConfigurations
                 .IsRequired(false)
                 .HasForeignKey("_bookId")
                 .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
-
-            // entity.HasOne<Loan>("_currentLoan")
-            //     .WithOne()
-            //     .IsRequired(false)
-            //     .HasForeignKey<Loan>("_bookId")
-            //     .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

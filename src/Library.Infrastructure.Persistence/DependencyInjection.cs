@@ -26,6 +26,11 @@ namespace Library.Infrastructure.Persistence
                     options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
+                .AddDbContext<LibraryReadDbContext>(options =>
+                {
+                    options.EnableDetailedErrors();
+                    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
+                })
                 .AddScoped(typeof(IAggregateRepository<>), typeof(AggregateRepository<>))
                 .AddScoped(typeof(IAggregateReadRepository<>), typeof(AggregateRepository<>));
 
@@ -34,11 +39,11 @@ namespace Library.Infrastructure.Persistence
             services
                 .AddGraphQLServer()
                 .AddAuthorization()
-                .AddQueryType<BookViewModelQueries>()
+                .AddQueryType<BookReadModelQueries>()
                 .AddProjections()
                 .AddFiltering()
                 .AddSorting()
-                .AddType<BookViewModelType>();
+                .AddType<BookReadModelType>();
 
             services.AddErrorFilter<GraphQLErrorFilter>();
 
