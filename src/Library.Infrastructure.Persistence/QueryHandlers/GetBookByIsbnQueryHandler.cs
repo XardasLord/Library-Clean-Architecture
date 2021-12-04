@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Library.Application.UseCases.Books.Queries;
@@ -10,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.QueryHandlers
 {
-    public class GetAvailableBooksQueryHandler : IRequestHandler<GetAvailableBooksQuery, IReadOnlyCollection<BookViewModel>>
+    public class GetBookByIsbnQueryHandler : IRequestHandler<GetBookByIsbnQuery, BookViewModel>
     {
         private readonly LibraryReadDbContext _context;
 
-        public GetAvailableBooksQueryHandler(LibraryReadDbContext context)
+        public GetBookByIsbnQueryHandler(LibraryReadDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IReadOnlyCollection<BookViewModel>> Handle(GetAvailableBooksQuery query, CancellationToken cancellationToken)
+        public async Task<BookViewModel> Handle(GetBookByIsbnQuery query, CancellationToken cancellationToken)
         {
-            var books = await _context.BookReadModels
-                .Where(x => x.InStock)
+            var book = await _context.BookReadModels
+                .Where(x => x.Isbn == query.Isbn)
                 .Select(x => new BookViewModel
                 {
                     Id = x.Id,
@@ -33,9 +32,9 @@ namespace Library.Infrastructure.Persistence.QueryHandlers
                     InStock = x.InStock
                 })
                 .AsNoTracking()
-                .ToListAsync(cancellationToken: cancellationToken);
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
-            return books;
+            return book;
         }
     }
 }

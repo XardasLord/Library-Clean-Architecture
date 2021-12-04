@@ -1,7 +1,7 @@
 ﻿using Library.Application.UseCases.Books.ViewModels;
 using MediatR;
 
-namespace Library.Application.UseCases.Books.Queries.GetBookByIsbn
+namespace Library.Application.UseCases.Books.Queries
 {
     public class GetBookByIsbnQuery : IRequest<BookViewModel>
     {

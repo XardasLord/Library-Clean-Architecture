@@ -13,8 +13,7 @@ namespace Library.Application
             var infrastructureAssembly = AppDomain.CurrentDomain.Load("Library.Infrastructure.Persistence");
             
             return services
-                .AddMediatR(Assembly.GetExecutingAssembly(), infrastructureAssembly)
-                .AddAutoMapper(Assembly.GetExecutingAssembly());
+                .AddMediatR(Assembly.GetExecutingAssembly(), infrastructureAssembly);
         }
     }
 }
