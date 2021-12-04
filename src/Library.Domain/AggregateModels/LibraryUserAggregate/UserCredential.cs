@@ -13,6 +13,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
         public UserCredential(string login, string password)
         {
+            // TODO: Implement Guard clause
             if (string.IsNullOrWhiteSpace(login))
                 throw new InvalidCredentialException($"Parameter {nameof(login)} cannot be empty.");
 

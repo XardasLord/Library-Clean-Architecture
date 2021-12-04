@@ -1,11 +1,13 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
+using Library.Domain.Tests.Unit.Helpers;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
-    public class CreateBookTests
+    public class CreateBookTests : AggregateTestHelper
     {
         private static Book Act(string title, string author, string subject, string isbn) 
             => Book.Create(title, author, subject, isbn);
@@ -14,10 +16,10 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         public void given_valid_data_book_should_be_created()
         {
             // Arrange
-            const string title = "Book Title";
-            const string author = "Book Author";
-            const string subject = "Subject";
-            const string isbn = "9783161484100";
+            var title = GetBookTitle;
+            var author = GetBookAuthor;
+            var subject = GetBookSubject;
+            var isbn = GetIsbn.Value;
 
             // Act
             var result = Act(title, author, subject, isbn);
@@ -32,67 +34,111 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         }
 
         [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        public void given_invalid_title_book_creation_should_throw_an_exception(string title)
+        [MemberData(nameof(StringEmptyOrWhiteSpaceData))]
+        public void given_empty_title_book_creation_should_throw_an_exception(string title)
         {
-            const string author = "Book Author";
-            const string subject = "Subject";
-            const string isbn = "Isbn";
+            var author = GetBookAuthor;
+            var subject = GetBookSubject;
+            var isbn = GetIsbn.Value;
 
             var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<BookCreationException>();
+            result.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public void given_null_title_book_creation_should_throw_an_exception()
+        {
+            var author = GetBookAuthor;
+            var subject = GetBookSubject;
+            var isbn = GetIsbn.Value;
+
+            var result = Record.Exception(() => Act(null, author, subject, isbn));
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ArgumentNullException>();
         }
 
         [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        public void given_invalid_author_book_creation_should_throw_an_exception(string author)
+        [MemberData(nameof(StringEmptyOrWhiteSpaceData))]
+        public void given_empty_author_book_creation_should_throw_an_exception(string author)
         {
-            const string title = "Title";
-            const string subject = "Subject";
-            const string isbn = "Isbn";
+            var title = GetBookTitle;
+            var subject = GetBookSubject;
+            var isbn = GetIsbn.Value;
 
             var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<BookCreationException>();
+            result.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public void given_null_author_book_creation_should_throw_an_exception()
+        {
+            var title = GetBookTitle;
+            var subject = GetBookSubject;
+            var isbn = GetIsbn.Value;
+
+            var result = Record.Exception(() => Act(title, null, subject, isbn));
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ArgumentNullException>();
         }
 
         [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        public void given_invalid_subject_book_creation_should_throw_an_exception(string subject)
+        [MemberData(nameof(StringEmptyOrWhiteSpaceData))]
+        public void given_empty_subject_book_creation_should_throw_an_exception(string subject)
         {
-            const string title = "Title";
-            const string author = "Author";
-            const string isbn = "Isbn";
+            var title = GetBookTitle;
+            var author = GetBookAuthor;
+            var isbn = GetIsbn.Value;
 
             var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<BookCreationException>();
+            result.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public void given_null_subject_book_creation_should_throw_an_exception()
+        {
+            var title = GetBookTitle;
+            var author = GetBookAuthor;
+            var isbn = GetIsbn.Value;
+
+            var result = Record.Exception(() => Act(title, author, null, isbn));
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ArgumentNullException>();
         }
 
         [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
+        [MemberData(nameof(StringEmptyOrWhiteSpaceData))]
         public void given_empty_isbn_book_creation_should_throw_an_exception(string isbn)
         {
-            const string title = "Title";
-            const string author = "Author";
-            const string subject = "Subject";
+            var title = GetBookTitle;
+            var author = GetBookAuthor;
+            var subject = GetBookSubject;
 
             var result = Record.Exception(() => Act(title, author, subject, isbn));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<BookCreationException>();
+            result.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public void given_null_isbn_book_creation_should_throw_an_exception()
+        {
+            var title = GetBookTitle;
+            var author = GetBookAuthor;
+            var subject = GetBookSubject;
+
+            var result = Record.Exception(() => Act(title, author, subject, null));
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ArgumentNullException>();
         }
 
         [Theory]
@@ -102,9 +148,9 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         [InlineData("11122233344455")] // 14 length
         public void given_invalid_isbn_format_book_creation_should_throw_an_exception(string isbn)
         {
-            const string title = "Title";
-            const string author = "Author";
-            const string subject = "Subject";
+            var title = GetBookTitle;
+            var author = GetBookAuthor;
+            var subject = GetBookSubject;
 
             var result = Record.Exception(() => Act(title, author, subject, isbn));
 

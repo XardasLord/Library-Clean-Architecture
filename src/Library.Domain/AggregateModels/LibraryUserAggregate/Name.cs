@@ -14,6 +14,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
         public Name(string firstName, string lastName)
         {
+            // TODO: Implement Guard clause
             if (string.IsNullOrWhiteSpace(firstName))
                 throw new LibraryUserCreationException($"Parameter {nameof(firstName)} cannot be empty.");
 

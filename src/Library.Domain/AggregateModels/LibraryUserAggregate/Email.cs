@@ -15,6 +15,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
         public Email(string email)
         {
+            // TODO: Implement Guard clause
             try
             {
                 var emailAddress = new MailAddress(email);
@@ -33,7 +34,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         }
 
         public static implicit operator string(Email email) => email.Value;
-        public static implicit operator Email(string email) => new Email(email);
+        public static implicit operator Email(string email) => new(email);
 
         public override string ToString() => Value;
     }

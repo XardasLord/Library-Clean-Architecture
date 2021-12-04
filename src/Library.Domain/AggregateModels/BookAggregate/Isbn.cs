@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Ardalis.GuardClauses;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
 using Library.Domain.Exceptions;
 using Library.Domain.SeedWork;
@@ -18,6 +19,8 @@ namespace Library.Domain.AggregateModels.BookAggregate
 
         public Isbn(string isbn)
         {
+            Guard.Against.NullOrWhiteSpace(isbn, nameof(isbn));
+                
             const string nonDigitsPattern = "[^.0-9]";
             isbn = Regex.Replace(isbn, nonDigitsPattern, string.Empty);
 
@@ -33,7 +36,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
         }
 
         public static implicit operator string(Isbn isbn) => isbn.Value;
-        public static implicit operator Isbn(string value) => new Isbn(value);
+        public static implicit operator Isbn(string value) => new(value);
 
         public override string ToString() => Value;
     }

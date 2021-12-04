@@ -11,6 +11,13 @@ namespace Library.Domain.Tests.Unit.Helpers
         protected static LibraryUser GetValidLibraryUserAggregate() => PrepareLibraryUserAggregate();
         protected static Book GetValidBookAggregate() => PrepareBookAggregate();
         protected static DateTimePeriod GetValidDateTimePeriod() => PrepareValidDateTimePeriod();
+        
+        
+        protected static string GetBookTitle => "Test Book Title";
+        protected static string GetBookAuthor => "Test Book Author";
+        protected static string GetBookSubject => "Test Book Subject";
+        protected static Isbn GetIsbn => new Isbn("9783161484100");
+        
 
         private static LibraryUser PrepareLibraryUserAggregate()
         {

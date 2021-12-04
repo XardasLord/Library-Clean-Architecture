@@ -49,6 +49,8 @@ namespace Library.Tests.Base
 
 		public static IEnumerable<object[]> StringNullOrWhiteSpaceData =>
 			new[] { "", " ", "  ", null }.ToMemberData();
+		public static IEnumerable<object[]> StringEmptyOrWhiteSpaceData =>
+			new[] { "", " ", "  " }.ToMemberData();
 
 		public static IEnumerable<object[]> DecimalNegativeData =>
 			new[] { -100m, -10m, -1m, -0.1m, -0.01m }.ToMemberData();

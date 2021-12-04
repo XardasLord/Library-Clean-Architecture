@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Library.Domain.AggregateModels.BookAggregate.Exceptions;
+using Ardalis.GuardClauses;
 using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.BookAggregate
@@ -11,26 +11,15 @@ namespace Library.Domain.AggregateModels.BookAggregate
         public string Subject { get; }
         public Isbn Isbn { get; }
 
-        private BookInformation() { }
+        private BookInformation()
+        {
+        }
 
         public BookInformation(string title, string author, string subject, string isbn)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                throw new BookCreationException($"Parameter {nameof(title)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(author))
-                throw new BookCreationException($"Parameter {nameof(author)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(subject))
-                throw new BookCreationException($"Parameter {nameof(subject)} cannot be empty.");
-
-            if (string.IsNullOrWhiteSpace(isbn))
-                throw new BookCreationException($"Parameter {nameof(isbn)} cannot be empty.");
-
-
-            Title = title;
-            Author = author;
-            Subject = subject;
+            Title = Guard.Against.NullOrWhiteSpace(title, nameof(title));
+            Author = Guard.Against.NullOrWhiteSpace(author, nameof(author));
+            Subject = Guard.Against.NullOrWhiteSpace(subject, nameof(subject));
             Isbn = new Isbn(isbn);
         }
 
