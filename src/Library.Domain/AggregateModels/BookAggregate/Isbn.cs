@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Ardalis.GuardClauses;
 using Library.Domain.AggregateModels.BookAggregate.Exceptions;
-using Library.Domain.Exceptions;
-using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class Isbn : ValueObject
+    public record Isbn
     {
         // https://howtodoinjava.com/regex/java-regex-validate-international-standard-book-number-isbns/
         private static readonly Regex Isbn10FormatPattern = new Regex(@"^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
@@ -15,7 +12,9 @@ namespace Library.Domain.AggregateModels.BookAggregate
         
         public string Value { get; }
 
-        private Isbn() { }
+        private Isbn()
+        {
+        }
 
         public Isbn(string isbn)
         {
@@ -28,11 +27,6 @@ namespace Library.Domain.AggregateModels.BookAggregate
                 throw new BookIsbnInvalidFormatException(isbn);
 
             Value = isbn;
-        }
-
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return Value;
         }
 
         public static implicit operator string(Isbn isbn) => isbn.Value;

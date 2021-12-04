@@ -7,9 +7,9 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class Email : ValueObject
+    public record Email
     {
-        public string Value { get; }
+        public string Value { get; init; }
 
         private Email() { }
 
@@ -26,11 +26,6 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             {
                 throw new InvalidEmailException(email, ex.Message);
             }
-        }
-
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return Value;
         }
 
         public static implicit operator string(Email email) => email.Value;

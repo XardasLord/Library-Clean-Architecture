@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
-using Library.Domain.Exceptions;
-using Library.Domain.SeedWork;
+﻿using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class Name : ValueObject
+    public record Name
     {
         public string FirstName { get; }
         public string LastName { get; }
 
-        public Name() { }
+        public Name()
+        {
+        }
 
         public Name(string firstName, string lastName)
         {
@@ -23,12 +22,6 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
             FirstName = firstName;
             LastName = lastName;
-        }
-
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return FirstName;
-            yield return LastName;
         }
 
         public static implicit operator string(Name name) => name.ToString();

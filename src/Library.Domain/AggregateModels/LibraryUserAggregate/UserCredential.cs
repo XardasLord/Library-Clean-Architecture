@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Security.Authentication;
-using Library.Domain.SeedWork;
+﻿using System.Security.Authentication;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class UserCredential : ValueObject
+    public record UserCredential
     {
         public string Login { get; }
         public string Password { get; }
 
-        private UserCredential() { }
+        private UserCredential()
+        {
+        }
 
         public UserCredential(string login, string password)
         {
@@ -25,12 +25,6 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
 
             Login = login;
             Password = password;
-        }
-
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return Login;
-            yield return Password;
         }
     }
 }

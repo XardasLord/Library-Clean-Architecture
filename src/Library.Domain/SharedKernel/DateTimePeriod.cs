@@ -5,12 +5,14 @@ using Library.Domain.SeedWork;
 
 namespace Library.Domain.SharedKernel
 {
-    public class DateTimePeriod : ValueObject
+    public record DateTimePeriod
     {
         public DateTime StartDate { get; }
         public DateTime EndDate { get; }
 
-        private DateTimePeriod() { }
+        private DateTimePeriod()
+        {
+        }
 
         private DateTimePeriod(DateTime startDate, DateTime endDate)
         {
@@ -27,12 +29,6 @@ namespace Library.Domain.SharedKernel
         public static DateTimePeriod Create(DateTime startDate, DateTime endDate)
         {
             return new DateTimePeriod(startDate, endDate);
-        }
-
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return StartDate;
-            yield return EndDate;
         }
     }
 }

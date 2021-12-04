@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using Ardalis.GuardClauses;
-using Library.Domain.SeedWork;
+﻿using Ardalis.GuardClauses;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class BookInformation : ValueObject
+    public record BookInformation
     {
-        public string Title { get; }
-        public string Author { get; }
-        public string Subject { get; }
-        public Isbn Isbn { get; }
+        public string Title { get; init; }
+        public string Author { get; init;  }
+        public string Subject { get; init;  }
+        public Isbn Isbn { get; init;  }
 
         private BookInformation()
         {
@@ -21,11 +19,6 @@ namespace Library.Domain.AggregateModels.BookAggregate
             Author = Guard.Against.NullOrWhiteSpace(author, nameof(author));
             Subject = Guard.Against.NullOrWhiteSpace(subject, nameof(subject));
             Isbn = new Isbn(isbn);
-        }
-
-        protected override IEnumerable<object> GetAtomicValues()
-        {
-            yield return Isbn;
         }
     }
 }
