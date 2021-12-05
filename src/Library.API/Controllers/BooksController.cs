@@ -39,7 +39,7 @@ namespace Library.API.Controllers
         [HttpPost("{bookId}/borrow")]
         public async Task<IActionResult> BorrowBook(long bookId, BorrowBookCommand command)
         {
-            command.BookId = bookId;
+            command = command with { BookId = bookId };
 
             await Mediator.Send(command);
 

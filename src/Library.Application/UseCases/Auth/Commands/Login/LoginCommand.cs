@@ -2,9 +2,5 @@
 
 namespace Library.Application.UseCases.Auth.Commands.Login
 {
-    public class LoginCommand : IRequest<LoginCommandResponse>
-    {
-        public string Login { get; set; }
-        public string Password { get; set; }
-    }
+    public record LoginCommand(string Login, string Password) : IRequest<LoginCommandResponse>;
 }

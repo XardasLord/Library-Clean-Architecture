@@ -2,11 +2,5 @@
 
 namespace Library.Application.UseCases.Books.Commands.ReturnBook
 {
-    public class ReturnBookCommand : IRequest
-    {
-        public long BookId { get; }
-
-        public ReturnBookCommand(long bookId) 
-            => BookId = bookId;
-    }
+    public record ReturnBookCommand(long BookId) : IRequest;
 }

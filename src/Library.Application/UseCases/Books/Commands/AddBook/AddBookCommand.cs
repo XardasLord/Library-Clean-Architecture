@@ -2,11 +2,5 @@
 
 namespace Library.Application.UseCases.Books.Commands.AddBook
 {
-    public class AddBookCommand : IRequest<long>
-    {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string Subject { get; set; }
-        public string Isbn { get; set; }
-    }
+    public record AddBookCommand(string Title, string Author, string Subject, string Isbn) : IRequest<long>;
 }
