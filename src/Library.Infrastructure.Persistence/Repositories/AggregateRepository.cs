@@ -7,8 +7,8 @@ namespace Library.Infrastructure.Persistence.Repositories
 {
     public class AggregateRepository<T> : RepositoryBase<T>, IAggregateReadRepository<T>, IAggregateRepository<T> where T : class, IAggregateRoot
     {
-        public AggregateRepository(LibraryDbContext dbContext)
-            : base(dbContext)
+        public AggregateRepository(WriteDbContext writeDbContext)
+            : base(writeDbContext)
         {
         }
     }

@@ -8,7 +8,7 @@ namespace Library.Infrastructure.Persistence.Extensions
 {
     public static class MediatorExtensions
     {
-        public static async Task DispatchDomainEventsAsync(this IMediator mediator, LibraryDbContext context)
+        public static async Task DispatchDomainEventsAsync(this IMediator mediator, WriteDbContext context)
         {
             var domainEntities = context.ChangeTracker
                 .Entries<Entity>()

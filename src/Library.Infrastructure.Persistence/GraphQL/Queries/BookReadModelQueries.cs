@@ -13,7 +13,7 @@ namespace Library.Infrastructure.Persistence.GraphQL.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<BookReadModel> GetBooks([Service] LibraryReadDbContext dbContext)
+        public IQueryable<BookReadModel> GetBooks([Service] ReadDbContext dbContext)
             => dbContext.BookReadModels.AsQueryable();
     }
 }

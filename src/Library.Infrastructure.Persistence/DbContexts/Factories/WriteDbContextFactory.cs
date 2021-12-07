@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Library.Infrastructure.Persistence.DbContexts.Factories
 {
-    public class LibraryDbContextFactory : IDesignTimeDbContextFactory<WriteDbContext>
+    public class WriteDbContextFactory : IDesignTimeDbContextFactory<WriteDbContext>
     {
         public WriteDbContext CreateDbContext(string[] args)
         {

@@ -21,12 +21,12 @@ namespace Library.Infrastructure.Persistence
 
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
             => services
-                .AddDbContext<LibraryDbContext>(options =>
+                .AddDbContext<WriteDbContext>(options =>
                 {
                     options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
-                .AddDbContext<LibraryReadDbContext>(options =>
+                .AddDbContext<ReadDbContext>(options =>
                 {
                     options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
@@ -74,7 +74,7 @@ namespace Library.Infrastructure.Persistence
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var db = services.GetRequiredService<LibraryDbContext>();
+                    var db = services.GetRequiredService<WriteDbContext>();
                     db.Database.Migrate();
                 }
                 catch (Exception ex)

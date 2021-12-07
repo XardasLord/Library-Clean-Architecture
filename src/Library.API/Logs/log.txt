@@ -1,4 +1,0 @@
-2020-06-06 07:37:12.081 +00:00 [INF] Starting web host
-2020-06-06 07:37:13.645 +00:00 [WRN] Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.
-2020-06-06 07:38:18.656 +00:00 [INF] Starting web host
-2020-06-06 07:38:19.985 +00:00 [WRN] Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed.

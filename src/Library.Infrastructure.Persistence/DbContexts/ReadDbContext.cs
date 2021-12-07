@@ -1,14 +1,15 @@
-﻿using Library.Infrastructure.Persistence.DbContexts.EntityConfigurations.ReadModelsConfiguration;
+﻿using System.Linq;
+using Library.Infrastructure.Persistence.DbContexts.EntityConfigurations.ReadModelsConfiguration;
 using Library.Infrastructure.Persistence.DbContexts.ReadModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.DbContexts
 {
-    public class LibraryReadDbContext : DbContext
+    public class ReadDbContext : DbContext
     {
-        public DbSet<BookReadModel> BookReadModels => Set<BookReadModel>();
+        public IQueryable<BookReadModel> BookReadModels => Set<BookReadModel>().AsNoTracking();
 
-        public LibraryReadDbContext(DbContextOptions<LibraryReadDbContext> options) : base(options)
+        public ReadDbContext(DbContextOptions<ReadDbContext> options) : base(options)
         {
         }
 

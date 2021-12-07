@@ -11,9 +11,9 @@ namespace Library.Infrastructure.Persistence.QueryHandlers
 {
     public class GetBookQueryHandler : IRequestHandler<GetBookQuery, BookViewModel>
     {
-        private readonly LibraryReadDbContext _context;
+        private readonly ReadDbContext _context;
 
-        public GetBookQueryHandler(LibraryReadDbContext context)
+        public GetBookQueryHandler(ReadDbContext context)
         {
             _context = context;
         }
@@ -31,7 +31,6 @@ namespace Library.Infrastructure.Persistence.QueryHandlers
                     Title = x.Title,
                     InStock = x.InStock
                 })
-                .AsNoTracking()
                 .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
             return book;

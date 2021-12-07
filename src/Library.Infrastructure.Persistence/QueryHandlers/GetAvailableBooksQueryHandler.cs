@@ -12,9 +12,9 @@ namespace Library.Infrastructure.Persistence.QueryHandlers
 {
     public class GetAvailableBooksQueryHandler : IRequestHandler<GetAvailableBooksQuery, IReadOnlyCollection<BookViewModel>>
     {
-        private readonly LibraryReadDbContext _context;
+        private readonly ReadDbContext _context;
 
-        public GetAvailableBooksQueryHandler(LibraryReadDbContext context)
+        public GetAvailableBooksQueryHandler(ReadDbContext context)
         {
             _context = context;
         }
@@ -32,7 +32,6 @@ namespace Library.Infrastructure.Persistence.QueryHandlers
                     Title = x.Title,
                     InStock = x.InStock
                 })
-                .AsNoTracking()
                 .ToListAsync(cancellationToken: cancellationToken);
 
             return books;

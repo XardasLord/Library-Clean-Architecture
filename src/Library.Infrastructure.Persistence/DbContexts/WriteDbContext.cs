@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.DbContexts
 {
-    public class LibraryWriteDbContext : DbContext
+    public class WriteDbContext : DbContext
     {
         private readonly IMediator _mediator;
 
-        public LibraryWriteDbContext(DbContextOptions<LibraryWriteDbContext> options, IMediator mediator) : base(options)
+        public WriteDbContext(DbContextOptions<WriteDbContext> options, IMediator mediator) : base(options)
         {
             _mediator = mediator;
         }
