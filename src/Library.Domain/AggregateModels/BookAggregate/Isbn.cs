@@ -1,15 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 using Ardalis.GuardClauses;
-using Library.Domain.AggregateModels.BookAggregate.Exceptions;
+using Library.Domain.AggregateModels.BookAggregate.Guards;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
     public record Isbn
     {
-        // https://howtodoinjava.com/regex/java-regex-validate-international-standard-book-number-isbns/
-        private static readonly Regex Isbn10FormatPattern = new Regex(@"^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
-        private static readonly Regex Isbn13FormatPattern = new Regex(@"^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$");
-        
         public string Value { get; }
 
         private Isbn()
@@ -19,14 +15,11 @@ namespace Library.Domain.AggregateModels.BookAggregate
         public Isbn(string isbn)
         {
             Guard.Against.NullOrWhiteSpace(isbn, nameof(isbn));
-                
+            
             const string nonDigitsPattern = "[^.0-9]";
             isbn = Regex.Replace(isbn, nonDigitsPattern, string.Empty);
 
-            if (!Isbn10FormatPattern.IsMatch(isbn) && !Isbn13FormatPattern.IsMatch(isbn))
-                throw new BookIsbnInvalidFormatException(isbn);
-
-            Value = isbn;
+            Value = Guard.Against.IsbnCorrectness(isbn, nameof(isbn));
         }
 
         public static implicit operator string(Isbn isbn) => isbn.Value;
