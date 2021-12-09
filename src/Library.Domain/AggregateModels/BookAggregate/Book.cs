@@ -9,16 +9,16 @@ using Library.Domain.SharedKernel;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class Book : Entity<long>, IAggregateRoot
+    public class Book : Entity<BookId>, IAggregateRoot
     {
-        private BookInformation _bookInformation;
+        internal BookInformation _bookInformation;
         internal List<Loan> _loans;
         internal bool _inStock;
 
         public BookInformation BookInformation => _bookInformation;
         public bool InStock => _inStock;
 
-        private Book()
+        internal Book()
         {
             _loans = new List<Loan>();
         }

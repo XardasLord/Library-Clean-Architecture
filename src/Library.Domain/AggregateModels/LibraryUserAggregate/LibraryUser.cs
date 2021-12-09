@@ -5,7 +5,7 @@ using Library.Domain.SharedKernel;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class LibraryUser : Entity<long>, IAggregateRoot
+    public class LibraryUser : Entity<LibraryUserId>, IAggregateRoot
     {
         private UserCredential _credentials;
         private string _firstName;
@@ -21,8 +21,9 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         public bool IsActive => _isActive;
         public IReadOnlyCollection<Loan> ActiveLoans => _activeLoans;
 
-        private LibraryUser()
+        internal LibraryUser()
         {
+            _activeLoans = new List<Loan>();
         }
 
         private LibraryUser(UserCredential credentials, Name name, Email email)

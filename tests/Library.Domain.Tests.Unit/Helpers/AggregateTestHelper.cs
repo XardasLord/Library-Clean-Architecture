@@ -8,28 +8,33 @@ namespace Library.Domain.Tests.Unit.Helpers
 {
     public class AggregateTestHelper : TestBase
     {
-        protected static LibraryUser GetValidLibraryUserAggregate() => PrepareLibraryUserAggregate();
-        protected static Book GetValidBookAggregate() => PrepareBookAggregate();
+        protected LibraryUser GetValidLibraryUserAggregate() => PrepareLibraryUserAggregate();
+        protected Book GetValidBookAggregate() => PrepareBookAggregate();
         protected static DateTimePeriod GetValidDateTimePeriod() => PrepareValidDateTimePeriod();
-        
-        
-        protected static string GetBookTitle => "Test Book Title";
-        protected static string GetBookAuthor => "Test Book Author";
-        protected static string GetBookSubject => "Test Book Subject";
-        protected static Isbn GetIsbn => new Isbn("9783161484100");
+
+
+        protected string GetBookTitle => CreateString();
+        protected string GetBookAuthor => CreateString();
+        protected string GetBookSubject => CreateString();
+        protected static Isbn GetIsbn => new("9783161484100");
         
 
-        private static LibraryUser PrepareLibraryUserAggregate()
+        private LibraryUser PrepareLibraryUserAggregate()
         {
-            return LibraryUser.Create(
-                new UserCredential("Login", "Password"),
-                new Name("FirstName", "Last"),
-                new Email("Email@email.com"));
+            return new LibraryUser
+            {
+                Id = CreateLong()
+            };
         }
 
-        private static Book PrepareBookAggregate()
+        private Book PrepareBookAggregate()
         {
-            return Book.Create("Title", "Author", "Subject", "9783161484100");
+            return new Book
+            {
+                Id = CreateLong(),
+                _bookInformation = new BookInformation(GetBookTitle, GetBookAuthor, GetBookSubject, GetIsbn.Value),
+                _inStock = true
+            };
         }
         
         private static DateTimePeriod PrepareValidDateTimePeriod() 

@@ -17,6 +17,7 @@ namespace Library.Infrastructure.Persistence.DbContexts.EntityConfigurations
 
             entity.Property(x => x.Id)
                 .HasColumnName("BookId")
+                .HasConversion(id => id.Value, id => new BookId(id))
                 .UseIdentityColumn();
 
             entity.Property(x => x.InStock)

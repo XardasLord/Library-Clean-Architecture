@@ -5,7 +5,7 @@ namespace Library.Domain.SeedWork
 {
     public abstract class Entity<T> : Entity
     {
-        public T Id { get; protected set; }
+        public T Id { get; internal set; }
 
         private int? _requestedHashCode;
 

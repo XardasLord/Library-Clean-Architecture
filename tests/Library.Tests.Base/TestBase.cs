@@ -57,6 +57,9 @@ namespace Library.Tests.Base
 
 		public static IEnumerable<object[]> IntNegativeData =>
 			new[] { -100, -10, -1 }.ToMemberData();
+		
+		public static IEnumerable<object[]> IntNegativeAndZeroData =>
+			new[] { -100, -10, -1, 0 }.ToMemberData();
 
 		public static IEnumerable<object[]> IntNullOrNegativeData =>
 			new[] { (int?)null, -100, -10, -1 }.ToMemberData();
@@ -84,6 +87,9 @@ namespace Library.Tests.Base
 
 		protected string CreateString() =>
 			Create<string>();
+
+		protected long CreateLong() =>
+			Create<long>();
 
 		protected DateTime CreateDateTime() =>
 			Create<DateTime>();
