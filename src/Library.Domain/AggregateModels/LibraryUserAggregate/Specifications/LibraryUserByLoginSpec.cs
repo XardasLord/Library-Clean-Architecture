@@ -10,4 +10,14 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate.Specifications
                 .Where(user => user.Credentials.Login == login);
         }
     }
+
+    public sealed class LibraryUserWithActiveLoansSpec : Specification<LibraryUser>, ISingleResultSpecification
+    {
+        public LibraryUserWithActiveLoansSpec(long id)
+        {
+            Query
+                .Include(user => user.ActiveLoans)
+                .Where(user => user.Id == id);
+        }
+    }
 }

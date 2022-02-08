@@ -45,5 +45,17 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             
             return user;
         }
+
+        public void BorrowBook(Book book, DateTimePeriod borrowPeriod)
+        {
+            if (ActiveLoans.Count == 3)
+                throw new LibraryUserMaximumBooksBorrowedExceededException("Cannot borrow more books at the same time. User has 3 active loans.");
+            
+            book.Borrow(this, borrowPeriod);
+            
+            _activeLoans.Add(Loan.Create(book.Id, Id, borrowPeriod));
+
+            AddDomainEvent(new LibraryUserBorrowedBookEvent(Id, book.Id));
+        }
     }
 }

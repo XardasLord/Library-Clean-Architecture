@@ -47,7 +47,6 @@ namespace Library.Domain.AggregateModels.BookAggregate
             if (!InStock)
                 throw new BookIsNotInStockException();
             
-            _loans.Add(Loan.Create(Id, libraryUser.Id, borrowPeriod));
             _inStock = false;
 
             AddDomainEvent(new BookBorrowedEvent(Id, libraryUser.Id, borrowPeriod));
@@ -58,8 +57,9 @@ namespace Library.Domain.AggregateModels.BookAggregate
             if (InStock)
                 throw new BookIsInStockException(Id);
 
-            var activeLoan = _loans.Single(l => l.IsActive);
-            activeLoan.Finish();
+            // TODO: This should be moved as a responsibility of LibraryUser domain class
+            // var activeLoan = _loans.Single(l => l.IsActive);
+            // activeLoan.Finish();
 
             _inStock = true;
 

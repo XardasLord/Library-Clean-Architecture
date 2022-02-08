@@ -11,6 +11,7 @@ namespace Library.Domain.Tests.Unit.Helpers
         protected LibraryUser GetValidLibraryUserAggregate() => PrepareLibraryUserAggregate();
         protected Book GetValidBookAggregate() => PrepareBookAggregate();
         protected static DateTimePeriod GetValidDateTimePeriod() => PrepareValidDateTimePeriod();
+        protected Loan GetSampleLoanEntity() => PrepareSampleLoanEntity();
 
 
         protected string GetBookTitle => CreateString();
@@ -39,5 +40,8 @@ namespace Library.Domain.Tests.Unit.Helpers
         
         private static DateTimePeriod PrepareValidDateTimePeriod() 
             => DateTimePeriod.Create(DateTime.UtcNow, DateTime.UtcNow.AddDays(7));
+
+        private Loan PrepareSampleLoanEntity()
+            => Loan.Create(CreateLong(), CreateLong(), PrepareValidDateTimePeriod());
     }
 }
