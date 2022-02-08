@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20211204215451_InitDatabase")]
-    partial class InitDatabase
+    [Migration("20220208145859_init_database")]
+    partial class init_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,38 +20,6 @@ namespace Library.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Library.Application.UseCases.Books.ViewModels.BookViewModel", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Author")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Author");
-
-                    b.Property<string>("Isbn")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Isbn");
-
-                    b.Property<string>("Subject")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Subject");
-
-                    b.Property<string>("Title")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Title");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Book");
-                });
 
             modelBuilder.Entity("Library.Domain.AggregateModels.BookAggregate.Book", b =>
                 {
@@ -132,15 +100,6 @@ namespace Library.Infrastructure.Persistence.Migrations
                     b.ToTable("Loan");
                 });
 
-            modelBuilder.Entity("Library.Application.UseCases.Books.ViewModels.BookViewModel", b =>
-                {
-                    b.HasOne("Library.Domain.AggregateModels.BookAggregate.Book", null)
-                        .WithOne()
-                        .HasForeignKey("Library.Application.UseCases.Books.ViewModels.BookViewModel", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Library.Domain.AggregateModels.BookAggregate.Book", b =>
                 {
                     b.OwnsOne("Library.Domain.AggregateModels.BookAggregate.BookInformation", "BookInformation", b1 =>
@@ -152,19 +111,16 @@ namespace Library.Infrastructure.Persistence.Migrations
 
                             b1.Property<string>("Author")
                                 .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Author");
 
                             b1.Property<string>("Subject")
                                 .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Subject");
 
                             b1.Property<string>("Title")
                                 .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Title");
 
@@ -184,7 +140,6 @@ namespace Library.Infrastructure.Persistence.Migrations
 
                                     b2.Property<string>("Value")
                                         .IsRequired()
-                                        .ValueGeneratedOnUpdateSometimes()
                                         .HasColumnType("nvarchar(max)")
                                         .HasColumnName("Isbn");
 

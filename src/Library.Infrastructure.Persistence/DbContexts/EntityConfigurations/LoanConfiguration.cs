@@ -16,7 +16,7 @@ namespace Library.Infrastructure.Persistence.DbContexts.EntityConfigurations
             entity
                 .Property(e => e.Id)
                 .HasColumnName("LoanId")
-                .HasConversion(id => id.Value, id => new LoanId(id))
+                // .HasConversion(id => id.Value, id => new LoanId(id)) // In case of custom Identity class representation
                 .UseIdentityColumn();
 
             entity

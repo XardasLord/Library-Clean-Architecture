@@ -15,7 +15,7 @@ namespace Library.Infrastructure.Persistence.DbContexts.EntityConfigurations
 
             entity.Property(x => x.Id)
                 .HasColumnName("LibraryUserId")
-                .HasConversion(id => id.Value, id => new LibraryUserId(id))
+                // .HasConversion(id => id.Value, id => new LibraryUserId(id)); // In case of custom Identity class representation
                 .UseIdentityColumn();
 
             entity.Property(x => x.FirstName)

@@ -6,10 +6,10 @@ using Library.Domain.SharedKernel.Exceptions;
 
 namespace Library.Domain.SharedKernel
 {
-    public class Loan : Entity<LoanId>
+    public class Loan : Entity<long>
     {
-        private BookId _bookId;
-        private LibraryUserId _userId;
+        private long _bookId;
+        private long _userId;
         private DateTimePeriod _borrowPeriod;
         private bool _isActive;
         public DateTimePeriod BorrowPeriod => _borrowPeriod;

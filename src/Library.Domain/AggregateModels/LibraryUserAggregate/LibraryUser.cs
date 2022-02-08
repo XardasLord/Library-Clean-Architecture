@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
+using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
+using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
 using Library.Domain.SeedWork;
 using Library.Domain.SharedKernel;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
-    public class LibraryUser : Entity<LibraryUserId>, IAggregateRoot
+    public class LibraryUser : Entity<long>, IAggregateRoot
     {
         private UserCredential _credentials;
         private string _firstName;
         private string _lastName;
         private Email _email;
         private bool _isActive;
-        private List<Loan> _activeLoans;
+        internal List<Loan> _activeLoans;
 
         public UserCredential Credentials => _credentials;
         public string FirstName => _firstName;

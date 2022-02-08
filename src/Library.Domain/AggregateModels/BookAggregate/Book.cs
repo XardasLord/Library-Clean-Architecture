@@ -9,7 +9,7 @@ using Library.Domain.SharedKernel;
 
 namespace Library.Domain.AggregateModels.BookAggregate
 {
-    public class Book : Entity<BookId>, IAggregateRoot
+    public class Book : Entity<long>, IAggregateRoot
     {
         internal BookInformation _bookInformation;
         internal List<Loan> _loans;
@@ -42,7 +42,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
             AddDomainEvent(new NewBookRegisteredEvent(Id, DateTime.UtcNow));
         }
         
-        public void Borrow(LibraryUser libraryUser, DateTimePeriod borrowPeriod)
+        internal void Borrow(LibraryUser libraryUser, DateTimePeriod borrowPeriod)
         {
             if (!InStock)
                 throw new BookIsNotInStockException();
