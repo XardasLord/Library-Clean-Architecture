@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate.Events;
 using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
@@ -21,7 +22,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         public string LastName => _lastName;
         public Email Email => _email;
         public bool IsActive => _isActive;
-        public IReadOnlyCollection<Loan> ActiveLoans => _activeLoans;
+        public IReadOnlyCollection<Loan> ActiveLoans => _activeLoans.Where(x => x.IsActive).ToList();
 
         internal LibraryUser()
         {
@@ -49,13 +50,26 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         public void BorrowBook(Book book, DateTimePeriod borrowPeriod)
         {
             if (ActiveLoans.Count == 3)
-                throw new LibraryUserMaximumBooksBorrowedExceededException("Cannot borrow more books at the same time. User has 3 active loans.");
+                throw new LibraryUserMaximumBooksBorrowedExceededException();
             
             book.Borrow(this, borrowPeriod);
             
             _activeLoans.Add(Loan.Create(book.Id, Id, borrowPeriod));
 
             AddDomainEvent(new LibraryUserBorrowedBookEvent(Id, book.Id));
+        }
+
+        public void ReturnBook(Book book)
+        {
+            var bookLoanEntry = ActiveLoans.FirstOrDefault(x => x.BookId == book.Id);
+            
+            if (bookLoanEntry is null)
+                throw new LibraryUserDoesNotHaveBookBorrowed(book.Id);
+
+            book.Return(this);
+            bookLoanEntry.Finish();
+            
+            AddDomainEvent(new LibraryUserReturnedBookEvent(Id, book.Id));
         }
     }
 }

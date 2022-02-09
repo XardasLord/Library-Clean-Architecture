@@ -52,14 +52,10 @@ namespace Library.Domain.AggregateModels.BookAggregate
             AddDomainEvent(new BookBorrowedEvent(Id, libraryUser.Id, borrowPeriod));
         }
 
-        public void Return(LibraryUser libraryUser)
+        internal void Return(LibraryUser libraryUser)
         {
             if (InStock)
                 throw new BookIsInStockException(Id);
-
-            // TODO: This should be moved as a responsibility of LibraryUser domain class
-            // var activeLoan = _loans.Single(l => l.IsActive);
-            // activeLoan.Finish();
 
             _inStock = true;
 

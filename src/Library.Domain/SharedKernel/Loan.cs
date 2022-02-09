@@ -14,6 +14,7 @@ namespace Library.Domain.SharedKernel
         private bool _isActive;
         public DateTimePeriod BorrowPeriod => _borrowPeriod;
         public bool IsActive => _isActive;
+        public long BookId => _bookId;
         
         
         private Loan()
@@ -35,7 +36,7 @@ namespace Library.Domain.SharedKernel
             return loan;
         }
 
-        public void Finish()
+        internal void Finish()
         {
             if (!IsActive)
                 throw new LoanNotActiveException(Id);

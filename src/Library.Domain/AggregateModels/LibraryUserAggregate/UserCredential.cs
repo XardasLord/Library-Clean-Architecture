@@ -1,4 +1,4 @@
-﻿using System.Security.Authentication;
+﻿using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate
 {
@@ -15,13 +15,13 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         {
             // TODO: Implement Guard clause
             if (string.IsNullOrWhiteSpace(login))
-                throw new InvalidCredentialException($"Parameter {nameof(login)} cannot be empty.");
+                throw new InvalidCredentialsException($"Parameter {nameof(login)} cannot be empty.");
 
             if (string.IsNullOrWhiteSpace(password))
-                throw new InvalidCredentialException($"Parameter {nameof(password)} cannot be empty.");
+                throw new InvalidCredentialsException($"Parameter {nameof(password)} cannot be empty.");
 
             if (password.Length <= 5)
-                throw new InvalidCredentialException("Password has to be at least 6 characters length.");
+                throw new InvalidCredentialsException("Password has to be at least 6 characters length.");
 
             Login = login;
             Password = password;
