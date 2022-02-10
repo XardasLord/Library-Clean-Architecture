@@ -23,7 +23,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
         public Email Email => _email;
         public bool IsActive => _isActive;
         public IReadOnlyCollection<Loan> ActiveLoans => _activeLoans.Where(x => x.IsActive).ToList();
-
+        
         internal LibraryUser()
         {
             _activeLoans = new List<Loan>();
@@ -52,7 +52,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             if (ActiveLoans.Count == 3)
                 throw new LibraryUserMaximumBooksBorrowedExceededException();
             
-            book.Borrow(this, borrowPeriod);
+            book.Borrow(this, borrowPeriod); // TODO: This should be handled in a separate transaction - in a handler of the event fired below
             
             _activeLoans.Add(Loan.Create(book.Id, Id, borrowPeriod));
 
@@ -66,7 +66,7 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             if (bookLoanEntry is null)
                 throw new LibraryUserDoesNotHaveBookBorrowed(book.Id);
 
-            book.Return(this);
+            book.Return(this); // TODO: This should be handled in a separate transaction - in a handler of the event fired below
             bookLoanEntry.Finish();
             
             AddDomainEvent(new LibraryUserReturnedBookEvent(Id, book.Id));

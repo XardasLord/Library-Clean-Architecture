@@ -1,14 +1,13 @@
-﻿using Library.Domain.AggregateModels.BookAggregate;
-using MediatR;
+﻿using MediatR;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate.Events
 {
     public class LibraryUserBorrowedBookEvent : INotification
     {
-        public LibraryUserId LibraryUserId { get; }
-        public BookId BookId { get; }
+        public long LibraryUserId { get; }
+        public long BookId { get; }
 
-        public LibraryUserBorrowedBookEvent(LibraryUserId libraryUserId, BookId bookId)
+        public LibraryUserBorrowedBookEvent(long libraryUserId, long bookId)
         {
             LibraryUserId = libraryUserId;
             BookId = bookId;

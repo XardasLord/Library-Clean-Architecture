@@ -36,8 +36,12 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate.Library
             // Assert
             _libraryUser.ActiveLoans.Count.Should().Be(1);
             _libraryUser.ActiveLoans.First().IsActive.Should().BeTrue();
+            
             _libraryUser.DomainEvents.Count.Should().Be(1);
-            _libraryUser.DomainEvents.First().Should().BeOfType<LibraryUserBorrowedBookEvent>();
+            var @event = _libraryUser.DomainEvents.First();
+            @event.Should().BeOfType<LibraryUserBorrowedBookEvent>();
+            (@event as LibraryUserBorrowedBookEvent)?.BookId.Should().Be(_book.Id);
+            (@event as LibraryUserBorrowedBookEvent)?.LibraryUserId.Should().Be(_libraryUser.Id);
         }
 
         [Fact]

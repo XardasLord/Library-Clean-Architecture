@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
-using Library.Domain.AggregateModels.LibraryUserAggregate.Exceptions;
+using Library.Domain.Tests.Unit.Helpers;
 using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate.LibraryUserTests
 {
-    public class CreateLibraryUser
+    public class CreateLibraryUser : AggregateTestHelper
     {
         private static LibraryUser Act(UserCredential credentials, Name name, string email)
             => LibraryUser.Create(credentials, name, email);
@@ -31,46 +31,6 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate.Library
             libraryUser.LastName.Should().Be(lastName);
             libraryUser.Email.Value.Should().Be(email);
             libraryUser.IsActive.Should().BeTrue();
-        }
-        
-        [Theory]
-        [InlineData(" ")]
-        [InlineData("")]
-        [InlineData(null)]
-        public void given_empty_email_should_throws_an_exception(string email)
-        {
-            const string login = "Login";
-            const string password = "Password";
-            const string firstName = "FirstName";
-            const string lastName = "LastName";
-            var credentials = new UserCredential(login, password);
-            var name = new Name(firstName, lastName);
-
-            var result = Record.Exception(() => Act(credentials, name, email));
-
-            result.Should().NotBeNull();
-            result.Should().BeOfType<InvalidEmailException>();
-        }
-
-        [Theory]
-        [InlineData("Email")]
-        [InlineData("Email@")]
-        [InlineData("@Email")]
-        [InlineData("@Email@com")]
-        [InlineData("Email@com@com")]
-        public void given_invalid_email_format_should_throws_an_exception(string email)
-        {
-            const string login = "Login";
-            const string password = "Password";
-            const string firstName = "FirstName";
-            const string lastName = "LastName";
-            var credentials = new UserCredential(login, password);
-            var name = new Name(firstName, lastName);
-
-            var result = Record.Exception(() => Act(credentials, name, email));
-
-            result.Should().NotBeNull();
-            result.Should().BeOfType<InvalidEmailException>();
         }
     }
 }

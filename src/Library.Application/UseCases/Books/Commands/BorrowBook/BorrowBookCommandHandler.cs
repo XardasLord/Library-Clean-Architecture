@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Library.Application.UseCases.Books.Exceptions;
 using Library.Application.UseCases.LibraryUsers.Exceptions;
 using Library.Domain.AggregateModels.BookAggregate;
-using Library.Domain.AggregateModels.BookAggregate.Specifications;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate.Specifications;
 using Library.Domain.SharedKernel;
