@@ -1,15 +1,13 @@
 ﻿using System;
-using HotChocolate;
 using HotChocolate.AspNetCore;
-using HotChocolate.Execution.Configuration;
-using Library.Domain.AggregateModels.LibraryUserAggregate;
-using Library.Domain.AggregateModels.StorageAggregate;
+using Library.Domain.SharedKernel;
 using Library.Infrastructure.Persistence.DbContexts;
+using Library.Infrastructure.Persistence.GraphQL.ErrorHandling;
 using Library.Infrastructure.Persistence.GraphQL.Queries;
 using Library.Infrastructure.Persistence.GraphQL.Types;
 using Library.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,36 +21,51 @@ namespace Library.Infrastructure.Persistence
 
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
             => services
-                .AddDbContext<LibraryDbContext>(options =>
+                .AddDbContext<WriteDbContext>(options =>
                 {
                     options.EnableDetailedErrors();
                     options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
                 })
-                //.AddDbContext<LibraryViewDbContext>(options =>
-                //{
-                //    options.EnableDetailedErrors();
-                //    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
-                //})
-                .AddScoped<ILibraryUserRepository, LibraryUserRepository>()
-                .AddScoped<IStorageRepository, StorageRepository>();
+                .AddDbContext<ReadDbContext>(options =>
+                {
+                    options.EnableDetailedErrors();
+                    options.UseSqlServer(configuration.GetConnectionString(ConnectionStringConfigName));
+                })
+                .AddScoped(typeof(IAggregateRepository<>), typeof(AggregateRepository<>))
+                .AddScoped(typeof(IAggregateReadRepository<>), typeof(AggregateRepository<>));
 
-        public static IServiceCollection AddGraphQLQueries(this IServiceCollection services) 
-            => services
-                .AddGraphQL(
-                    SchemaBuilder.New()
-                        .AddQueryType<StorageViewModelQuery>()
-                        .AddType<BookViewModelType>()
-                        .AddType<StorageViewModelType>()
-                        .Create(),
-                    new QueryExecutionOptions
+        public static IServiceCollection AddGraphQLQueries(this IServiceCollection services)
+        {
+            services
+                .AddGraphQLServer()
+                .AddAuthorization()
+                .AddQueryType<BookReadModelQueries>()
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting()
+                .AddType<BookReadModelType>();
+
+            services.AddErrorFilter<GraphQLErrorFilter>();
+
+            return services;
+        }
+
+        public static IApplicationBuilder UseGraphQLQueries(
+            this IApplicationBuilder app,
+            IConfiguration graphQlConfiguration,
+            IWebHostEnvironment env)
+        {
+            var graphQLEndpoint = graphQlConfiguration.GetSection("EndpointUrl").Value;
+
+            return app.UseEndpoints(x => x.MapGraphQL(graphQLEndpoint)
+                .WithOptions(new GraphQLServerOptions
+                {
+                    Tool =
                     {
-                        ForceSerialExecution = true
-                    });
-
-        public static IApplicationBuilder UseGraphQLQueries(this IApplicationBuilder app, IConfiguration graphQLConfiguration)
-            => app
-                .UseGraphQL(new PathString(graphQLConfiguration.GetSection("EndpointUrl").Value))
-                .UsePlayground(new PathString(graphQLConfiguration.GetSection("EndpointUrl").Value));
+                        Enable = env.IsDevelopment()
+                    }
+                }));
+        }
 
         public static IHost MigrateDatabase(this IHost webHost)
         {
@@ -61,7 +74,7 @@ namespace Library.Infrastructure.Persistence
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var db = services.GetRequiredService<LibraryDbContext>();
+                    var db = services.GetRequiredService<WriteDbContext>();
                     db.Database.Migrate();
                 }
                 catch (Exception ex)

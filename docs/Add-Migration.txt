@@ -1,1 +1,1 @@
-Add-Migration <name_of_migration> -o Migrations
+Add-Migration <name_of_migration> -Context WriteDbContext -o Migrations

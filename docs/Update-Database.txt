@@ -1,0 +1,3 @@
+# Need to set up defaul project as Library.Infrastructure.Persistence
+
+Update-Database -Context WriteDbContext

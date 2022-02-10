@@ -35,7 +35,7 @@ namespace Library.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseInfrastructure(Configuration);
+            app.UseInfrastructure(Configuration, env);
 
             app.UseEndpoints(endpoints =>
             {

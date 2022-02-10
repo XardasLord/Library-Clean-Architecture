@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.3.0" />
+    <PackageReference Include="Ardalis.Specification" Version="5.2.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Library.Domain.Tests.Unit</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
 </Project>

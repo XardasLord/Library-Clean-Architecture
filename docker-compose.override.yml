@@ -8,7 +8,6 @@ services:
       - ConnectionStrings__LibraryConnectionString=Server=db;Database=Library;User=sa;Password=test$$123;
       - JwtConfig__Secret=PDv7DrqznYL6nv7DrqzjnQYO9JxIsWdcjnQYL6nu0f
       - JwtConfig__ExpirationInMinutes=1440
-      - StorageConfig__DevelopStorageId=1
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -17,3 +16,4 @@ services:
     environment:
       SA_PASSWORD: "test$$123"
       ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"

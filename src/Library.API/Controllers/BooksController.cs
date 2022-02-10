@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Library.Application.UseCases.Storages.Commands.AddBook;
-using Library.Application.UseCases.Storages.Commands.BorrowBook;
-using Library.Application.UseCases.Storages.Commands.ReturnBook;
-using Library.Application.UseCases.Storages.Dtos;
-using Library.Application.UseCases.Storages.Queries.GetAvailableBooks;
-using Library.Application.UseCases.Storages.Queries.GetBook;
-using Library.Application.UseCases.Storages.Queries.GetBookByIsbn;
+using Library.Application.UseCases.Books.Commands.AddBook;
+using Library.Application.UseCases.Books.Commands.BorrowBook;
+using Library.Application.UseCases.Books.Commands.ReturnBook;
+using Library.Application.UseCases.Books.Queries;
+using Library.Application.UseCases.Books.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,17 +15,17 @@ namespace Library.API.Controllers
     {
         [AllowAnonymous]
         [HttpGet("{id:long}")]
-        public async Task<ActionResult<BookDto>> GetBook(long id) 
+        public async Task<ActionResult<BookViewModel>> GetBook(long id) 
             => Ok(await Mediator.Send(new GetBookQuery(id)));
 
         [AllowAnonymous]
         [HttpGet("available")]
-        public async Task<ActionResult<IReadOnlyCollection<BookDto>>> GetAllAvailableBooks()
+        public async Task<ActionResult<IReadOnlyCollection<BookViewModel>>> GetAllAvailableBooks()
             => Ok(await Mediator.Send(new GetAvailableBooksQuery()));
 
         [AllowAnonymous]
         [HttpGet("{isbn}")]
-        public async Task<ActionResult<BookDto>> GetBookByIsbn(string isbn)
+        public async Task<ActionResult<BookViewModel>> GetBookByIsbn(string isbn)
             => Ok(await Mediator.Send(new GetBookByIsbnQuery(isbn)));
 
         [HttpPost]
@@ -41,7 +39,7 @@ namespace Library.API.Controllers
         [HttpPost("{bookId}/borrow")]
         public async Task<IActionResult> BorrowBook(long bookId, BorrowBookCommand command)
         {
-            command.BookId = bookId;
+            command = command with { BookId = bookId };
 
             await Mediator.Send(command);
 

@@ -3,6 +3,7 @@ version: '3.4'
 services:
   library.api:
     image: ${DOCKER_REGISTRY-}libraryapi
+    container_name: lca-api
     build:
       context: .
       dockerfile: src/Library.API/Dockerfile
@@ -11,43 +12,44 @@ services:
     depends_on:
       - db
     networks:
-      - backtier
+      - lca
 
   db:
-    image: "mcr.microsoft.com/mssql/server"
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    container_name: lca-db
     ports:
       - "1433:1433"
     networks:
-      - backtier
+      - lca
 
-  elasticsearch:
-    container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
-    ports:
-      - 9200:9200
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    environment:
-      - discovery.type=single-node
-    networks:
-      - backtier
+  #elasticsearch:
+  #  container_name: lca-elasticsearch
+  #  image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+  #  ports:
+  #    - 9200:9200
+  #  volumes:
+  #    - elasticsearch-data:/usr/share/elasticsearch/data
+  #  environment:
+  #    - discovery.type=single-node
+  #  networks:
+  #    - lca
 
-  kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.6.2
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
-    environment:
-      - ELASTICSEARCH_URL=http://localhost:9200
-    networks:
-      - backtier
+  #kibana:
+  #  container_name: lca-kibana
+  #  image: docker.elastic.co/kibana/kibana:7.6.2
+  #  ports:
+  #    - 5601:5601
+  #  depends_on:
+  #    - elasticsearch
+  #  environment:
+  #    - ELASTICSEARCH_URL=http://localhost:9200
+  #  networks:
+  #    - lca
   
 networks:
-  backtier:
+  lca:
     driver: bridge
 
-volumes:
-  elasticsearch-data:
-    driver: local
+#volumes:
+#  elasticsearch-data:
+#    driver: local

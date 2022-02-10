@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Library.Application.Auth;
+using Library.Domain.SharedKernel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -35,7 +36,7 @@ namespace Library.Infrastructure.Authorization
             services.AddHttpContextAccessor();
 
             services.AddTransient<IAuthService, JwtService>();
-            services.AddTransient<ITokenAuthInfo, TokenAuthInfo>();
+            services.AddTransient<ICurrentUser, CurrentUser>();
 
             return services;
         }
