@@ -42,14 +42,14 @@ namespace Library.Domain.AggregateModels.BookAggregate
             AddDomainEvent(new NewBookRegisteredEvent(Id, DateTime.UtcNow));
         }
         
-        internal void Borrow(LibraryUser libraryUser, DateTimePeriod borrowPeriod)
+        public void SetAsNotAvailable(long libraryUserId, DateTimePeriod borrowPeriod)
         {
             if (!InStock)
                 throw new BookIsNotInStockException();
             
             _inStock = false;
 
-            AddDomainEvent(new BookBorrowedEvent(Id, libraryUser.Id, borrowPeriod));
+            AddDomainEvent(new BookBorrowedEvent(Id, libraryUserId, borrowPeriod));
         }
 
         internal void Return(LibraryUser libraryUser)
