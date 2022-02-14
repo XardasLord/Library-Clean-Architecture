@@ -52,7 +52,7 @@ namespace Library.Domain.AggregateModels.BookAggregate
             AddDomainEvent(new BookBorrowedEvent(Id, libraryUserId, borrowPeriod));
         }
 
-        internal void Return(LibraryUser libraryUser)
+        public void SetAsAvailable(long libraryUserId)
         {
             if (InStock)
                 throw new BookIsInStockException(Id);

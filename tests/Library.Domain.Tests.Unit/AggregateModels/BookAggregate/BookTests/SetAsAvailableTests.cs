@@ -7,19 +7,19 @@ using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
-    public class ReturnTests : AggregateTestHelper
+    public class SetAsAvailableTests : AggregateTestHelper
     {
         private readonly Book _book;
         private readonly LibraryUser _libraryUser;
 
-        public ReturnTests()
+        public SetAsAvailableTests()
         {
             _libraryUser = GetValidLibraryUserAggregate();
             _book = GetValidBookAggregate();
         }
         
         private void Act() 
-            => _book.Return(_libraryUser);
+            => _book.SetAsAvailable(_libraryUser.Id);
 
         [Fact]
         public void when_book_is_borrowed_book_should_be_returned()

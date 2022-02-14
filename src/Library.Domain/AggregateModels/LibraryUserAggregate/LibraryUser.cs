@@ -52,24 +52,21 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate
             if (ActiveLoans.Count == 3)
                 throw new LibraryUserMaximumBooksBorrowedExceededException();
             
-            // book.Borrow(this, borrowPeriod); // TODO: This should be handled in a separate transaction - in a handler of the event fired below
-            
             _activeLoans.Add(Loan.Create(bookId, Id, borrowPeriod));
 
             AddDomainEvent(new LibraryUserBorrowedBookEvent(Id, bookId, borrowPeriod));
         }
 
-        public void ReturnBook(Book book)
+        public void ReturnBook(long bookId)
         {
-            var bookLoanEntry = ActiveLoans.FirstOrDefault(x => x.BookId == book.Id);
+            var bookLoanEntry = ActiveLoans.FirstOrDefault(x => x.BookId == bookId);
             
             if (bookLoanEntry is null)
-                throw new LibraryUserDoesNotHaveBookBorrowed(book.Id);
-
-            book.Return(this); // TODO: This should be handled in a separate transaction - in a handler of the event fired below
+                throw new LibraryUserDoesNotHaveBookBorrowed(bookId);
+            
             bookLoanEntry.Finish();
             
-            AddDomainEvent(new LibraryUserReturnedBookEvent(Id, book.Id));
+            AddDomainEvent(new LibraryUserReturnedBookEvent(Id, bookId));
         }
     }
 }
