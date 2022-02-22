@@ -29,17 +29,14 @@ namespace Library.Domain.AggregateModels.BookAggregate
             _inStock = true;
         }
 
-        public static Book Create(string title, string author, string subject, string isbn)
+        public static Book Register(string title, string author, string subject, string isbn, long userId)
         {
             var bookInformation = new BookInformation(title, author, subject, isbn);
             var book = new Book(bookInformation);
+            
+            book.AddDomainEvent(new NewBookRegisteredEvent(book.Id, DateTime.UtcNow));
 
             return book;
-        }
-
-        public void Register(LibraryUser libraryUser)
-        {
-            AddDomainEvent(new NewBookRegisteredEvent(Id, DateTime.UtcNow));
         }
         
         public void SetAsNotAvailable(long libraryUserId, DateTimePeriod borrowPeriod)

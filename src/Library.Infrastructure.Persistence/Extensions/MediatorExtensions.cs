@@ -12,7 +12,7 @@ namespace Library.Infrastructure.Persistence.Extensions
         {
             var domainEntities = context.ChangeTracker
                 .Entries<Entity>()
-                .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any())
+                .Where(x => x.Entity.DomainEvents?.Any() ?? false)
                 .ToList();
 
             var domainEvents = domainEntities
@@ -26,7 +26,8 @@ namespace Library.Infrastructure.Persistence.Extensions
             // https://app.pluralsight.com/course-player?clipId=f4eb2c3a-ee0e-44ee-a5d3-7c2f70862977
 
             var tasks = domainEvents
-                .Select(async (domainEvent) => {
+                .Select(async (domainEvent) =>
+                {
                     await mediator.Publish(domainEvent);
                 });
 

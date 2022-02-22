@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Library.Application.UseCases.LibraryUsers.Exceptions;
 using Library.Domain.AggregateModels.BookAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.SharedKernel;
@@ -25,10 +26,10 @@ namespace Library.Application.UseCases.Books.Commands.AddBook
 
         public async Task<long> Handle(AddBookCommand command, CancellationToken cancellationToken)
         {
-            var libraryUser = await _libraryUserRepository.GetByIdAsync(_currentUser.UserId, cancellationToken);
+            var libraryUser = await _libraryUserRepository.GetByIdAsync(_currentUser.UserId, cancellationToken)
+                ?? throw new LibraryUserNotFoundException(_currentUser.UserId);
 
-            var book = Book.Create(command.Title, command.Author, command.Subject, command.Isbn);
-            book.Register(libraryUser);
+            var book = Book.Register(command.Title, command.Author, command.Subject, command.Isbn, libraryUser.Id);
 
             await _bookRepository.AddAsync(book, cancellationToken);
 
