@@ -8,6 +8,7 @@ using Library.Domain.AggregateModels.LibraryUserAggregate;
 using Library.Domain.AggregateModels.LibraryUserAggregate.Specifications;
 using Library.Domain.SharedKernel;
 using MediatR;
+using BookNotFoundException = Library.Application.UseCases.Books.Exceptions.BookNotFoundException;
 
 namespace Library.Application.UseCases.Books.Commands.BorrowBook
 {
@@ -37,9 +38,12 @@ namespace Library.Application.UseCases.Books.Commands.BorrowBook
             var book = await _bookRepository.GetByIdAsync(command.BookId, cancellationToken) 
                        ?? throw new BookNotFoundException(command.BookId);
 
+            if (!book.InStock)
+                throw new BookNotAvailableException(command.BookId);
+
             var dateTimePeriod = DateTimePeriod.Create(DateTime.UtcNow, command.BorrowingEndDate);
 
-            libraryUser.BorrowBook(book, dateTimePeriod);
+            libraryUser.BorrowBook(command.BookId, dateTimePeriod);
 
             await _libraryUserRepository.SaveChangesAsync(cancellationToken);
 

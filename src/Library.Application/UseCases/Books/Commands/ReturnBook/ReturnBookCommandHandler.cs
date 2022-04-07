@@ -32,10 +32,10 @@ namespace Library.Application.UseCases.Books.Commands.ReturnBook
             var libraryUser = await _libraryUserRepository.GetBySpecAsync(spec, cancellationToken)
                               ?? throw new LibraryUserNotFoundException(_currentUser.UserId);
 
-            var book = await _bookRepository.GetByIdAsync(command.BookId, cancellationToken)
-                       ?? throw new BookNotFoundException(command.BookId);
+            _ = await _bookRepository.GetByIdAsync(command.BookId, cancellationToken)
+                ?? throw new BookNotFoundException(command.BookId);
 
-            libraryUser.ReturnBook(book);
+            libraryUser.ReturnBook(command.BookId);
 
             await _libraryUserRepository.SaveChangesAsync(cancellationToken);
 

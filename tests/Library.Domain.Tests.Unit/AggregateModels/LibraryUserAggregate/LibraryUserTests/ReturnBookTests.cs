@@ -24,13 +24,13 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate.Library
         }
 
         private void Act()
-            => _libraryUser.ReturnBook(_book);
+            => _libraryUser.ReturnBook(_book.Id);
 
         [Fact]
         public void when_library_user_returns_previously_borrowed_book_should_finish_its_loan()
         {
             // Arrange
-            _libraryUser.BorrowBook(_book, _dateTimePeriod);
+            _libraryUser.BorrowBook(_book.Id, _dateTimePeriod);
             
             // Act
             Act();

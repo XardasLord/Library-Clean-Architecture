@@ -8,13 +8,13 @@ using Xunit;
 
 namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
 {
-    public class BorrowTests : AggregateTestHelper
+    public class SetAsTestsNotAvailableTests : AggregateTestHelper
     {
         private readonly Book _book;
         private readonly LibraryUser _libraryUser;
         private readonly DateTimePeriod _dateTimePeriod;
 
-        public BorrowTests()
+        public SetAsTestsNotAvailableTests()
         {
             _libraryUser = GetValidLibraryUserAggregate();
             _book = GetValidBookAggregate();
@@ -22,7 +22,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.BookAggregate.BookTests
         }
 
         private void Act()
-            => _book.Borrow(_libraryUser, _dateTimePeriod);
+            => _book.SetAsNotAvailable(_libraryUser.Id, _dateTimePeriod);
 
         [Fact]
         public void when_book_is_not_borrowed_should_be_out_of_stock()

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Library.Domain.SharedKernel;
+using MediatR;
 
 namespace Library.Domain.AggregateModels.LibraryUserAggregate.Events
 {
@@ -6,11 +7,13 @@ namespace Library.Domain.AggregateModels.LibraryUserAggregate.Events
     {
         public long LibraryUserId { get; }
         public long BookId { get; }
+        public DateTimePeriod BorrowPeriod { get; }
 
-        public LibraryUserBorrowedBookEvent(long libraryUserId, long bookId)
+        public LibraryUserBorrowedBookEvent(long libraryUserId, long bookId, DateTimePeriod borrowPeriod)
         {
             LibraryUserId = libraryUserId;
             BookId = bookId;
+            BorrowPeriod = borrowPeriod;
         }
     }
 }

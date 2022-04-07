@@ -25,7 +25,7 @@ namespace Library.Domain.Tests.Unit.AggregateModels.LibraryUserAggregate.Library
         }
 
         private void Act()
-            => _libraryUser.BorrowBook(_book, _dateTimePeriod);
+            => _libraryUser.BorrowBook(_book.Id, _dateTimePeriod);
 
         [Fact]
         public void when_library_user_borrows_available_book_should_has_new_loan_registered()
